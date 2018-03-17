@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">CubeMaster</string>
+
+    <string name="timer">Timer</string>
+    <string name="stats">Stats</string>
+    <string name="my_puzzles">My Puzzles</string>
+    <string name="settings">Settings</string>
+    <string name="detail">Times Detail</string>
+    <string name="ok">OK</string>
+    <string name="restart">Do you want to restart now to apply changes?</string>
+    <string name="areyousuredelete">Are you sure you want to delete this puzzle? (This action can\'t be undone)</string>
+    <string name="areyousurereset">Are you sure you want to reset this puzzle? You will loose all registered times</string>
+    <string name="delete">DELETE</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="show_detail">SHOW DETAIL</string>
+    <string name="sort_by">Sort by: </string>
+    <string name="recent">Recent</string>
+    <string name="latest">Latest</string>
+    <string name="puzzle_hint">e.g., 3x3x3, Piraminx, 2x2x3</string>
+    <string name="cannot_empty">It cannot be empty</string>
+    <string name="already_exists">It already exists</string>
+    <string name="add_new">ADD NEW</string>
+    <string name="number_of_solves">Number of solves</string>
+    <string name="best_time">Best time</string>
+    <string name="worst_time">Worst time</string>
+    <string name="average">Average</string>
+    <string name="current_average_of_5">Current average of 5</string>
+    <string name="current_average_of_10">Current average of 10</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="coloured_timer">Coloured Timer</string>
+    <string name="minutes_beep">Minutes BEEP</string>
+    <string name="times_detail">Times detail</string>
+    <string name="reset">Reset</string>
+    <string name="use">Use</string>
+    <string name="default_puzzle">Default</string>
+    <string name="press_back_again_to_exit">Press \'Back\' again to Exit</string>
+    <string name="delete_last_solve">Delete last solve</string>
+    <string name="change_puzzle">Change Puzzle</string>
+    <string name="reset_current_puzzle">Reset Current Puzzle</string>
+</resources>

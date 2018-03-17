@@ -1,0 +1,194 @@
+<resources>
+
+    <style name="Default" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/md_grey_800</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionBarTheme">@style/CustomBarOptionsColor</item>
+    </style>
+
+    <style name="AppTheme.CustomBarRed" parent="Default">
+        <item name="colorPrimary">@color/md_red_900</item>
+        <item name="colorAccent">@color/md_red_500</item>
+        <item name="buttonStyle">@style/ButtonStyleRed</item>
+    </style>
+
+    <style name="ButtonStyleRed" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_red_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarPink" parent="Default">
+        <item name="colorPrimary">@color/md_pink_900</item>
+        <item name="colorAccent">@color/md_pink_500</item>
+        <item name="buttonStyle">@style/ButtonStylePink</item>
+    </style>
+
+    <style name="ButtonStylePink" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_pink_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarPurple" parent="Default">
+        <item name="colorPrimary">@color/md_purple_900</item>
+        <item name="colorAccent">@color/md_purple_500</item>
+        <item name="buttonStyle">@style/ButtonStylePurple</item>
+    </style>
+
+    <style name="ButtonStylePurple" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_purple_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarDeepPurple" parent="Default">
+        <item name="colorPrimary">@color/md_deep_purple_900</item>
+        <item name="colorAccent">@color/md_deep_purple_500</item>
+        <item name="buttonStyle">@style/ButtonStyleDeepPurple</item>
+    </style>
+
+    <style name="ButtonStyleDeepPurple" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_deep_purple_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarIndigo" parent="Default">
+        <item name="colorPrimary">@color/md_indigo_900</item>
+        <item name="colorAccent">@color/md_indigo_500</item>
+        <item name="buttonStyle">@style/ButtonStyleIndigo</item>
+    </style>
+
+    <style name="ButtonStyleIndigo" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_indigo_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBlue" parent="Default">
+        <item name="colorPrimary">@color/md_blue_900</item>
+        <item name="colorAccent">@color/md_blue_500</item>
+        <item name="buttonStyle">@style/ButtonStyleBlue</item>
+    </style>
+
+    <style name="ButtonStyleBlue" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_blue_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLightBlue" parent="Default">
+        <item name="colorPrimary">@color/md_light_blue_900</item>
+        <item name="colorAccent">@color/md_light_blue_500</item>
+        <item name="buttonStyle">@style/ButtonStyleLightBlue</item>
+    </style>
+
+    <style name="ButtonStyleLightBlue" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_light_blue_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarCyan" parent="Default">
+        <item name="colorPrimary">@color/md_cyan_900</item>
+        <item name="colorAccent">@color/md_cyan_500</item>
+        <item name="buttonStyle">@style/ButtonStyleCyan</item>
+    </style>
+
+    <style name="ButtonStyleCyan" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_cyan_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarGreen" parent="Default">
+        <item name="colorPrimary">@color/md_green_900</item>
+        <item name="colorAccent">@color/md_green_500</item>
+        <item name="buttonStyle">@style/ButtonStyleGreen</item>
+    </style>
+
+    <style name="ButtonStyleGreen" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_green_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarTeal" parent="Default">
+        <item name="colorPrimary">@color/md_teal_900</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+        <item name="buttonStyle">@style/ButtonStyleTeal</item>
+    </style>
+
+    <style name="ButtonStyleTeal" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_teal_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLightGreen" parent="Default">
+        <item name="colorPrimary">@color/md_light_green_900</item>
+        <item name="colorAccent">@color/md_light_green_500</item>
+        <item name="buttonStyle">@style/ButtonStyleLightGreen</item>
+    </style>
+
+    <style name="ButtonStyleLightGreen" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_light_green_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLime" parent="Default">
+        <item name="colorPrimary">@color/md_lime_900</item>
+        <item name="colorAccent">@color/md_lime_500</item>
+        <item name="buttonStyle">@style/ButtonStyleLime</item>
+    </style>
+
+    <style name="ButtonStyleLime" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_lime_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarYellow" parent="Default">
+        <item name="colorPrimary">@color/md_amber_600</item>
+        <item name="colorAccent">@color/md_yellow_A700</item>
+        <item name="buttonStyle">@style/ButtonStyleYellow</item>
+    </style>
+
+    <style name="ButtonStyleYellow" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_yellow_A700</item>
+    </style>
+
+    <style name="AppTheme.CustomBarOrange" parent="Default">
+        <item name="colorPrimary">@color/md_orange_900</item>
+        <item name="colorAccent">@color/md_orange_500</item>
+        <item name="buttonStyle">@style/ButtonStyleOrange</item>
+    </style>
+
+    <style name="ButtonStyleOrange" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_orange_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarDeepOrange" parent="Default">
+        <item name="colorPrimary">@color/md_deep_orange_900</item>
+        <item name="colorAccent">@color/md_deep_orange_500</item>
+        <item name="buttonStyle">@style/ButtonStyleDeepOrange</item>
+    </style>
+
+    <style name="ButtonStyleDeepOrange" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_deep_orange_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBrown" parent="Default">
+        <item name="colorPrimary">@color/md_brown_900</item>
+        <item name="colorAccent">@color/md_brown_500</item>
+        <item name="buttonStyle">@style/ButtonStyleBrown</item>
+    </style>
+
+    <style name="ButtonStyleBrown" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_brown_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarGrey" parent="Default">
+        <item name="colorPrimary">@color/md_grey_900</item>
+        <item name="colorAccent">@color/md_grey_500</item>
+        <item name="buttonStyle">@style/ButtonStyleGrey</item>
+    </style>
+
+    <style name="ButtonStyleGrey" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_grey_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBlueGrey" parent="Default">
+        <item name="colorPrimary">@color/md_blue_grey_900</item>
+        <item name="colorAccent">@color/md_blue_grey_500</item>
+        <item name="buttonStyle">@style/ButtonStyleBlueGrey</item>
+    </style>
+
+    <style name="ButtonStyleBlueGrey" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/md_blue_grey_500</item>
+    </style>
+
+    <style name="CustomBarOptionsColor" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#FFF</item>
+    </style>
+
+</resources>

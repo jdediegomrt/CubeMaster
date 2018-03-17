@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">CubeMaster</string>
+
+    <string name="timer">Cronómetro</string>
+    <string name="stats">Estadísticas</string>
+    <string name="my_puzzles">Mis puzzles</string>
+    <string name="settings">Ajustes</string>
+    <string name="detail">Detalles</string>
+    <string name="ok">ACEPTAR</string>
+    <string name="restart">¿Desea reiniciar la aplicación para aplicar los cambios?</string>
+    <string name="areyousuredelete">¿Estas seguro que quieres borrar este puzzle? (Esta acción no se puede deshacer)</string>
+    <string name="areyousurereset">¿Estas seguro que quieres reestablecer este puzzle? Perderás todos los tiempos registrados</string>
+    <string name="delete">BORRAR</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="show_detail">VER DETALLES</string>
+    <string name="sort_by">Ordenar por: </string>
+    <string name="recent">Más reciente</string>
+    <string name="latest">Más antiguo </string>
+    <string name="puzzle_hint">Por ejemplo: 3x3x3, Piraminx, 2x2x3</string>
+    <string name="cannot_empty">¡No puede estar vacío!</string>
+    <string name="already_exists">Ya existe</string>
+    <string name="add_new">NUEVO</string>
+    <string name="number_of_solves">Veces resuelto</string>
+    <string name="best_time">Mejor tiempo</string>
+    <string name="worst_time">Peor tiempo</string>
+    <string name="average">Media</string>
+    <string name="current_average_of_5">Media de 5</string>
+    <string name="current_average_of_10">Media de 10</string>
+    <string name="change_theme">Cambiar tema</string>
+    <string name="coloured_timer">Colores en cronómetro</string>
+    <string name="minutes_beep">Sonido cada minuto</string>
+    <string name="times_detail">Detalle</string>
+    <string name="reset">Reestablecer</string>
+    <string name="use">Usar</string>
+    <string name="default_puzzle">Por defecto</string>
+    <string name="press_back_again_to_exit">Presione de nuevo para salir</string>
+    <string name="delete_last_solve">Borrar último tiempo</string>
+    <string name="change_puzzle">Cambiar puzzle</string>
+    <string name="reset_current_puzzle">Reestablecer puzzle actual</string>
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.dediegomrt.cubemaster.View.MainActivity"
+    android:weightSum="2"
+    android:orientation="vertical"
+    android:background="@color/md_grey_200"
+    android:clipToPadding="false">
+
+    <FrameLayout
+        android:layout_above="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"/>
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_alignParentBottom="true"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="insideInset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/menu_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:background="@android:color/transparent"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/timer"
+                    android:drawableTop="@drawable/ic_alarm_white_24dp"
+                    android:textAlignment="center"
+                    android:text="@string/timer"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="125sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:background="@android:color/transparent"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/stats"
+                    android:drawableTop="@drawable/ic_assessment_white_24dp"
+                    android:textAlignment="center"
+                    android:text="@string/stats"
+                    android:alpha="0.5"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="125sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"/>
+
+                <RadioButton
+                    android:background="@android:color/transparent"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/mypuzzles"
+                    android:drawableTop="@drawable/ic_extension_white_24dp"
+                    android:textAlignment="center"
+                    android:text="@string/my_puzzles"
+                    android:alpha="0.5"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="125sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"/>
+
+                <RadioButton
+                    android:background="@android:color/transparent"
+                    android:button="@android:color/transparent"
+                    android:id="@+id/settings"
+                    android:drawableTop="@drawable/ic_settings_white_24dp"
+                    android:textAlignment="center"
+                    android:text="@string/settings"
+                    android:alpha="0.5"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="125sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"/>
+
+            </RadioGroup>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

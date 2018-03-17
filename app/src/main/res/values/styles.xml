@@ -1,0 +1,104 @@
+<resources>
+
+    <style name="Default" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/md_grey_600</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionBarTheme">@style/CustomBarOptionsColor</item>
+    </style>
+
+    <style name="AppTheme.CustomBarRed" parent="Default">
+        <item name="colorPrimary">@color/md_red_900</item>
+        <item name="colorAccent">@color/md_red_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarPink" parent="Default">
+        <item name="colorPrimary">@color/md_pink_900</item>
+        <item name="colorAccent">@color/md_pink_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarPurple" parent="Default">
+        <item name="colorPrimary">@color/md_purple_900</item>
+        <item name="colorAccent">@color/md_purple_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarDeepPurple" parent="Default">
+        <item name="colorPrimary">@color/md_deep_purple_900</item>
+        <item name="colorAccent">@color/md_deep_purple_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarIndigo" parent="Default">
+        <item name="colorPrimary">@color/md_indigo_900</item>
+        <item name="colorAccent">@color/md_indigo_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBlue" parent="Default">
+        <item name="colorPrimary">@color/md_blue_900</item>
+        <item name="colorAccent">@color/md_blue_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLightBlue" parent="Default">
+        <item name="colorPrimary">@color/md_light_blue_900</item>
+        <item name="colorAccent">@color/md_light_blue_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarCyan" parent="Default">
+        <item name="colorPrimary">@color/md_cyan_900</item>
+        <item name="colorAccent">@color/md_cyan_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarGreen" parent="Default">
+        <item name="colorPrimary">@color/md_green_900</item>
+        <item name="colorAccent">@color/md_green_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarTeal" parent="Default">
+        <item name="colorPrimary">@color/md_teal_900</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLightGreen" parent="Default">
+        <item name="colorPrimary">@color/md_light_green_900</item>
+        <item name="colorAccent">@color/md_light_green_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarLime" parent="Default">
+        <item name="colorPrimary">@color/md_lime_900</item>
+        <item name="colorAccent">@color/md_lime_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarYellow" parent="Default">
+        <item name="colorPrimary">@color/md_amber_600</item>
+        <item name="colorAccent">@color/md_yellow_A700</item>
+    </style>
+
+    <style name="AppTheme.CustomBarOrange" parent="Default">
+        <item name="colorPrimary">@color/md_orange_900</item>
+        <item name="colorAccent">@color/md_orange_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarDeepOrange" parent="Default">
+        <item name="colorPrimary">@color/md_deep_orange_900</item>
+        <item name="colorAccent">@color/md_deep_orange_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBrown" parent="Default">
+        <item name="colorPrimary">@color/md_brown_900</item>
+        <item name="colorAccent">@color/md_brown_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarGrey" parent="Default">
+        <item name="colorPrimary">@color/md_grey_900</item>
+        <item name="colorAccent">@color/md_grey_500</item>
+    </style>
+
+    <style name="AppTheme.CustomBarBlueGrey" parent="Default">
+        <item name="colorPrimary">@color/md_blue_grey_900</item>
+        <item name="colorAccent">@color/md_blue_grey_500</item>
+    </style>
+
+    <style name="CustomBarOptionsColor" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#FFF</item>
+    </style>
+
+</resources>
