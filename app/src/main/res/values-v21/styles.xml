@@ -188,7 +188,7 @@
     </style>
 
     <style name="CustomBarOptionsColor" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">#FFF</item>
+        <item name="colorControlNormal">@color/md_white_1000</item>
     </style>
 
 </resources>
