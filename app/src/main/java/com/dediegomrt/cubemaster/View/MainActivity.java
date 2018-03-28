@@ -4,9 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,16 +53,19 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle(R.string.timer);
 
         fm = getFragmentManager();
-        RelativeLayout menuLayout = (RelativeLayout) findViewById(R.id.content_main);
         RadioButton timer = (RadioButton) findViewById(R.id.timer);
         RadioButton stats = (RadioButton) findViewById(R.id.stats);
         RadioButton settings = (RadioButton) findViewById(R.id.settings);
         RadioButton myPuzzles = (RadioButton) findViewById(R.id.mypuzzles);
-        
+
         getSupportActionBar().setBackgroundDrawable(getDrawable(Session.getInstance().darkColorTheme));
-        menuLayout.setBackgroundResource(Session.getInstance().darkColorTheme);
+        timer.setBackground(ThemeConfig.getInstance().getMenuAnimation());
+        stats.setBackground(ThemeConfig.getInstance().getMenuAnimation());
+        myPuzzles.setBackground(ThemeConfig.getInstance().getMenuAnimation());
+        settings.setBackground(ThemeConfig.getInstance().getMenuAnimation());
 
         replaceFragment(new ChronoFragment(), chronoStr);
+        ((TransitionDrawable)timer.getBackground()).startTransition(0);
 
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -135,10 +142,6 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             return true;
-        } else if (id == R.id.resetCurrentDatabase){
-            DatabaseMethods.getInstance().resetCurrentPuzzle();
-            refreshView();
-            return true;
         } else if (id == R.id.addNewPuzzle){
             final NewPuzzleDialog dialog = new NewPuzzleDialog(MainActivity.this);
             dialog.show();
@@ -190,10 +193,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void reverseAnimate(CompoundButton v) {
-        v.animate().alpha(0.5f).setDuration(300).start();
+        ((TransitionDrawable)v.getBackground()).startTransition(0);
+        ((TransitionDrawable)v.getBackground()).reverseTransition(300);
     }
 
     private void animate(CompoundButton v) {
-        v.animate().alpha(1f).setDuration(300).start();
+        ((TransitionDrawable)v.getBackground()).startTransition(300);
     }
 }

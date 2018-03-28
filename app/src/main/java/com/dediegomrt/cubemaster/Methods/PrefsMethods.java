@@ -52,4 +52,13 @@ public class PrefsMethods {
         prefsConfig.editor.putInt("colorAccent", position);
         prefsConfig.editor.apply();
     }
+
+    public int getFreezingTime(){
+        return prefsConfig.prefs.getInt("freezingTime", 0);
+    }
+
+    public void setFreezingTime(int freezingTime){
+        prefsConfig.editor.putInt("freezingTime", freezingTime);
+        prefsConfig.editor.apply();
+    }
 }

@@ -40,6 +40,10 @@ public class PrefsConfig {
             editor.putBoolean("color", true);
             editor.apply();
         }
+        if(!prefs.contains("freezingTime")){
+            editor.putInt("freezingTime", 500);
+            editor.apply();
+        }
         if(!prefs.contains("user")){
             DatabaseMethods.getInstance().addUser(context);
             editor.putBoolean("user", true);

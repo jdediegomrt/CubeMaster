@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +29,6 @@ import java.util.Locale;
 
 public class ChronoFragment extends Fragment {
 
-    private int cont=1;
     private static MediaPlayer mp;
     private RelativeLayout animatedLine;
     private LinearLayout layVisible;
@@ -38,17 +38,15 @@ public class ChronoFragment extends Fragment {
     private TextView secs;
     private TextView millis;
 
-    ChronoThread thread;
+    ChronoThread thread = null;
+    private boolean holded=false;
 
     private OnFragmentInteractionListener mListener;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chrono, container, false);
-
-        thread = null;
 
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
@@ -64,89 +62,68 @@ public class ChronoFragment extends Fragment {
         animatedLine = (RelativeLayout)v.findViewById(R.id.animatedLine);
         final RadioGroup activityMenu = (RadioGroup)getActivity().findViewById(R.id.menu_layout);
 
+        if(PrefsMethods.getInstance().isColorActivated()) {
+            animatedLine.setVisibility(View.VISIBLE);
+        } else {
+            animatedLine.setVisibility(View.GONE);
+        }
+
         c.setOnTouchListener(new View.OnTouchListener(){
+            final Handler handler = new Handler();
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(PrefsMethods.getInstance().isColorActivated()) {
-                    animatedLine.setVisibility(View.VISIBLE);
-                    if(event.getAction() == MotionEvent.ACTION_DOWN){
-                        if (cont%2!=0){
-                            animatedLine.setBackgroundResource(R.drawable.background2);
-                            return true;
-                        } else {
-                            cont++;
-                            animatedLine.setBackgroundResource(R.drawable.background);
-                            thread.setNo(true);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String time;
-                                    if(mins.getText().equals("0")){
-                                        time = secs.getText().toString()+'.'+millis.getText().toString();
-                                    } else {
-                                        if(hours.getText().equals("0")){
-                                            time = mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
-                                        } else{
-                                            time = hours.getText().toString()+':'+mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
-                                        }
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    animatedLine.setBackgroundResource(R.drawable.background2);
+                    if(thread!=null&&thread.isAlive()){
+                        animatedLine.setBackgroundResource(R.drawable.background);
+                        thread.setNo(true);
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                String time;
+                                if(mins.getText().equals("0")){
+                                    time = secs.getText().toString()+'.'+millis.getText().toString();
+                                } else {
+                                    if(hours.getText().equals("0")){
+                                        time = mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
+                                    } else{
+                                        time = hours.getText().toString()+':'+mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
                                     }
-                                    for (int i = 0; i < activityMenu.getChildCount(); i++) {
-                                        activityMenu.getChildAt(i).setEnabled(true);
-                                    }
-                                    DatabaseMethods.getInstance().saveData(time, getDateTime());
                                 }
-                            }, 10);
-                            return false;
-                        }
+                                for (int i = 0; i < activityMenu.getChildCount(); i++) {
+                                    activityMenu.getChildAt(i).setEnabled(true);
+                                }
+                                DatabaseMethods.getInstance().saveData(time, getDateTime());
+                            }
+                        }, 10);
+                    } else {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                holded = true;
+                                if(holded) animatedLine.setBackgroundResource(R.drawable.background3);
+                            }
+                        }, PrefsMethods.getInstance().getFreezingTime());
                     }
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                    return true;
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacksAndMessages(null);
+                    if(holded) {
                         for (int i = 0; i < activityMenu.getChildCount(); i++) {
                             activityMenu.getChildAt(i).setEnabled(false);
                         }
-                        cont++;
-                        animatedLine.setBackgroundResource(R.drawable.background3);
                         thread = new ChronoThread(millis, secs, mins, hours, layVisible, layVisible2, mp);
                         thread.start();
-                        return true;
+                    } else {
+                        animatedLine.setBackgroundResource(R.drawable.background);
                     }
-                    return false;
-                } else {
-                    animatedLine.setVisibility(View.GONE);
-                    if(event.getAction() == MotionEvent.ACTION_DOWN){
-                        if (cont%2!=0){
-                            return true;
-                        } else {
-                            cont++;
-                            thread.setNo(true);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String time;
-                                    if(mins.getText().equals("0")){
-                                        time = secs.getText().toString()+'.'+millis.getText().toString();
-                                    } else {
-                                        if(hours.getText().equals("0")){
-                                            time = mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
-                                        } else{
-                                            time = hours.getText().toString()+':'+mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
-                                        }
-                                    }
-                                    DatabaseMethods.getInstance().saveData(time, getDateTime());
-                                }
-                            }, 10);
-                            return false;
-                        }
-                    }
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        cont++;
-                        thread = new ChronoThread(millis, secs, mins, hours, layVisible, layVisible2, mp);
-                        thread.start();
-                        return true;
-                    }
+                    Log.d("holded", String.valueOf(holded));
+                    holded = false;
                     return false;
                 }
+                return true;
             }
         });
 

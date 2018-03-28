@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -73,6 +74,7 @@ public class ChronoThread extends Thread {
             }
             handler.act();
         }
+        Log.d("finthread", "finaliza");
     }
 
     public void setNo(boolean no) {

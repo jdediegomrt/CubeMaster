@@ -101,4 +101,9 @@
         <item name="colorControlNormal">@color/md_white_1000</item>
     </style>
 
+    <style name="NumberPickerText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+    </style>
+
 </resources>

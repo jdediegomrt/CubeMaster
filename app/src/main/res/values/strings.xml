@@ -37,4 +37,6 @@
     <string name="delete_last_solve">Delete last solve</string>
     <string name="change_puzzle">Change Puzzle</string>
     <string name="reset_current_puzzle">Reset Current Puzzle</string>
+    <string name="time_holding">Freezing time</string>
+    <string name="s">s</string>
 </resources>

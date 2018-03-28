@@ -5,10 +5,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
@@ -20,6 +23,7 @@ import com.dediegomrt.cubemaster.View.Dialogs.RestartDialog;
 public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    String freezingTimeSelector[]= {"0.0s", "0.1s", "0.2s", "0.3s", "0.4s", "0.5s", "0.6s", "0.7s", "0.8s", "0.9s", "1.0s"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,16 +33,28 @@ public class SettingsFragment extends Fragment {
 
         final Switch beep = (Switch)v.findViewById(R.id.switchBeep);
         final Switch color = (Switch)v.findViewById(R.id.switchColor);
+        final NumberPicker freezingTime = (NumberPicker) v.findViewById(R.id.freezingTimeSetter);
         final GridView gridView = (GridView)v.findViewById(R.id.colorGridView);
+
+        freezingTime.setMaxValue(10);
+        freezingTime.setMinValue(0);
+        freezingTime.setDisplayedValues(freezingTimeSelector);
+        freezingTime.setWrapSelectorWheel(true);
+
+        ColorsAdapter adapter = new ColorsAdapter(getActivity());
+        gridView.setAdapter(adapter);
 
         if(PrefsMethods.getInstance().isBeepActivated()){
             beep.setChecked(true);
         }
         if(PrefsMethods.getInstance().isColorActivated()){
             color.setChecked(true);
+            freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime()/100);
+            freezingTime.setEnabled(true);
+        } else {
+            freezingTime.setValue(0);
+            freezingTime.setEnabled(false);
         }
-        ColorsAdapter adapter = new ColorsAdapter(getActivity());
-        gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,9 +82,22 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if(color.isChecked()){
                     PrefsMethods.getInstance().activateColor(true);
+                    freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime()/100);
+                    freezingTime.setEnabled(true);
                 } else {
                     PrefsMethods.getInstance().activateColor(false);
+                    PrefsMethods.getInstance().setFreezingTime(0);
+                    freezingTime.setValue(0);
+                    freezingTime.setEnabled(false);
                 }
+            }
+        });
+
+        freezingTime.setOnValueChangedListener( new NumberPicker.
+                OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                PrefsMethods.getInstance().setFreezingTime(newVal*100);
             }
         });
 

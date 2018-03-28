@@ -1,6 +1,9 @@
 package com.dediegomrt.cubemaster.Config;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -32,6 +35,8 @@ public class ThemeConfig {
             R.drawable.spinner_of_colors_grey,
             R.drawable.spinner_of_colors_blue_grey
     );
+
+    private ColorDrawable[] colorsAnimation = new ColorDrawable[2];
 
     private static ThemeConfig instance;
 
@@ -150,9 +155,17 @@ public class ThemeConfig {
                 session.lightColorTheme=R.color.md_orange_500;
                 break;
         }
+
+        colorsAnimation[0] = new ColorDrawable(ResourcesCompat.getColor(activity.getResources(), Session.getInstance().darkColorTheme, null));
+        colorsAnimation[1] = new ColorDrawable(ResourcesCompat.getColor(activity.getResources(), Session.getInstance().lightColorTheme, null));
+
     }
 
     public List<Integer> colors(){
         return colors;
+    }
+
+    public TransitionDrawable getMenuAnimation(){
+        return new TransitionDrawable(colorsAnimation);
     }
 }

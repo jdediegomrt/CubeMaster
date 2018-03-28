@@ -37,4 +37,6 @@
     <string name="delete_last_solve">Borrar último tiempo</string>
     <string name="change_puzzle">Cambiar puzzle</string>
     <string name="reset_current_puzzle">Reestablecer puzzle actual</string>
+    <string name="time_holding">Tiempo de congelado</string>
+    <string name="s">s</string>
 </resources>

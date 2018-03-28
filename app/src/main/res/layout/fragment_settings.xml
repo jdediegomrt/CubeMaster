@@ -23,7 +23,7 @@
                 android:text="@string/minutes_beep"
                 android:layout_centerVertical="true"
                 android:textColor="@color/md_black_1000"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
 
             <Switch
                 android:layout_alignParentRight="true"
@@ -47,7 +47,7 @@
                 android:text="@string/coloured_timer"
                 android:layout_centerVertical="true"
                 android:textColor="@color/md_black_1000"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
 
             <Switch
                 android:layout_alignParentRight="true"
@@ -63,6 +63,34 @@
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:paddingStart="10sp"
+            android:paddingLeft="10sp"
+            android:paddingEnd="5sp"
+            android:paddingRight="5sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_holding"
+                android:layout_centerVertical="true"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp"/>
+
+            <NumberPicker
+                android:theme="@style/NumberPickerText"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/freezingTimeSetter"
+                android:layout_centerVertical="true"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:paddingStart="10sp"
             android:paddingEnd="10sp">
 
             <TextView
@@ -71,7 +99,7 @@
                 android:text="@string/change_theme"
                 android:layout_centerVertical="true"
                 android:textColor="@color/md_black_1000"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
 
         </RelativeLayout>
 
