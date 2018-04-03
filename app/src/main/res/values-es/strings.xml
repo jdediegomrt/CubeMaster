@@ -16,7 +16,7 @@
     <string name="sort_by">Ordenar por: </string>
     <string name="recent">Más reciente</string>
     <string name="latest">Más antiguo </string>
-    <string name="puzzle_hint">Por ejemplo: 3x3x3, Piraminx, 2x2x3</string>
+    <string name="puzzle_hint">Por ejemplo: 3x3x3, Piramynx</string>
     <string name="cannot_empty">¡No puede estar vacío!</string>
     <string name="already_exists">Ya existe</string>
     <string name="add_new">NUEVO</string>
@@ -39,4 +39,5 @@
     <string name="reset_current_puzzle">Reestablecer puzzle actual</string>
     <string name="time_holding">Tiempo de congelado</string>
     <string name="s">s</string>
+    <string name="info">¿Quieres sabes cómo funciona tu cronómetro?\n1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n2. Suelta para comenzar\n3. Presiona de nuevo para parar\n4. Disfruta!\n</string>
 </resources>

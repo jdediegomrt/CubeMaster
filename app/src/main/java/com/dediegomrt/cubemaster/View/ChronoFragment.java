@@ -1,17 +1,24 @@
 package com.dediegomrt.cubemaster.View;
 
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -19,6 +26,7 @@ import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
+import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Handler.ChronoThread;
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
@@ -31,12 +39,16 @@ public class ChronoFragment extends Fragment {
 
     private static MediaPlayer mp;
     private RelativeLayout animatedLine;
+    private RelativeLayout infoContainer;
+    private ImageButton infoButton;
+    private LinearLayout infoLayout;
     private LinearLayout layVisible;
     private LinearLayout layVisible2;
     private TextView hours;
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private TextView infoText;
 
     ChronoThread thread = null;
     private boolean holded=false;
@@ -46,13 +58,19 @@ public class ChronoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_chrono, container, false);
+        final View v = inflater.inflate(R.layout.fragment_chrono, container, false);
 
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
+        infoButton = (ImageButton) v.findViewById(R.id.info_button);
+        infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
+        infoLayout = (LinearLayout) v.findViewById(R.id.info_layout);
+        infoText = (TextView) v.findViewById(R.id.info_text);
+        final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
+
         mp = MediaPlayer.create(getActivity(), R.raw.beep);
-        RelativeLayout c = (RelativeLayout) v.findViewById(R.id.chronoLayout);
+        RelativeLayout chronoScreen = (RelativeLayout) v.findViewById(R.id.chronoLayout);
         hours= (TextView)v.findViewById(R.id.hours);
         mins= (TextView)v.findViewById(R.id.mins);
         secs = (TextView)v.findViewById(R.id.secs);
@@ -68,7 +86,26 @@ public class ChronoFragment extends Fragment {
             animatedLine.setVisibility(View.GONE);
         }
 
-        c.setOnTouchListener(new View.OnTouchListener(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            LayoutTransition layoutTransition = infoContainer.getLayoutTransition();
+            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        }
+
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(infoLayout.getHeight()!=0){
+                    infoButton.setColorFilter(null);
+                    infoLayout.setLayoutParams(params);
+                } else {
+                    infoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    infoLayout.setLayoutParams(layoutParams);
+                }
+            }
+        });
+
+        chronoScreen.setOnTouchListener(new View.OnTouchListener(){
             final Handler handler = new Handler();
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -119,7 +156,6 @@ public class ChronoFragment extends Fragment {
                     } else {
                         animatedLine.setBackgroundResource(R.drawable.background);
                     }
-                    Log.d("holded", String.valueOf(holded));
                     holded = false;
                     return false;
                 }

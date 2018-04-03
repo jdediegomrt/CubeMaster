@@ -16,7 +16,7 @@
     <string name="sort_by">Sort by: </string>
     <string name="recent">Recent</string>
     <string name="latest">Latest</string>
-    <string name="puzzle_hint">e.g., 3x3x3, Piraminx, 2x2x3</string>
+    <string name="puzzle_hint">e.g., 3x3x3, Piramynx</string>
     <string name="cannot_empty">It cannot be empty</string>
     <string name="already_exists">It already exists</string>
     <string name="add_new">ADD NEW</string>
@@ -39,4 +39,5 @@
     <string name="reset_current_puzzle">Reset Current Puzzle</string>
     <string name="time_holding">Freezing time</string>
     <string name="s">s</string>
+    <string name="info">Want to know how your timer works? Lest go!\n1. Hold pressed the screen until the timer turns \'Green\'\n2. Release to start it\n3. Press again to shut it down\n4. Enjoy!\n</string>
 </resources>
