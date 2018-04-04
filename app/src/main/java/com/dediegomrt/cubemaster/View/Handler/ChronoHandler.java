@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ChronoHandler extends Handler{
-    private Boolean visible;
-    private Boolean visible2;
+    private Boolean minsVisible;
+    private Boolean hoursVisible;
     private String millis;
     private String secs;
     private String mins;
@@ -17,18 +17,18 @@ public class ChronoHandler extends Handler{
     private TextView secsText;
     private TextView minsText;
     private TextView hoursText;
-    private LinearLayout layVisible;
-    private LinearLayout layVisible2;
+    private LinearLayout minsLayout;
+    private LinearLayout hoursLayout;
 
-    public ChronoHandler(TextView m, TextView s, TextView M, TextView H, LinearLayout lay, LinearLayout lay2) {
+    public ChronoHandler(TextView m, TextView s, TextView M, TextView H, LinearLayout minsLayout, LinearLayout hoursLayout) {
         millisText = m;
         secsText = s;
         minsText = M;
         hoursText = H;
-        layVisible = lay;
-        layVisible2 = lay2;
-        visible = false;
-        visible2 = false;
+        this.minsLayout = minsLayout;
+        this.hoursLayout = hoursLayout;
+        minsVisible = false;
+        hoursVisible = false;
     }
 
     public void handleMessage(Message msg)
@@ -37,15 +37,15 @@ public class ChronoHandler extends Handler{
         secsText.setText(secs);
         minsText.setText(mins);
         hoursText.setText(hours);
-        if(visible){
-            layVisible.setVisibility(View.VISIBLE);
+        if(minsVisible){
+            minsLayout.setVisibility(View.VISIBLE);
         } else {
-            layVisible.setVisibility(View.GONE);
+            minsLayout.setVisibility(View.GONE);
         }
-        if(visible2){
-            layVisible2.setVisibility(View.VISIBLE);
+        if(hoursVisible){
+            hoursLayout.setVisibility(View.VISIBLE);
         } else {
-            layVisible2.setVisibility(View.GONE);
+            hoursLayout.setVisibility(View.GONE);
         }
     }
 
@@ -65,12 +65,12 @@ public class ChronoHandler extends Handler{
         hours = hoursStr;
     }
 
-    public void minsVisible(Boolean visible){
-        this.visible=visible;
+    public void minsVisible(Boolean minsVisible){
+        this.minsVisible=minsVisible;
     }
 
-    public void hoursVisible(Boolean visible){
-        this.visible2=visible;
+    public void hoursVisible(Boolean hoursVisible){
+        this.hoursVisible=hoursVisible;
     }
 
     public void act() {

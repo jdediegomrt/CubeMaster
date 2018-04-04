@@ -59,18 +59,18 @@ public class DetailActivity extends AppCompatActivity {
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
-        RelativeLayout puzzleNameContainer = (RelativeLayout) findViewById(R.id.puzzleNameContainer);
+        RelativeLayout puzzleNameContainer = (RelativeLayout) findViewById(R.id.puzzle_name_container);
         puzzleNameContainer.setBackgroundResource(Session.getInstance().lightColorTheme);
-        RelativeLayout detailContainer = (RelativeLayout) findViewById(R.id.timesDetail);
+        RelativeLayout detailContainer = (RelativeLayout) findViewById(R.id.times_detail);
         detailContainer.setBackgroundResource(Session.getInstance().lightColorTheme);
         timesLayout = (LinearLayout)findViewById(R.id.times);
-        bestTime = (TextView)findViewById(R.id.bestTime);
-        worstTime = (TextView)findViewById(R.id.worstTime);
+        bestTime = (TextView)findViewById(R.id.best_time);
+        worstTime = (TextView)findViewById(R.id.worst_time);
         average = (TextView) findViewById(R.id.average);
         average5 = (TextView) findViewById(R.id.averageof5);
         average10 = (TextView) findViewById(R.id.averageof10);
-        timesCount = (TextView) findViewById(R.id.timesCount);
-        currentPuzzle = (TextView) findViewById(R.id.currentPuzzle);
+        timesCount = (TextView) findViewById(R.id.times_count);
+        currentPuzzle = (TextView) findViewById(R.id.puzzle_name);
         sortMode = (Spinner) findViewById(R.id.sort_mode);
 
         currentPuzzle.setText(getCurrentPuzzle());
@@ -113,13 +113,13 @@ public class DetailActivity extends AppCompatActivity {
             for (int i = 0; i < timesDetail.size(); i++) {
                 final Detail detail = timesDetail.get(i);
 
-                final View v = getLayoutInflater().inflate(R.layout.times_detail_element, null);
+                final View v = getLayoutInflater().inflate(R.layout.element_timesdetail_list, null);
 
-                final RelativeLayout item = (RelativeLayout)v.findViewById(R.id.info);
+                final RelativeLayout item = (RelativeLayout)v.findViewById(R.id.detail);
                 final TextView date = (TextView)v.findViewById(R.id.date);
                 final TextView time = (TextView)v.findViewById(R.id.time);
-                final Button button = (Button)v.findViewById(R.id.deleteButton);
-                final ImageView divider = (ImageView)v.findViewById(R.id.divider);
+                final Button button = (Button)v.findViewById(R.id.delete_puzzle);
+                final View divider = v.findViewById(R.id.divider);
 
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());

@@ -31,19 +31,6 @@ public class PrefsMethods {
         prefsConfig.editor.apply();
     }
 
-    public boolean isColorActivated(){
-        if(prefsConfig.prefs.getBoolean("color", false)){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void activateColor(boolean activate){
-        prefsConfig.editor.putBoolean("color", activate);
-        prefsConfig.editor.apply();
-    }
-
     public int getColorAccent(){
         return prefsConfig.prefs.getInt("colorAccent", 0);
     }

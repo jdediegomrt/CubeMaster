@@ -14,14 +14,14 @@
         <Spinner
             android:textAlignment="center"
             android:spinnerMode="dropdown"
-            android:id="@+id/databaseName"
+            android:id="@+id/puzzle_name"
             android:scrollbars="vertical"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_width="0dp" />
 
         <Button
-            android:id="@+id/okDialog"
+            android:id="@+id/accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ok"/>
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/newDialog"
+        android:id="@+id/add_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_new"

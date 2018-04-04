@@ -26,10 +26,10 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_whattodopuzzle);
 
-        final Button delete = (Button) findViewById(R.id.deletePuzzle);
-        final Button showStats = (Button) findViewById(R.id.showStats);
-        final Button use = (Button) findViewById(R.id.usePuzzle);
-        final Button reset = (Button) findViewById(R.id.resetPuzzle);
+        final Button delete = (Button) findViewById(R.id.delete_puzzle);
+        final Button showStats = (Button) findViewById(R.id.show_stats);
+        final Button use = (Button) findViewById(R.id.use_puzzle);
+        final Button reset = (Button) findViewById(R.id.reset_puzzle);
 
         if(!puzzle.equals(context.getString(R.string.default_puzzle))) {
             delete.setOnClickListener(this);
@@ -44,17 +44,17 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.deletePuzzle:
-                areYouSure(R.id.deletePuzzle);
+            case R.id.delete_puzzle:
+                areYouSure(R.id.delete_puzzle);
                 break;
-            case R.id.resetPuzzle:
-                areYouSure(R.id.resetPuzzle);
+            case R.id.reset_puzzle:
+                areYouSure(R.id.reset_puzzle);
                 break;
-            case R.id.usePuzzle:
+            case R.id.use_puzzle:
                 DatabaseMethods.getInstance().usePuzzle(puzzle);
                 dismiss();
                 break;
-            case R.id.showStats:
+            case R.id.show_stats:
                 dismiss();
                 goToDetail();
                 break;
@@ -66,11 +66,11 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     private void areYouSure(final int id){
         setContentView(R.layout.layout_dialog_areyousure);
 
-        final TextView text = (TextView)findViewById(R.id.text);
-        final Button ok = (Button)findViewById(R.id.ok);
+        final TextView text = (TextView)findViewById(R.id.info_areyousure);
+        final Button ok = (Button)findViewById(R.id.accept);
         final Button cancel = (Button)findViewById(R.id.cancel);
 
-        if(id==R.id.deletePuzzle) {
+        if(id==R.id.delete_puzzle) {
             text.setText(R.string.areyousuredelete);
         } else {
             text.setText(R.string.areyousurereset);
@@ -79,7 +79,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id==R.id.deletePuzzle) {
+                if(id==R.id.delete_puzzle) {
                     DatabaseMethods.getInstance().deletePuzzle(puzzle);
                 } else {
                     DatabaseMethods.getInstance().resetPuzzle(puzzle);

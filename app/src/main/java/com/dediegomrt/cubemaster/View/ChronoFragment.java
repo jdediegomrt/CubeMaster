@@ -1,23 +1,18 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.animation.LayoutTransition;
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -42,13 +37,12 @@ public class ChronoFragment extends Fragment {
     private RelativeLayout infoContainer;
     private ImageButton infoButton;
     private LinearLayout infoLayout;
-    private LinearLayout layVisible;
-    private LinearLayout layVisible2;
+    private LinearLayout hoursLayout;
+    private LinearLayout minsLayout;
     private TextView hours;
     private TextView mins;
     private TextView secs;
     private TextView millis;
-    private TextView infoText;
 
     ChronoThread thread = null;
     private boolean holded=false;
@@ -66,25 +60,18 @@ public class ChronoFragment extends Fragment {
         infoButton = (ImageButton) v.findViewById(R.id.info_button);
         infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
         infoLayout = (LinearLayout) v.findViewById(R.id.info_layout);
-        infoText = (TextView) v.findViewById(R.id.info_text);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
 
         mp = MediaPlayer.create(getActivity(), R.raw.beep);
-        RelativeLayout chronoScreen = (RelativeLayout) v.findViewById(R.id.chronoLayout);
+        final RelativeLayout chronoScreen = (RelativeLayout) v.findViewById(R.id.chrono_layout);
         hours= (TextView)v.findViewById(R.id.hours);
         mins= (TextView)v.findViewById(R.id.mins);
         secs = (TextView)v.findViewById(R.id.secs);
         millis = (TextView)v.findViewById(R.id.millis);
-        layVisible = (LinearLayout)v.findViewById(R.id.layVisible);
-        layVisible2 = (LinearLayout)v.findViewById(R.id.layVisible2);
-        animatedLine = (RelativeLayout)v.findViewById(R.id.animatedLine);
+        hoursLayout = (LinearLayout)v.findViewById(R.id.hours_layout);
+        minsLayout = (LinearLayout)v.findViewById(R.id.mins_layout);
+        animatedLine = (RelativeLayout)v.findViewById(R.id.animated_line);
         final RadioGroup activityMenu = (RadioGroup)getActivity().findViewById(R.id.menu_layout);
-
-        if(PrefsMethods.getInstance().isColorActivated()) {
-            animatedLine.setVisibility(View.VISIBLE);
-        } else {
-            animatedLine.setVisibility(View.GONE);
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = infoContainer.getLayoutTransition();
@@ -97,10 +84,12 @@ public class ChronoFragment extends Fragment {
                 if(infoLayout.getHeight()!=0){
                     infoButton.setColorFilter(null);
                     infoLayout.setLayoutParams(params);
+                    chronoScreen.setEnabled(true);
                 } else {
                     infoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     infoLayout.setLayoutParams(layoutParams);
+                    chronoScreen.setEnabled(false);
                 }
             }
         });
@@ -110,9 +99,9 @@ public class ChronoFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    animatedLine.setBackgroundResource(R.drawable.background2);
+                    animatedLine.setBackgroundResource(R.drawable.background_timer_freeze);
                     if(thread!=null&&thread.isAlive()){
-                        animatedLine.setBackgroundResource(R.drawable.background);
+                        animatedLine.setBackgroundResource(R.drawable.background_timer_off);
                         thread.setNo(true);
                         final Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -131,6 +120,7 @@ public class ChronoFragment extends Fragment {
                                 for (int i = 0; i < activityMenu.getChildCount(); i++) {
                                     activityMenu.getChildAt(i).setEnabled(true);
                                 }
+                                infoButton.setEnabled(true);
                                 DatabaseMethods.getInstance().saveData(time, getDateTime());
                             }
                         }, 10);
@@ -139,7 +129,7 @@ public class ChronoFragment extends Fragment {
                             @Override
                             public void run() {
                                 holded = true;
-                                if(holded) animatedLine.setBackgroundResource(R.drawable.background3);
+                                if(holded) animatedLine.setBackgroundResource(R.drawable.background_timer_on);
                             }
                         }, PrefsMethods.getInstance().getFreezingTime());
                     }
@@ -151,10 +141,11 @@ public class ChronoFragment extends Fragment {
                         for (int i = 0; i < activityMenu.getChildCount(); i++) {
                             activityMenu.getChildAt(i).setEnabled(false);
                         }
-                        thread = new ChronoThread(millis, secs, mins, hours, layVisible, layVisible2, mp);
+                        infoButton.setEnabled(false);
+                        thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                         thread.start();
                     } else {
-                        animatedLine.setBackgroundResource(R.drawable.background);
+                        animatedLine.setBackgroundResource(R.drawable.background_timer_off);
                     }
                     holded = false;
                     return false;

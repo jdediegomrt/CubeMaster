@@ -8,7 +8,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dediegomrt.cubemaster.View.MainActivity"
     android:orientation="vertical"
-    android:background="@color/md_grey_200"
     android:clipToPadding="false">
 
     <FrameLayout

@@ -12,14 +12,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/deletePuzzle"
+            android:id="@+id/delete_puzzle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/delete"/>
 
         <Button
-            android:id="@+id/showStats"
+            android:id="@+id/show_stats"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -36,14 +36,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/resetPuzzle"
+            android:id="@+id/reset_puzzle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/reset"/>
 
         <Button
-            android:id="@+id/usePuzzle"
+            android:id="@+id/use_puzzle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

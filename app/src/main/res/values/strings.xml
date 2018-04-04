@@ -40,4 +40,10 @@
     <string name="time_holding">Freezing time</string>
     <string name="s">s</string>
     <string name="info">Want to know how your timer works? Lest go!\n1. Hold pressed the screen until the timer turns \'Green\'\n2. Release to start it\n3. Press again to shut it down\n4. Enjoy!\n</string>
+    <string name="selected">-</string>
+    <string name="frtime_info">Freezing time is the time you must hold pressed the timer screen until it becomes green and starts when you release your finger</string>
+    <string name="dot">.</string>
+    <string name="twodots">:</string>
+    <string name="zero">0</string>
+    <string name="zero_millis">000</string>
 </resources>

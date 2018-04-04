@@ -23,7 +23,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/puzzleNameContainer"
+            android:id="@+id/puzzle_name_container"
             android:background="@color/md_blue_grey_100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:minHeight="30sp">
 
             <TextView
-                android:id="@+id/currentPuzzle"
+                android:id="@+id/puzzle_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
@@ -43,7 +43,7 @@
         </RelativeLayout>
 
         <ScrollView
-            android:layout_below="@+id/puzzleNameContainer"
+            android:layout_below="@+id/puzzle_name_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -71,7 +71,7 @@
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/timesCount"
+                        android:id="@+id/times_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -98,7 +98,7 @@
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/bestTime"
+                        android:id="@+id/best_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -125,7 +125,7 @@
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/worstTime"
+                        android:id="@+id/worst_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -217,7 +217,7 @@
 
                 <RelativeLayout
                     android:background="@color/md_blue_grey_100"
-                    android:id="@+id/timesDetail"
+                    android:id="@+id/times_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="10sp"

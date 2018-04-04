@@ -6,7 +6,8 @@
     android:background="@color/default_background_grey">
 
     <LinearLayout
-        android:id="@+id/settingsLayout"
+        android:animateLayoutChanges="true"
+        android:id="@+id/settings_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -28,7 +29,7 @@
             <Switch
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/switchBeep"
+                android:id="@+id/beep_switch"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -37,30 +38,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:paddingStart="10sp"
-            android:paddingEnd="10sp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/coloured_timer"
-                android:layout_centerVertical="true"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp"/>
-
-            <Switch
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/switchColor"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+            android:minHeight="50sp"
             android:layout_height="50sp"
             android:paddingStart="10sp"
             android:paddingLeft="10sp"
@@ -68,10 +46,36 @@
             android:paddingRight="5sp">
 
             <TextView
+                android:id="@+id/frtime_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50sp"
                 android:text="@string/time_holding"
                 android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp"/>
+
+            <ImageButton
+                android:id="@+id/frtime_info"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/selected"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_info_outline_black_18dp"
+                android:layout_toRightOf="@id/frtime_text"
+                android:layout_toEndOf="@id/frtime_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selected"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/frtime_setter"
+                android:layout_toStartOf="@+id/frtime_setter"
                 android:textColor="@color/md_black_1000"
                 android:textSize="15sp"/>
 
@@ -79,7 +83,7 @@
                 android:theme="@style/NumberPickerText"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/freezingTimeSetter"
+                android:id="@+id/frtime_setter"
                 android:layout_centerVertical="true"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
@@ -88,20 +92,38 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/frtime_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
+            android:layout_height="wrap_content"
             android:paddingStart="10sp"
             android:paddingEnd="10sp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_theme"
+                android:id="@+id/frtime_info_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/frtime_info"
                 android:layout_centerVertical="true"
                 android:textColor="@color/md_black_1000"
-                android:textSize="15sp"/>
+                android:textSize="13sp"/>
 
         </RelativeLayout>
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_theme"
+            android:layout_centerVertical="true"
+            android:textColor="@color/md_black_1000"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -110,7 +132,7 @@
             android:paddingEnd="10sp">
 
             <GridView
-                android:id="@+id/colorGridView"
+                android:id="@+id/color_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

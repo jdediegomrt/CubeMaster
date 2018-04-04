@@ -11,13 +11,13 @@
         android:layout_marginEnd="10dp"
         android:textAlignment="center"
         android:text="@string/restart"
-        android:id="@+id/infoRestart"
+        android:id="@+id/info_restart"
         android:textColor="@color/md_black_1000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
-        android:layout_below="@id/infoRestart"
+        android:layout_below="@id/info_restart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

@@ -36,10 +36,6 @@ public class PrefsConfig {
             editor.putBoolean("beep", false);
             editor.apply();
         }
-        if(!prefs.contains("color")){
-            editor.putBoolean("color", true);
-            editor.apply();
-        }
         if(!prefs.contains("freezingTime")){
             editor.putInt("freezingTime", 500);
             editor.apply();

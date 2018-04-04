@@ -44,7 +44,7 @@ public class SortBySpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = inflater.inflate(R.layout.sort_element, viewGroup, false);
+            view = inflater.inflate(R.layout.element_sortby_spinner, viewGroup, false);
         }
         TextView element = (TextView) view.findViewById(R.id.element);
         element.setText(modes.get(position));

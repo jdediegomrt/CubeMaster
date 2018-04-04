@@ -16,13 +16,13 @@ public class ChronoThread extends Thread {
     private boolean no;
     private ChronoHandler handler;
 
-    public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout lay,
-                        LinearLayout lay2, MediaPlayer mp) {
+    public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
+                        LinearLayout hoursLayout, MediaPlayer mp) {
         no=false;
         this.secs=0;
         this.mins=0;
         this.hours=0;
-        handler = new ChronoHandler(millis, secs, mins, hours, lay, lay2);
+        handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
         handler.setTextSecs("0");
         handler.setTextMins("0");
         handler.setTextHours("0");
@@ -74,7 +74,6 @@ public class ChronoThread extends Thread {
             }
             handler.act();
         }
-        Log.d("finthread", "finaliza");
     }
 
     public void setNo(boolean no) {

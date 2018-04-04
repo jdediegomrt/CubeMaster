@@ -26,7 +26,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> {
     private Drawable originalBackground;
 
     public MyPuzzlesAdapter(Context context, List<String> puzzles) {
-        super(context, R.layout.puzzles_list_element, puzzles);
+        super(context, R.layout.element_puzzles_list, puzzles);
         this.puzzles = puzzles;
         this.context=context;
     }
@@ -40,9 +40,9 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> {
 
         if(item==null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            item = inflater.inflate(R.layout.puzzles_list_element, null);
+            item = inflater.inflate(R.layout.element_puzzles_list, null);
             holder = new ViewHolder();
-            holder.name = (TextView)item.findViewById(R.id.text1);
+            holder.name = (TextView)item.findViewById(R.id.element);
             originalBackground = holder.name.getBackground();
             item.setTag(holder);
         } else {

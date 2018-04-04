@@ -40,4 +40,10 @@
     <string name="time_holding">Tiempo de congelado</string>
     <string name="s">s</string>
     <string name="info">¿Quieres sabes cómo funciona tu cronómetro?\n1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n2. Suelta para comenzar\n3. Presiona de nuevo para parar\n4. Disfruta!\n</string>
+    <string name="selected">-</string>
+    <string name="frtime_info">Freezing time is the time you must hold pressed the timer screen until it becomes green and starts when you release your finger</string>
+    <string name="dot">.</string>
+    <string name="twodots">:</string>
+    <string name="zero">0</string>
+    <string name="zero_millis">000</string>
 </resources>

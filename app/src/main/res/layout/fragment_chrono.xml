@@ -6,16 +6,16 @@
     android:background="@color/md_black_1000">
 
     <RelativeLayout
-        android:id="@+id/chronoLayout"
+        android:id="@+id/chrono_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/animatedLine"
+            android:id="@+id/animated_line"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/background"/>
+            android:background="@drawable/background_timer_off"/>
 
         <LinearLayout
             android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/layVisible2"
+                android:id="@+id/hours_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -36,22 +36,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
+                    android:textSize="50sp"
+                    android:text="@string/zero"
                     android:textColor="@color/md_white_1000"/>
                 <TextView
-                    android:id="@+id/dotsHours"
+                    android:id="@+id/hours_dots"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text=":"
+                    android:textSize="50sp"
+                    android:text="@string/twodots"
                     android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/layVisible"
+                android:id="@+id/mins_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -61,16 +61,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
+                    android:textSize="50sp"
+                    android:text="@string/zero"
                     android:textColor="@color/md_white_1000"/>
                 <TextView
-                    android:id="@+id/dots"
+                    android:id="@+id/mins_dots"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text=":"
+                    android:textSize="50sp"
+                    android:text="@string/twodots"
                     android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
@@ -84,23 +84,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
+                    android:textSize="50sp"
+                    android:text="@string/zero"
                     android:textColor="@color/md_white_1000"/>
                 <TextView
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text="."
+                    android:textSize="50sp"
+                    android:text="@string/dot"
                     android:textColor="@color/md_white_1000"/>
                 <TextView
                     android:id="@+id/millis"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text="000"
+                    android:textSize="50sp"
+                    android:text="@string/zero_millis"
                     android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
@@ -114,7 +114,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/background_white_square"
+        android:background="@drawable/background_display_window"
         android:animateLayoutChanges="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -127,9 +127,6 @@
             android:background="@android:color/transparent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:textSize="15sp"
-            android:text="@string/info"
-            android:textColor="@color/md_black_1000"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
 
@@ -150,8 +147,8 @@
 
     <ImageButton
         android:id="@+id/info_button"
-        android:contentDescription="@string/info"
-        android:background="@drawable/background4"
+        android:contentDescription="@string/selected"
+        android:background="@drawable/background_info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_info_white_24dp"

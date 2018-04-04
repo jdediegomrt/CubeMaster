@@ -27,13 +27,13 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_changedatabase);
 
-        spinner = (Spinner) findViewById(R.id.databaseName);
-        final Button ok = (Button) findViewById(R.id.okDialog);
-        final Button addNew = (Button) findViewById(R.id.newDialog);
+        spinner = (Spinner) findViewById(R.id.puzzle_name);
+        final Button ok = (Button) findViewById(R.id.accept);
+        final Button addNew = (Button) findViewById(R.id.add_new);
 
         ArrayList<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_element, puzzles);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.element_puzzlechange_spinner, puzzles);
         spinner.setAdapter(adapter);
         spinner.setSelection(puzzles.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
 
@@ -44,11 +44,11 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.okDialog:
+            case R.id.accept:
                 DatabaseMethods.getInstance().usePuzzle(spinner.getSelectedItem().toString());
                 dismiss();
                 break;
-            case R.id.newDialog:
+            case R.id.add_new:
                 NewPuzzleDialog dialog = new NewPuzzleDialog(context);
                 dialog.show();
                 dialog.setOnDismissListener(new OnDismissListener() {

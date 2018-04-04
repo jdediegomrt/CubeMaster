@@ -10,15 +10,15 @@
         android:textAlignment="center"
         android:maxLength="20"
         android:hint="@string/puzzle_hint"
-        android:id="@+id/newPuzzle"
+        android:id="@+id/new_puzzle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:singleLine="true"/>
 
     <Button
-        android:layout_below="@id/newPuzzle"
-        android:id="@+id/okDialog"
+        android:layout_below="@id/new_puzzle"
+        android:id="@+id/accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ok"/>

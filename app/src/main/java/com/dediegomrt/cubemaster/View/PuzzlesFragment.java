@@ -46,7 +46,7 @@ public class PuzzlesFragment extends Fragment {
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        puzzlesList = (ListView) v.findViewById(R.id.puzzlesList);
+        puzzlesList = (ListView) v.findViewById(R.id.puzzles_list);
         fillList();
 
         puzzlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

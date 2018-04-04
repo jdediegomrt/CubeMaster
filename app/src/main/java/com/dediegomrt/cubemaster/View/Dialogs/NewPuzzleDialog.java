@@ -23,8 +23,8 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_changedatabase2);
 
-        final Button ok = (Button) findViewById(R.id.okDialog);
-        name = (EditText) findViewById(R.id.newPuzzle);
+        final Button ok = (Button) findViewById(R.id.accept);
+        name = (EditText) findViewById(R.id.new_puzzle);
 
         ok.setOnClickListener(this);
     }
@@ -32,7 +32,7 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.okDialog:
+            case R.id.accept:
                 if(!name.getText().toString().equals("")) {
                     if(!DatabaseMethods.getInstance().existPuzzle(name.getText().toString())) {
                         DatabaseMethods.getInstance().addNewPuzzle(name.getText().toString());
