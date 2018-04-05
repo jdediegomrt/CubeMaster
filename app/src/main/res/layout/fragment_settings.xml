@@ -62,10 +62,10 @@
                 android:contentDescription="@string/selected"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:background="@android:color/transparent"
+                android:background="@drawable/background_info_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_black_18dp"
+                android:src="@drawable/ic_info_white_18dp"
                 android:layout_toRightOf="@id/frtime_text"
                 android:layout_toEndOf="@id/frtime_text"/>
 

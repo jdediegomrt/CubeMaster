@@ -31,6 +31,19 @@ public class PrefsMethods {
         prefsConfig.editor.apply();
     }
 
+    public boolean isOnboardingShown(){
+        if(prefsConfig.prefs.getBoolean("beep", false)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setOnboardingShown(boolean shown){
+        prefsConfig.editor.putBoolean("onboarding", shown);
+        prefsConfig.editor.apply();
+    }
+
     public int getColorAccent(){
         return prefsConfig.prefs.getInt("colorAccent", 0);
     }

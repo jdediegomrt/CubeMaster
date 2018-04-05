@@ -1,15 +1,13 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.animation.LayoutTransition;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -69,13 +67,16 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(infoText.getHeight()!=0){
+                    frTimeInfoButton.setColorFilter(null);
                     infoText.setLayoutParams(params);
                 } else {
+                    frTimeInfoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     infoText.setLayoutParams(layoutParams);
                 }
             }
         });
+
         beep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +87,7 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
         freezingTime.setOnValueChangedListener( new NumberPicker.
                 OnValueChangeListener() {
             @Override
@@ -93,6 +95,7 @@ public class SettingsFragment extends Fragment {
                 PrefsMethods.getInstance().setFreezingTime(newVal*100);
             }
         });
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

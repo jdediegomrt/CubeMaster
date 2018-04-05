@@ -1,27 +1,25 @@
 package com.dediegomrt.cubemaster.View;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
 import com.dediegomrt.cubemaster.Config.ThemeConfig;
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
+import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
@@ -50,9 +48,16 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
+
+    /*TODO Eliminar primer setOnboardingShown(false) al subir, es para pruebas*/
+        PrefsMethods.getInstance().setOnboardingShown(false);
+        if (!PrefsMethods.getInstance().isOnboardingShown()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+        }
+
         getSupportActionBar().setTitle(R.string.timer);
 
-        fm = getFragmentManager();
+        fm = getSupportFragmentManager();
         RadioButton timer = (RadioButton) findViewById(R.id.timer);
         RadioButton stats = (RadioButton) findViewById(R.id.stats);
         RadioButton settings = (RadioButton) findViewById(R.id.settings);
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         myPuzzles.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         settings.setBackground(ThemeConfig.getInstance().getMenuAnimation());
 
-        replaceFragment(new ChronoFragment(), chronoStr);
+        fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
         ((TransitionDrawable)timer.getBackground()).startTransition(0);
 
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     getSupportActionBar().setTitle(R.string.timer);
-                    replaceFragment(new ChronoFragment(), chronoStr);
+                    fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
                     animate(buttonView);
                 } else {
                     reverseAnimate(buttonView);
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     getSupportActionBar().setTitle(R.string.stats);
-                    replaceFragment(new StatsFragment(), statsStr);
+                    fm.beginTransaction().replace(R.id.container, new StatsFragment(), statsStr).commit();
                     animate(buttonView);
                 } else {
                     reverseAnimate(buttonView);
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     getSupportActionBar().setTitle(R.string.my_puzzles);
-                    replaceFragment(new PuzzlesFragment(), puzzlesStr);
+                    fm.beginTransaction().replace(R.id.container, new PuzzlesFragment(), puzzlesStr).commit();
                     animate(buttonView);
                 } else {
                     reverseAnimate(buttonView);
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     getSupportActionBar().setTitle(R.string.settings);
-                    replaceFragment(new SettingsFragment(), settingsStr);
+                    fm.beginTransaction().replace(R.id.container, new SettingsFragment(), settingsStr).commit();
                     animate(buttonView);
                 } else {
                     reverseAnimate(buttonView);
@@ -120,7 +125,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem addNew = menu.findItem(R.id.addNewPuzzle);
+        MenuItem addNew = menu.findItem(R.id.add_new);
         addNew.setVisible(false);
         return true;
     }
@@ -128,11 +133,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.deleteLastSolve) {
+        if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().currentPuzzleId);
             refreshView();
             return true;
-        } else if (id == R.id.changeDatabase) {
+        } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(MainActivity.this);
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             return true;
-        } else if (id == R.id.addNewPuzzle){
+        } else if (id == R.id.add_new){
             final NewPuzzleDialog dialog = new NewPuzzleDialog(MainActivity.this);
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -175,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void refreshView() {
-        fm = getFragmentManager();
+        fm = getSupportFragmentManager();
         if(fm.findFragmentByTag(statsStr)!=null&&fm.findFragmentByTag(statsStr).isVisible()){
             replaceFragment(new StatsFragment(), statsStr);
         } else {

@@ -77,6 +77,18 @@ public class DatabaseMethods {
         return num;
     }
 
+    public int countAllTimes(){
+        int num=0;
+        Cursor c = makeQuery("SELECT count(num_solve) FROM times WHERE user_id="+ Session.getInstance().currentUserId);
+        if (c.moveToFirst()) {
+            do {
+                num= c.getInt(0);
+            } while(c.moveToNext());
+        }
+        c.close();
+        return num;
+    }
+
     public int countTimesByName(String name){
         int num=0;
         Cursor c = makeQuery("SELECT count(num_solve) FROM times WHERE user_id="+ Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+name+"')");

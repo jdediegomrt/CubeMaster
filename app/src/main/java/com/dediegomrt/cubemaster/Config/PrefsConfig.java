@@ -32,6 +32,10 @@ public class PrefsConfig {
     }
 
     public void initConfig(){
+        if(!prefs.contains("onboarding")){
+            editor.putBoolean("onboarding", false);
+            editor.apply();
+        }
         if(!prefs.contains("beep")){
             editor.putBoolean("beep", false);
             editor.apply();

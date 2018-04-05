@@ -39,11 +39,24 @@
     <string name="reset_current_puzzle">Reestablecer puzzle actual</string>
     <string name="time_holding">Tiempo de congelado</string>
     <string name="s">s</string>
-    <string name="info">¿Quieres sabes cómo funciona tu cronómetro?\n1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n2. Suelta para comenzar\n3. Presiona de nuevo para parar\n4. Disfruta!\n</string>
     <string name="selected">-</string>
-    <string name="frtime_info">Freezing time is the time you must hold pressed the timer screen until it becomes green and starts when you release your finger</string>
+    <string name="frtime_info">El tiempo de congelado es el tiempo que debes mantener pulsado el cronómetro hasta que se vuelva verde y comience cuando dejes de pulsar la pantalla</string>
     <string name="dot">.</string>
     <string name="twodots">:</string>
     <string name="zero">0</string>
     <string name="zero_millis">000</string>
+    <string name="rate_us">¡Increíble, has resuelto puzzles %1$d veces con esta aplicación!\n\n¿Tienes un minuto para valorarla? Cuéntame cómo ha sido tu experiencia, tu opinión es lo único que tengo para mejorar y seguir creciendo.</string>
+    <string name="later">Luego</string>
+    <string name="rate_now">Valorar</string>
+    <string name="no_thanks">no, gracias</string>
+    <string name="got_it">Entendido</string>
+    <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
+    <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. Disfruta!</string>
+
+    <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
+    <string name="onboarding_sub_text_1">Take a minute to know why </string>
+    <string name="onboarding_main_text_2">pantalla 2</string>
+    <string name="onboarding_sub_text_2">Take a minute to know why </string>
+    <string name="onboarding_main_text_3">pantalla 3</string>
+    <string name="onboarding_sub_text_3">Take a minute to know why </string>
 </resources>

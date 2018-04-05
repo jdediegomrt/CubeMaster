@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info_layout"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/info"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+    <RelativeLayout
+        android:id="@+id/text"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/md_black_1000"
+            android:text="@string/info_main_text"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/sub_text"
+            android:layout_below="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/md_black_1000"
+            android:text="@string/info_sub_text"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_below="@+id/text"
+        android:id="@+id/gotit_button"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/got_it"/>
+
+</RelativeLayout>
