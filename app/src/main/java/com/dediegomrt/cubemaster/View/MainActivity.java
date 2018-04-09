@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-
     /*TODO Eliminar primer setOnboardingShown(false) al subir, es para pruebas*/
         PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {

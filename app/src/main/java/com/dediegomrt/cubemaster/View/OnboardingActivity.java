@@ -1,6 +1,7 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,9 +35,13 @@ public class OnboardingActivity extends AppCompatActivity {
         mainText = (TextView) findViewById(R.id.main_text);
         subText = (TextView) findViewById(R.id.sub_text);
         text = (RelativeLayout) findViewById(R.id.text);
+        final ImageView cubemasterImage = (ImageView) findViewById(R.id.cubemaster_image);
 
-        Button button = (Button) findViewById(R.id.gotit_button);
+        final Button button = (Button) findViewById(R.id.gotit_button);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.onboarding_container);
+
+        TabLayout pageIndicator = (TabLayout) findViewById(R.id.pageIndicator);
+        pageIndicator.setupWithViewPager(viewPager, true); // <- magic here
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,19 +58,22 @@ public class OnboardingActivity extends AppCompatActivity {
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
         });
 
-        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+        viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
                 final float normalizedPosition = Math.abs(Math.abs(position) - 1);
                 if(normalizedPosition<0.5){
                     text.setAlpha(1-normalizedPosition*2);
-                }else {
+                    button.setAlpha(1-normalizedPosition*2);
+                }else{
                     text.setAlpha(normalizedPosition*2-1);
+                    button.setAlpha(normalizedPosition*2-1);
                 }
+                cubemasterImage.setRotation(360-position*360);
             }
         });
 
@@ -74,10 +82,16 @@ public class OnboardingActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrolled( int position , float positionOffset , int positionOffsetPixels ) {
-                if ( positionOffset > 0.5 ) {
+                if(positionOffset > 0.5) {
                     updateText(position + 1);
-                } else {
+                    if(position==viewPager.getAdapter().getCount()-2){
+                        button.setVisibility(View.VISIBLE);
+                    }
+                }else{
                     updateText(position);
+                    if(position==viewPager.getAdapter().getCount()-2){
+                        button.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
 
@@ -108,22 +122,24 @@ public class OnboardingActivity extends AppCompatActivity {
 
             ImageView sectionImage = (ImageView) rootView.findViewById(R.id.section_image);
 
-//            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
-//                case 1:
-//                    sectionImage.setBackgroundColor(Color.MAGENTA);
-//                    break;
-//                case 2:
-//                    sectionImage.setBackgroundColor(Color.GREEN);
-//                    break;
-//                case 3:
-//                    sectionImage.setBackgroundColor(Color.BLUE);
-//                    break;
-//            }
+            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+                case 0:
+                    sectionImage.setBackgroundResource(R.drawable.background_onboarding_1);
+                    break;
+                case 1:
+                    sectionImage.setBackgroundResource(R.drawable.background_onboarding_2);
+                    break;
+                case 2:
+                    sectionImage.setBackgroundResource(R.drawable.background_onboarding_3);
+                    break;
+                case 3:
+                    sectionImage.setBackgroundResource(R.drawable.background_onboarding_4);
+                    break;
+            }
             return rootView;
         }
     }
 
-    /*TODO Aplicar strings correctamente para idiomas*/
     private void updateText(int position) {
         switch(position){
             case 0:
@@ -137,6 +153,10 @@ public class OnboardingActivity extends AppCompatActivity {
             case 2:
                 mainText.setText(R.string.onboarding_main_text_3);
                 subText.setText(R.string.onboarding_sub_text_3);
+                break;
+            case 3:
+                mainText.setText(R.string.onboarding_main_text_4);
+                subText.setText(R.string.onboarding_sub_text_4);
                 break;
         }
     }

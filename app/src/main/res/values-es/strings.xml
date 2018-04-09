@@ -53,10 +53,12 @@
     <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
     <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. Disfruta!</string>
 
-    <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
-    <string name="onboarding_sub_text_1">Take a minute to know why </string>
-    <string name="onboarding_main_text_2">pantalla 2</string>
-    <string name="onboarding_sub_text_2">Take a minute to know why </string>
-    <string name="onboarding_main_text_3">pantalla 3</string>
-    <string name="onboarding_sub_text_3">Take a minute to know why </string>
+    <string name="onboarding_main_text_1">Bienvenido a CubeMaster!</string>
+    <string name="onboarding_sub_text_1">Veámos qué te funciones te ofrece</string>
+    <string name="onboarding_main_text_2">Intuitiva</string>
+    <string name="onboarding_sub_text_2">CubeMaster pretende ser fácil de manejar y entender. ¡Nos encanta lo fácil!</string>
+    <string name="onboarding_main_text_3">Robusta</string>
+    <string name="onboarding_sub_text_3">Una estructura de datos basada en la solidez y la fiabilidad.</string>
+    <string name="onboarding_main_text_4">Personalizable</string>
+    <string name="onboarding_sub_text_4">Siempre es mejor ver las cosas con tu color favorito, ¡ahora puedes!</string>
 </resources>

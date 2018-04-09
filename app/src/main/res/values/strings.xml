@@ -54,9 +54,11 @@
     <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n4. Enjoy!</string>
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
-    <string name="onboarding_sub_text_1">Take a minute to know why </string>
-    <string name="onboarding_main_text_2">pantalla 2</string>
-    <string name="onboarding_sub_text_2">Take a minute to know why </string>
-    <string name="onboarding_main_text_3">pantalla 3</string>
-    <string name="onboarding_sub_text_3">Take a minute to know why </string>
+    <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
+    <string name="onboarding_main_text_2">Intuitive</string>
+    <string name="onboarding_sub_text_2">CubeMaster tries to be easy to handle and understand. We love easier things!</string>
+    <string name="onboarding_main_text_3">Robust</string>
+    <string name="onboarding_sub_text_3">A data structure based on robustness and reliability</string>
+    <string name="onboarding_main_text_4">Customizable</string>
+    <string name="onboarding_sub_text_4">It always is better to see things with your favourite color, now you can!</string>
 </resources>
