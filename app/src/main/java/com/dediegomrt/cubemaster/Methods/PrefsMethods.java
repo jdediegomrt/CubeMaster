@@ -32,7 +32,7 @@ public class PrefsMethods {
     }
 
     public boolean isOnboardingShown(){
-        if(prefsConfig.prefs.getBoolean("beep", false)){
+        if(prefsConfig.prefs.getBoolean("onboarding", false)){
             return true;
         } else {
             return false;

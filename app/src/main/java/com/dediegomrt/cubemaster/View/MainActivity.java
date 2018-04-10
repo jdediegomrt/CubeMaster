@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
-        getSupportActionBar().setTitle(R.string.timer);
-
         fm = getSupportFragmentManager();
         RadioButton timer = (RadioButton) findViewById(R.id.timer);
         RadioButton stats = (RadioButton) findViewById(R.id.stats);
@@ -75,7 +73,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    getSupportActionBar().setTitle(R.string.timer);
                     fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
                     animate(buttonView);
                 } else {
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    getSupportActionBar().setTitle(R.string.stats);
                     fm.beginTransaction().replace(R.id.container, new StatsFragment(), statsStr).commit();
                     animate(buttonView);
                 } else {
@@ -99,7 +95,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    getSupportActionBar().setTitle(R.string.my_puzzles);
                     fm.beginTransaction().replace(R.id.container, new PuzzlesFragment(), puzzlesStr).commit();
                     animate(buttonView);
                 } else {
@@ -111,7 +106,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    getSupportActionBar().setTitle(R.string.settings);
                     fm.beginTransaction().replace(R.id.container, new SettingsFragment(), settingsStr).commit();
                     animate(buttonView);
                 } else {
@@ -160,7 +154,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {}
+    public void onFragmentInteraction(Uri uri) {/*Do nothing*/}
 
     @Override
     public void onBackPressed() {

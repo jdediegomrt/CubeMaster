@@ -10,6 +10,7 @@
     <string name="restart">Do you want to restart now to apply changes?</string>
     <string name="areyousuredelete">Are you sure you want to delete this puzzle? (This action can\'t be undone)</string>
     <string name="areyousurereset">Are you sure you want to reset this puzzle? You will loose all registered times</string>
+    <string name="areyousuredeletepuzzle">Are you sure you want to delete this solve? This action will update all statistics</string>
     <string name="delete">DELETE</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="show_detail">SHOW DETAIL</string>
@@ -60,5 +61,5 @@
     <string name="onboarding_main_text_3">Robust</string>
     <string name="onboarding_sub_text_3">A data structure based on robustness and reliability</string>
     <string name="onboarding_main_text_4">Customizable</string>
-    <string name="onboarding_sub_text_4">It always is better to see things with your favourite color, now you can!</string>
+    <string name="onboarding_sub_text_4">It always is better to see things with your favourite color. Now you can!</string>
 </resources>

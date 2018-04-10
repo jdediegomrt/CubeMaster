@@ -52,10 +52,12 @@
 
         <ImageView
             android:contentDescription="@string/selected"
-            android:layout_margin="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:id="@+id/cubemaster_image"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:src="@mipmap/cubemaster"/>
 
     </RelativeLayout>
@@ -85,8 +87,8 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_above="@id/gotit_button_layout"
-        android:background="@color/md_white_1000"
-        local:tabIndicatorColor="@color/md_black_1000"
+        android:background="@color/white_tr"
+        local:tabIndicatorColor="@color/md_white_1000"
         local:tabIndicatorHeight="5dp"/>
 
 </RelativeLayout>

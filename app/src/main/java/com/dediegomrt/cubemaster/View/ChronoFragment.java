@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,10 +52,6 @@ public class ChronoFragment extends Fragment {
     private TextView secs;
     private TextView millis;
 
-    private TextView mainText;
-    private TextView subText;
-    private RelativeLayout text;
-
     ChronoThread thread = null;
     private boolean holded=false;
 
@@ -65,6 +63,7 @@ public class ChronoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_chrono, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.timer);
 
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
@@ -73,6 +72,8 @@ public class ChronoFragment extends Fragment {
         infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
         infoLayout = (RelativeLayout) v.findViewById(R.id.info_layout);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
+
+        Log.d("mostrado onboarding", String.valueOf(PrefsMethods.getInstance().isOnboardingShown()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = infoContainer.getLayoutTransition();
@@ -116,6 +117,10 @@ public class ChronoFragment extends Fragment {
                 });
             }
         });
+
+        if(!PrefsMethods.getInstance().isOnboardingShown()){
+            infoButton.performClick();
+        }
 
         chronoScreen.setOnTouchListener(new View.OnTouchListener(){
             final Handler handler = new Handler();

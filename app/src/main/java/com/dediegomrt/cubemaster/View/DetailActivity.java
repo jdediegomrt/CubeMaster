@@ -1,31 +1,37 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dediegomrt.cubemaster.Config.ThemeConfig;
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.Methods.StatsMethods;
 import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.Utils.Detail;
 import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Adapters.SortBySpinnerAdapter;
+import com.dediegomrt.cubemaster.View.Dialogs.DeletePuzzleDialog;
+import com.dediegomrt.cubemaster.View.Dialogs.PuzzleOptionsDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,10 +52,10 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.getOverflowIcon().setTint(Color.WHITE);
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
+
+        ThemeConfig.getInstance().setActivity(this);
+        ThemeConfig.getInstance().initConfig();
+
         final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -73,13 +79,13 @@ public class DetailActivity extends AppCompatActivity {
         currentPuzzle = (TextView) findViewById(R.id.puzzle_name);
         sortMode = (Spinner) findViewById(R.id.sort_mode);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            LayoutTransition layoutTransition = timesLayout.getLayoutTransition();
+            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        }
+
         currentPuzzle.setText(getCurrentPuzzle());
-        timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(getCurrentPuzzle())));
-        bestTime.setText(StatsMethods.getInstance().getBestTime(getCurrentPuzzle()));
-        worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));
-        average.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 0));
-        average5.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 5));
-        average10.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 10));
+        refreshView();
 
         SortBySpinnerAdapter adapter = new SortBySpinnerAdapter(getBaseContext());
         sortMode.setAdapter(adapter);
@@ -88,12 +94,12 @@ public class DetailActivity extends AppCompatActivity {
         sortMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                timesLayout.removeAllViews();
-                getTimesDetail(position);
+                timesLayout.removeAllViewsInLayout();
+                getTimesDetail(position, DetailActivity.this);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {/*Do nothing*/}
         });
     }
 
@@ -101,13 +107,14 @@ public class DetailActivity extends AppCompatActivity {
         return getIntent().getStringExtra("puzzleName");
     }
 
-    private void getTimesDetail(int mode){
+    private void getTimesDetail(int mode, final Context context){
         final ArrayList<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(getCurrentPuzzle(), mode);
         switch (mode){
             case 2: Collections.sort(timesDetail, Detail.TimeComparatorAsc);
                 break;
             case 3: Collections.sort(timesDetail, Detail.TimeComparatorDesc);
                 break;
+            default: break;
         }
         if(!timesDetail.isEmpty()) {
             for (int i = 0; i < timesDetail.size(); i++) {
@@ -115,85 +122,28 @@ public class DetailActivity extends AppCompatActivity {
 
                 final View v = getLayoutInflater().inflate(R.layout.element_timesdetail_list, null);
 
-                final RelativeLayout item = (RelativeLayout)v.findViewById(R.id.detail);
                 final TextView date = (TextView)v.findViewById(R.id.date);
                 final TextView time = (TextView)v.findViewById(R.id.time);
-                final Button button = (Button)v.findViewById(R.id.delete_puzzle);
+                final ImageButton button = (ImageButton)v.findViewById(R.id.delete_puzzle);
                 final View divider = v.findViewById(R.id.divider);
 
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());
 
-                button.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_cancel_black_18dp));
-                button.setBackgroundTintList(ContextCompat.getColorStateList(DetailActivity.this, Session.getInstance().lightColorTheme));
-
+                button.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
                 divider.setBackgroundColor(getResources().getColor(Session.getInstance().lightColorTheme));
-
-                item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        v.setClickable(false);
-                        v.setEnabled(false);
-                        button.setVisibility(View.VISIBLE);
-                        button.animate().alpha(1.0f).setDuration(100).setListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-
-                            }
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                final Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        button.animate().alpha(0.0f).setDuration(300).setListener(new Animator.AnimatorListener() {
-                                            @Override
-                                            public void onAnimationStart(Animator animation) {
-
-                                            }
-                                            @Override
-                                            public void onAnimationEnd(Animator animation) {
-                                                button.setVisibility(View.GONE);
-                                                v.setClickable(true);
-                                                v.setEnabled(true);
-                                            }
-                                            @Override
-                                            public void onAnimationCancel(Animator animation) {
-
-                                            }
-                                            @Override
-                                            public void onAnimationRepeat(Animator animation) {
-
-                                            }
-                                        }).start();
-                                    }
-                                }, 2200);
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
-
-                            }
-                        }).start();
-                    }
-                });
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        (timesLayout).removeView((View)v.getParent().getParent());
-                        DatabaseMethods.getInstance().deleteSolve(detail.getNumSolve());
-                        timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(getCurrentPuzzle())));
-                        bestTime.setText(StatsMethods.getInstance().getBestTime(getCurrentPuzzle()));
-                        worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));
-                        average.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 0));
-                        average5.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 5));
-                        average10.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 10));
+                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, timesLayout, v, detail.getNumSolve());
+                        dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                refreshView();
+                            }
+                        });
                     }
                 });
 
@@ -208,7 +158,17 @@ public class DetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            default: break;
         }
         return true;
+    }
+
+    private void refreshView(){
+        timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(getCurrentPuzzle())));
+        bestTime.setText(StatsMethods.getInstance().getBestTime(getCurrentPuzzle()));
+        worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));
+        average.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 0));
+        average5.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 5));
+        average10.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 10));
     }
 }

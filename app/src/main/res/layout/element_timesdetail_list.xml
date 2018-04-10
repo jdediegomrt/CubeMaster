@@ -43,17 +43,18 @@
 
         </RelativeLayout>
 
-        <Button
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_cancel_black_18dp"
             android:layout_marginRight="40dp"
             android:layout_marginEnd="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:id="@+id/delete_puzzle"
+            android:alpha="0.5"
             android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:visibility="gone"
-            android:alpha="0"/>
+            android:layout_height="20dp"/>
 
     </RelativeLayout>
 

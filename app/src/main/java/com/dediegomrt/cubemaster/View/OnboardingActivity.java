@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dediegomrt.cubemaster.Config.PrefsConfig;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 import com.dediegomrt.cubemaster.R;
 
@@ -30,7 +32,7 @@ public class OnboardingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
-        PrefsMethods.getInstance().setOnboardingShown(true);
+        PrefsConfig.getInstance().setContext(this);
 
         mainText = (TextView) findViewById(R.id.main_text);
         subText = (TextView) findViewById(R.id.sub_text);
@@ -46,6 +48,7 @@ public class OnboardingActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PrefsMethods.getInstance().setOnboardingShown(true);
                 finish();
             }
         });
