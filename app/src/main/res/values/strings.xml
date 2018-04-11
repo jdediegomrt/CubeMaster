@@ -56,10 +56,15 @@
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
-    <string name="onboarding_main_text_2">Intuitive</string>
-    <string name="onboarding_sub_text_2">CubeMaster tries to be easy to handle and understand. We love easier things!</string>
-    <string name="onboarding_main_text_3">Robust</string>
-    <string name="onboarding_sub_text_3">A data structure based on robustness and reliability</string>
-    <string name="onboarding_main_text_4">Customizable</string>
-    <string name="onboarding_sub_text_4">It always is better to see things with your favourite color. Now you can!</string>
+    <string name="onboarding_main_text_2">A chronometer</string>
+    <string name="onboarding_sub_text_2">This is what we are looking for, no?</string>
+    <string name="onboarding_main_text_3">Statistics</string>
+    <string name="onboarding_sub_text_3">Keep track of your progress and improvements, forgot the pencil!</string>
+    <string name="onboarding_main_text_4">Classification</string>
+    <string name="onboarding_sub_text_4">Choose whatever you want to time, It won\'t always be the same!</string>
+    <string name="onboarding_main_text_5">Customization</string>
+    <string name="onboarding_sub_text_5">If you like it, It\'s better and easier</string>
+    <string name="onboarding_main_text_6">Enjoy!</string>
+    <string name="onboarding_sub_text_6">It\'s the most important thing</string>
+    <string name="skip">skip</string>
 </resources>

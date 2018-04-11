@@ -54,12 +54,17 @@
     <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
     <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. Disfruta!</string>
 
-    <string name="onboarding_main_text_1">Bienvenido a CubeMaster!</string>
+    <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
     <string name="onboarding_sub_text_1">Veámos qué funciones te ofrece</string>
-    <string name="onboarding_main_text_2">Intuitiva</string>
-    <string name="onboarding_sub_text_2">CubeMaster pretende ser fácil de manejar y entender. ¡Nos encanta lo fácil!</string>
-    <string name="onboarding_main_text_3">Robusta</string>
-    <string name="onboarding_sub_text_3">Una estructura de datos basada en la solidez y la fiabilidad.</string>
-    <string name="onboarding_main_text_4">Personalizable</string>
-    <string name="onboarding_sub_text_4">Siempre es mejor ver las cosas con tu color favorito. ¡Ahora puedes!</string>
+    <string name="onboarding_main_text_2">Un cronómetro</string>
+    <string name="onboarding_sub_text_2">Esto es a por lo que hemos venido, ¿no?</string>
+    <string name="onboarding_main_text_3">Estadísticas</string>
+    <string name="onboarding_sub_text_3">Lleva un registro sobre tus avances y mejoras, ¡olvida el lápiz!</string>
+    <string name="onboarding_main_text_4">Clasificación</string>
+    <string name="onboarding_sub_text_4">Selecciona qué quieres cronometrar, ¡no siempre va a ser lo mismo!</string>
+    <string name="onboarding_main_text_5">Personalización</string>
+    <string name="onboarding_sub_text_5">A tu gusto, es mejor y más fácil</string>
+    <string name="onboarding_main_text_6">¡Diviértete!</string>
+    <string name="onboarding_sub_text_6">Es lo más importante</string>
+    <string name="skip">saltar</string>
 </resources>
