@@ -40,6 +40,10 @@ public class PrefsConfig {
             editor.putBoolean("beep", false);
             editor.apply();
         }
+        if(!prefs.contains("stopwatch")){
+            editor.putBoolean("stopwatch", false);
+            editor.apply();
+        }
         if(!prefs.contains("freezingTime")){
             editor.putInt("freezingTime", 500);
             editor.apply();

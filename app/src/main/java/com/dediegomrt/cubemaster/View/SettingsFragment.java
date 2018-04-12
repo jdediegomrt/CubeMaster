@@ -42,12 +42,16 @@ public class SettingsFragment extends Fragment {
         PrefsConfig.getInstance().setContext(v.getContext());
 
         final Switch beep = (Switch)v.findViewById(R.id.beep_switch);
+        final Switch pause = (Switch)v.findViewById(R.id.stopwatch_switch);
+        final ImageButton stopwatchInfoButton = (ImageButton)v.findViewById(R.id.stopwatch_info);
         final NumberPicker freezingTime = (NumberPicker) v.findViewById(R.id.frtime_setter);
         final GridView gridView = (GridView)v.findViewById(R.id.color_gridview);
         final ImageButton frTimeInfoButton = (ImageButton)v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = (LinearLayout) v.findViewById(R.id.settings_layout);
-        final TextView infoText =(TextView)v.findViewById(R.id.frtime_info_text);
-        final ViewGroup.LayoutParams params = infoText.getLayoutParams();
+        final TextView frTimeInfoText =(TextView)v.findViewById(R.id.frtime_info_text);
+        final TextView stopwatchInfoText =(TextView)v.findViewById(R.id.stopwatch_info_text);
+        final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
+        final ViewGroup.LayoutParams stopwatchParams = stopwatchInfoText.getLayoutParams();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = settingsLayout.getLayoutTransition();
@@ -67,16 +71,20 @@ public class SettingsFragment extends Fragment {
             beep.setChecked(true);
         }
 
+        if(PrefsMethods.getInstance().isPauseActivated()){
+            pause.setChecked(true);
+        }
+
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(infoText.getHeight()!=0){
+                if(frTimeInfoText.getHeight()!=0){
                     frTimeInfoButton.setColorFilter(null);
-                    infoText.setLayoutParams(params);
+                    frTimeInfoText.setLayoutParams(frTimeParams);
                 } else {
                     frTimeInfoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    infoText.setLayoutParams(layoutParams);
+                    frTimeInfoText.setLayoutParams(layoutParams);
                 }
             }
         });
@@ -88,6 +96,31 @@ public class SettingsFragment extends Fragment {
                     PrefsMethods.getInstance().activateBeep(true);
                 } else {
                     PrefsMethods.getInstance().activateBeep(false);
+                }
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pause.isChecked()){
+                    PrefsMethods.getInstance().activatePause(true);
+                } else {
+                    PrefsMethods.getInstance().activatePause(false);
+                }
+            }
+        });
+
+        stopwatchInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(stopwatchInfoText.getHeight()!=0){
+                    stopwatchInfoButton.setColorFilter(null);
+                    stopwatchInfoText.setLayoutParams(stopwatchParams);
+                } else {
+                    stopwatchInfoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    stopwatchInfoText.setLayoutParams(layoutParams);
                 }
             }
         });

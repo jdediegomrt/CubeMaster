@@ -44,6 +44,7 @@ public class ChronoFragment extends Fragment {
     private RelativeLayout animatedLine;
     private RelativeLayout infoContainer;
     private ImageButton infoButton;
+    private ImageButton pauseButton;
     private RelativeLayout infoLayout;
     private LinearLayout hoursLayout;
     private LinearLayout minsLayout;
@@ -71,9 +72,8 @@ public class ChronoFragment extends Fragment {
         infoButton = (ImageButton) v.findViewById(R.id.info_button);
         infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
         infoLayout = (RelativeLayout) v.findViewById(R.id.info_layout);
+        pauseButton =(ImageButton) v. findViewById(R.id.pause_button);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
-
-        Log.d("mostrado onboarding", String.valueOf(PrefsMethods.getInstance().isOnboardingShown()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = infoContainer.getLayoutTransition();
@@ -122,6 +122,23 @@ public class ChronoFragment extends Fragment {
             infoButton.performClick();
         }
 
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(thread!=null&&thread.isAlive()){
+                    if(!thread.getPause()) {
+                        thread.setPause(true);
+                        chronoScreen.setEnabled(false);
+                        pauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_play_circle_filled_white_48dp, null));
+                    } else {
+                        thread.setPause(false);
+                        chronoScreen.setEnabled(true);
+                        pauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_pause_circle_filled_white_48dp, null));
+                    }
+                }
+            }
+        });
+
         chronoScreen.setOnTouchListener(new View.OnTouchListener(){
             final Handler handler = new Handler();
             @Override
@@ -130,7 +147,7 @@ public class ChronoFragment extends Fragment {
                     animatedLine.setBackgroundResource(R.drawable.background_timer_freeze);
                     if(thread!=null&&thread.isAlive()){
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
-                        thread.setNo(true);
+                        thread.finalize(true);
                         final Handler handleChrono = new Handler();
                         handleChrono.postDelayed(new Runnable() {
                             @Override
@@ -147,6 +164,9 @@ public class ChronoFragment extends Fragment {
                                 }
                                 for (int i = 0; i < activityMenu.getChildCount(); i++) {
                                     activityMenu.getChildAt(i).setEnabled(true);
+                                }
+                                if(PrefsMethods.getInstance().isPauseActivated()){
+                                    pauseButton.setVisibility(View.GONE);
                                 }
                                 infoButton.setEnabled(true);
                                 DatabaseMethods.getInstance().saveData(time, getDateTime());
@@ -176,6 +196,9 @@ public class ChronoFragment extends Fragment {
                         infoButton.setEnabled(false);
                         thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                         thread.start();
+                        if(PrefsMethods.getInstance().isPauseActivated()){
+                            pauseButton.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
                     }

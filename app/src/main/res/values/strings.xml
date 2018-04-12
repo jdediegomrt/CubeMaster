@@ -42,6 +42,8 @@
     <string name="s">s</string>
     <string name="selected">-</string>
     <string name="frtime_info">Freezing time is the time you must hold pressed the timer screen until it becomes green and starts when you release your finger</string>
+    <string name="stopwatch_mode">Stopwatch mode</string>
+    <string name="stopwatch_info">This mode allows you to pause and resume your chronometer. Recommended for long time puzzles.</string>
     <string name="dot">.</string>
     <string name="twodots">:</string>
     <string name="zero">0</string>
@@ -51,8 +53,8 @@
     <string name="rate_now">Rate now</string>
     <string name="no_thanks">No, thanks</string>
     <string name="got_it">Got it!</string>
-    <string name="info_main_text">Want to know how your timer works? Lest go!\n</string>
-    <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n4. Enjoy!</string>
+    <string name="info_main_text">Want to know how your timer works? Let\'s go!\n</string>
+    <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n\n4. Enjoy!</string>
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>

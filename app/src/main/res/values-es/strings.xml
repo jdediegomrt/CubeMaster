@@ -42,6 +42,8 @@
     <string name="s">s</string>
     <string name="selected">-</string>
     <string name="frtime_info">El tiempo de congelado es el tiempo que debes mantener pulsado el cronómetro hasta que se vuelva verde y comience cuando dejes de pulsar la pantalla</string>
+    <string name="stopwatch_mode">Modo pausa</string>
+    <string name="stopwatch_info">Este modo te permite pausar y reanudar el cronómetro. Recomendado para puzzles de alta duración.</string>
     <string name="dot">.</string>
     <string name="twodots">:</string>
     <string name="zero">0</string>
@@ -52,7 +54,7 @@
     <string name="no_thanks">no, gracias</string>
     <string name="got_it">Entendido</string>
     <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
-    <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. Disfruta!</string>
+    <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. ¡Disfruta!</string>
 
     <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
     <string name="onboarding_sub_text_1">Veámos qué funciones te ofrece</string>

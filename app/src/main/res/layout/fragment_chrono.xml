@@ -136,4 +136,16 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"/>
 
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/pause_button"
+        android:contentDescription="@string/selected"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_pause_circle_filled_white_48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"/>
+
 </RelativeLayout>

@@ -31,6 +31,19 @@ public class PrefsMethods {
         prefsConfig.editor.apply();
     }
 
+    public boolean isPauseActivated(){
+        if(prefsConfig.prefs.getBoolean("stopwatch", false)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void activatePause(boolean activate){
+        prefsConfig.editor.putBoolean("stopwatch", activate);
+        prefsConfig.editor.apply();
+    }
+
     public boolean isOnboardingShown(){
         if(prefsConfig.prefs.getBoolean("onboarding", false)){
             return true;

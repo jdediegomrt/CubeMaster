@@ -13,12 +13,14 @@ import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 public class ChronoThread extends Thread {
     private MediaPlayer mp;
     private int secs, mins, hours;
-    private boolean no;
+    private boolean finish, pause, pauseFlag;
     private ChronoHandler handler;
 
     public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
                         LinearLayout hoursLayout, MediaPlayer mp) {
-        no=false;
+        finish=false;
+        pause=false;
+        pauseFlag=false;
         this.secs=0;
         this.mins=0;
         this.hours=0;
@@ -31,52 +33,71 @@ public class ChronoThread extends Thread {
 
     public void run(){
         long start = System.currentTimeMillis();
-        while(!no){
-            long millis = System.currentTimeMillis() - start;
-            if(millis <1000){
-                handler.setTextMillis(String.format("%03d", millis));
-            } else{
-                secs++;
-                if(secs<60){
-                    if(mins==0){
-                        handler.setTextSecs(String.valueOf(secs));
-                    } else {
-                        handler.setTextSecs(String.format("%02d", secs));
-                    }
-                } else {
-                    mins++;
-                    if(PrefsMethods.getInstance().isBeepActivated()) {
-                        mp.start();
-                    }
-                    secs = 0;
-                    handler.setTextSecs("00");
-                    if(mins<60) {
-                        if(hours==0){
-                            handler.setTextMins(String.valueOf(mins));
-                        } else {
-                            handler.setTextMins(String.format("%02d", mins));
-                        }
-                        handler.minsVisible(true);
-                    } else {
-                        hours++;
-                        mins = 0;
-                        handler.setTextMins("00");
-                        handler.setTextHours(String.valueOf(hours));
-                        handler.hoursVisible(true);
-                    }
-                }
-                start = System.currentTimeMillis();
-            }
+        long millis = 0;
+        do{
             try {
                 Thread.sleep(1);
             }catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
+            if(pause) {
+                pauseFlag=true;
+            } else {
+                if(pauseFlag){
+                    pauseFlag=false;
+                    start = System.currentTimeMillis() - millis;
+                }
+                millis = System.currentTimeMillis() - start;
+                if (millis < 1000) {
+                    handler.setTextMillis(String.format("%03d", millis));
+                } else {
+                    secs++;
+                    if (secs < 60) {
+                        if (mins == 0) {
+                            handler.setTextSecs(String.valueOf(secs));
+                        } else {
+                            handler.setTextSecs(String.format("%02d", secs));
+                        }
+                    } else {
+                        mins++;
+                        if (PrefsMethods.getInstance().isBeepActivated()) {
+                            mp.start();
+                        }
+                        secs = 0;
+                        handler.setTextSecs("00");
+                        if (mins < 60) {
+                            if (hours == 0) {
+                                handler.setTextMins(String.valueOf(mins));
+                            } else {
+                                handler.setTextMins(String.format("%02d", mins));
+                            }
+                            handler.minsVisible(true);
+                        } else {
+                            hours++;
+                            mins = 0;
+                            handler.setTextMins("00");
+                            handler.setTextHours(String.valueOf(hours));
+                            handler.hoursVisible(true);
+                        }
+                    }
+                    start = System.currentTimeMillis();
+                }
+                Log.e("millis ------- ", String.valueOf(millis));
+            }
             handler.act();
-        }
+        }while(!finish);
     }
 
-    public void setNo(boolean no) {
-        this.no = no;
+    public void finalize(boolean finish) {
+        this.finish = finish;
+    }
+
+
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
+    public boolean getPause() {
+        return pause;
     }
 }
