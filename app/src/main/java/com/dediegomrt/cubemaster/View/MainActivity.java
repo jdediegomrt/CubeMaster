@@ -1,17 +1,14 @@
 package com.dediegomrt.cubemaster.View;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -22,8 +19,6 @@ import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.Utils.Session;
-import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
-import com.dediegomrt.cubemaster.View.Dialogs.PuzzleChangeDialog;
 
 public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
@@ -116,44 +111,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem addNew = menu.findItem(R.id.add_new);
-        addNew.setVisible(false);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().currentPuzzleId);
-            refreshView();
-            return true;
-        } else if (id == R.id.change_database) {
-            final PuzzleChangeDialog dialog = new PuzzleChangeDialog(MainActivity.this);
-            dialog.show();
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    refreshView();
-                }
-            });
-            return true;
-        } else if (id == R.id.add_new){
-            final NewPuzzleDialog dialog = new NewPuzzleDialog(MainActivity.this);
-            dialog.show();
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    refreshView();
-                }
-            });
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onFragmentInteraction(Uri uri) {/*Do nothing*/}
 
     @Override
@@ -172,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void refreshView() {
+    void refreshView() {
         fm = getSupportFragmentManager();
         if(fm.findFragmentByTag(statsStr)!=null&&fm.findFragmentByTag(statsStr).isVisible()){
             replaceFragment(new StatsFragment(), statsStr);

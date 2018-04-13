@@ -2,6 +2,7 @@ package com.dediegomrt.cubemaster.View;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,6 +16,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +33,8 @@ import android.widget.TextView;
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 import com.dediegomrt.cubemaster.Utils.Session;
+import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
+import com.dediegomrt.cubemaster.View.Dialogs.PuzzleChangeDialog;
 import com.dediegomrt.cubemaster.View.Dialogs.RateDialog;
 import com.dediegomrt.cubemaster.View.Handler.ChronoThread;
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
@@ -59,6 +65,31 @@ public class ChronoFragment extends Fragment {
     private int currentScreen, nextScreen;
 
     private OnFragmentInteractionListener mListener;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.menu_stats, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.delete_last_solve) {
+            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().currentPuzzleId);
+            return true;
+        } else if (id == R.id.change_database) {
+            final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
+            dialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
