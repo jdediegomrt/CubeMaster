@@ -17,10 +17,10 @@
     <string name="sort_by">Ordenar por: </string>
     <string name="recent">Más reciente</string>
     <string name="latest">Más antiguo </string>
-    <string name="puzzle_hint">Por ejemplo: 3x3x3, Piramynx</string>
+    <string name="puzzle_hint">Introduce un nombre</string>
     <string name="cannot_empty">¡No puede estar vacío!</string>
     <string name="already_exists">Ya existe</string>
-    <string name="add_new">NUEVO</string>
+    <string name="add_new">Añadir</string>
     <string name="number_of_solves">Veces resuelto</string>
     <string name="best_time">Mejor tiempo</string>
     <string name="worst_time">Peor tiempo</string>
@@ -33,7 +33,6 @@
     <string name="times_detail">Detalle</string>
     <string name="reset">Reestablecer</string>
     <string name="use">Usar</string>
-    <string name="default_puzzle">Por defecto</string>
     <string name="press_back_again_to_exit">Presione de nuevo para salir</string>
     <string name="delete_last_solve">Borrar último tiempo</string>
     <string name="change_puzzle">Cambiar puzzle</string>
@@ -55,7 +54,6 @@
     <string name="got_it">Entendido</string>
     <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
     <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. ¡Disfruta!</string>
-
     <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
     <string name="onboarding_sub_text_1">Veámos qué funciones te ofrece</string>
     <string name="onboarding_main_text_2">Un cronómetro</string>
@@ -69,4 +67,5 @@
     <string name="onboarding_main_text_6">¡Diviértete!</string>
     <string name="onboarding_sub_text_6">Es lo más importante</string>
     <string name="skip">saltar</string>
+    <string name="search_title">Buscar</string>
 </resources>

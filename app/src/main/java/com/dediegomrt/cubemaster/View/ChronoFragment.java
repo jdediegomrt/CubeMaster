@@ -2,19 +2,14 @@ package com.dediegomrt.cubemaster.View;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,21 +19,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
+import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
+import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.Utils.Session;
-import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
 import com.dediegomrt.cubemaster.View.Dialogs.PuzzleChangeDialog;
 import com.dediegomrt.cubemaster.View.Dialogs.RateDialog;
 import com.dediegomrt.cubemaster.View.Handler.ChronoThread;
-import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
-import com.dediegomrt.cubemaster.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +41,6 @@ public class ChronoFragment extends Fragment {
 
     private static MediaPlayer mp;
     private RelativeLayout animatedLine;
-    private RelativeLayout infoContainer;
     private ImageButton infoButton;
     private ImageButton pauseButton;
     private RelativeLayout infoLayout;
@@ -61,8 +53,6 @@ public class ChronoFragment extends Fragment {
 
     ChronoThread thread = null;
     private boolean holded=false;
-
-    private int currentScreen, nextScreen;
 
     private OnFragmentInteractionListener mListener;
 
@@ -101,7 +91,7 @@ public class ChronoFragment extends Fragment {
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
         infoButton = (ImageButton) v.findViewById(R.id.info_button);
-        infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
+        RelativeLayout infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
         infoLayout = (RelativeLayout) v.findViewById(R.id.info_layout);
         pauseButton =(ImageButton) v. findViewById(R.id.pause_button);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();

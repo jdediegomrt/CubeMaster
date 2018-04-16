@@ -1,9 +1,6 @@
 package com.dediegomrt.cubemaster.View.Handler;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;

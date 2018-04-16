@@ -16,6 +16,8 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
     private EditText name;
     private Context context;
 
+    private boolean didSomething=false;
+
     public NewPuzzleDialog(@NonNull final Context context) {
         super(context);
         this.context=context;
@@ -37,6 +39,7 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
                     if(!DatabaseMethods.getInstance().existPuzzle(name.getText().toString())) {
                         DatabaseMethods.getInstance().addNewPuzzle(name.getText().toString());
                         DatabaseMethods.getInstance().usePuzzle(name.getText().toString());
+                        didSomething=true;
                         dismiss();
                     } else {
                         name.setText("");
@@ -49,6 +52,10 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
             default:
                 break;
         }
+    }
+
+    public boolean didSomething (){
+        return didSomething;
     }
 }
 

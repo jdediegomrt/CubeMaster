@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
@@ -17,11 +18,15 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
 
     private String puzzle;
     private Context context;
+    private int listSize;
 
-    public PuzzleOptionsDialog(@NonNull Context context, String puzzle) {
+    private boolean didSomething=false;
+
+    public PuzzleOptionsDialog(@NonNull Context context, String puzzle, int listSize) {
         super(context);
         this.puzzle=puzzle;
         this.context=context;
+        this.listSize=listSize;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_whattodopuzzle);
@@ -31,10 +36,8 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         final Button use = (Button) findViewById(R.id.use_puzzle);
         final Button reset = (Button) findViewById(R.id.reset_puzzle);
 
-        if(!puzzle.equals(context.getString(R.string.default_puzzle))) {
-            delete.setOnClickListener(this);
-        } else {
-            delete.setVisibility(View.GONE);
+        if(listSize<=2) {
+            delete.setTextColor(context.getColor(R.color.md_blue_grey_600));
         }
         showStats.setOnClickListener(this);
         use.setOnClickListener(this);
@@ -45,13 +48,18 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.delete_puzzle:
-                areYouSure(R.id.delete_puzzle);
+                if(listSize<=2) {
+                    Toast.makeText(context, R.string.press_back_again_to_exit, Toast.LENGTH_SHORT).show();
+                } else {
+                    areYouSure(R.id.delete_puzzle);
+                }
                 break;
             case R.id.reset_puzzle:
                 areYouSure(R.id.reset_puzzle);
                 break;
             case R.id.use_puzzle:
                 DatabaseMethods.getInstance().usePuzzle(puzzle);
+                didSomething=true;
                 dismiss();
                 break;
             case R.id.show_stats:
@@ -84,6 +92,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
                 } else {
                     DatabaseMethods.getInstance().resetPuzzle(puzzle);
                 }
+                didSomething=true;
                 dismiss();
             }
         });
@@ -99,5 +108,9 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("puzzleName", puzzle);
         getContext().startActivity(intent);
+    }
+
+    public boolean didSomething (){
+        return didSomething;
     }
 }

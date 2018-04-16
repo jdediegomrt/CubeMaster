@@ -14,6 +14,7 @@ import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
 
@@ -31,8 +32,8 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         final Button ok = (Button) findViewById(R.id.accept);
         final Button addNew = (Button) findViewById(R.id.add_new);
 
-        ArrayList<String> puzzles = new ArrayList<>();
-        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles);
+        List<String> puzzles = new ArrayList<>();
+        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles, context);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.element_puzzlechange_spinner, puzzles);
         spinner.setAdapter(adapter);
         spinner.setSelection(puzzles.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));

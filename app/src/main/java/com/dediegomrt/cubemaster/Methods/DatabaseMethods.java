@@ -10,6 +10,7 @@ import com.dediegomrt.cubemaster.Utils.Detail;
 import com.dediegomrt.cubemaster.Utils.Session;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseMethods {
 
@@ -54,12 +55,20 @@ public class DatabaseMethods {
         closeDatabase();
     }
 
-    public void addUser(Context context) {
+    public void addUser() {
         Cursor c = makeQuery("select count(id) from users");
         if (c.moveToFirst()) {
             do {
-                makeUpdate("insert into users (id, name) values (" + c.getInt(0)+1 + ", '" + "Default" + "')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 1 + ", " + (c.getInt(0)+1) + ", '" + context.getString(R.string.default_puzzle) + "')");
+                int newUserId = c.getInt(0)+1;
+                makeUpdate("insert into users (id, name) values (" + newUserId + ", '" + "Default" + "')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 1 + ", " + newUserId + ", '3x3x3')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 2 + ", " + newUserId + ", '2x2x2')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 3 + ", " + newUserId + ", '4x4x4')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 4 + ", " + newUserId + ", '5x5x5')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 5 + ", " + newUserId + ", 'Megaminx')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 6 + ", " + newUserId + ", 'Pyraminx')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 7 + ", " + newUserId + ", 'Skewb')");
+                makeUpdate("insert into puzzles (id, user_id, name) values (" + 8 + ", " + newUserId + ", 'Square-1')");
             } while(c.moveToNext());
         }
         c.close();
@@ -164,13 +173,14 @@ public class DatabaseMethods {
         makeUpdate("delete from times where puzzle_id="+Session.getInstance().currentPuzzleId);
     }
 
-    public void fillPuzzlesArrayList(ArrayList<String> puzzles){
+    public void fillPuzzlesArrayList(List<String> puzzles, Context context){
         Cursor c = makeQuery("SELECT name FROM puzzles where user_id=" + Session.getInstance().currentUserId + " order by id");
         if (c.moveToFirst()) {
             do {
                 puzzles.add(c.getString(0));
             } while(c.moveToNext());
         }
+        puzzles.add(context.getResources().getString(R.string.add_new));
         c.close();
     }
 
@@ -210,8 +220,8 @@ public class DatabaseMethods {
     }
 
 
-    public ArrayList<String> getTimes(){
-        ArrayList<String> times = new ArrayList<>();
+    public List<String> getTimes(){
+        List<String> times = new ArrayList<>();
         Cursor c = makeQuery("SELECT time FROM times WHERE user_id="+Session.getInstance().currentUserId+" and puzzle_id="+Session.getInstance().currentPuzzleId+" order by num_solve desc");
         if (c.moveToFirst()) {
             do {
@@ -223,8 +233,8 @@ public class DatabaseMethods {
         return times;
     }
 
-    public ArrayList<Detail> getTimesDetail(String puzzle, int mode){
-        ArrayList<Detail> times = new ArrayList<>();
+    public List<Detail> getTimesDetail(String puzzle, int mode){
+        List<Detail> times = new ArrayList<>();
         Cursor c;
         switch (mode){
             case 1: c = DatabaseMethods.getInstance().makeQuery("select time, date, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"') order by num_solve asc");
@@ -245,8 +255,8 @@ public class DatabaseMethods {
         return times;
     }
 
-    public ArrayList<String> getTimesByName(String name){
-        ArrayList<String> times = new ArrayList<>();
+    public List<String> getTimesByName(String name){
+        List<String> times = new ArrayList<>();
         Cursor c = makeQuery("SELECT time FROM times WHERE user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+name+"') order by num_solve desc");
         if (c.moveToFirst()) {
             do {

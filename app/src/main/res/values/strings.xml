@@ -17,10 +17,10 @@
     <string name="sort_by">Sort by: </string>
     <string name="recent">Recent</string>
     <string name="latest">Latest</string>
-    <string name="puzzle_hint">e.g., 3x3x3, Piramynx</string>
+    <string name="puzzle_hint">Introduce a name</string>
     <string name="cannot_empty">It cannot be empty</string>
     <string name="already_exists">It already exists</string>
-    <string name="add_new">ADD NEW</string>
+    <string name="add_new">Add new</string>
     <string name="number_of_solves">Number of solves</string>
     <string name="best_time">Best time</string>
     <string name="worst_time">Worst time</string>
@@ -33,7 +33,6 @@
     <string name="times_detail">Times detail</string>
     <string name="reset">Reset</string>
     <string name="use">Use</string>
-    <string name="default_puzzle">Default</string>
     <string name="press_back_again_to_exit">Press \'Back\' again to Exit</string>
     <string name="delete_last_solve">Delete last solve</string>
     <string name="change_puzzle">Change Puzzle</string>
@@ -69,4 +68,5 @@
     <string name="onboarding_main_text_6">Enjoy!</string>
     <string name="onboarding_sub_text_6">It\'s the most important thing</string>
     <string name="skip">skip</string>
+    <string name="search_title">Search</string>
 </resources>

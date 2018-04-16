@@ -49,7 +49,7 @@ public class PrefsConfig {
             editor.apply();
         }
         if(!prefs.contains("user")){
-            DatabaseMethods.getInstance().addUser(context);
+            DatabaseMethods.getInstance().addUser();
             editor.putBoolean("user", true);
             editor.apply();
         }

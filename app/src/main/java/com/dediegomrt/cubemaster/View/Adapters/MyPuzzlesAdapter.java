@@ -15,10 +15,6 @@ import com.dediegomrt.cubemaster.Utils.Session;
 
 import java.util.List;
 
-/**
- * Created by dedie on 24/05/2017.
- */
-
 public class MyPuzzlesAdapter extends ArrayAdapter<String> {
 
     private List<String> puzzles;
@@ -54,6 +50,11 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> {
             holder.name.setBackgroundResource(Session.getInstance().lightColorTheme);
         } else {
             holder.name.setBackground(originalBackground);
+        }
+        if(holder.name.getText().toString().equals(context.getResources().getString(R.string.add_new))){
+            holder.name.setTextColor(context.getColor(Session.getInstance().lightColorTheme));
+        } else {
+            holder.name.setTextColor(context.getColor(R.color.md_black_1000));
         }
         return(item);
     }

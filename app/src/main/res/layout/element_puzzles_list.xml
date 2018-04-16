@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/md_black_1000"
+        android:text="@string/add_new"
         android:textSize="15sp"
         android:paddingStart="10sp"
         android:paddingEnd="10sp"

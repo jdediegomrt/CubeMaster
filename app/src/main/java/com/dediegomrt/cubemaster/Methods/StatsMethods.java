@@ -19,7 +19,7 @@ public class StatsMethods {
     }
 
     public String getBestTime(String puzzleName){
-        ArrayList<String> times;
+        List<String> times;
         if (puzzleName==null) {
             times = DatabaseMethods.getInstance().getTimes();
         } else{
@@ -33,7 +33,7 @@ public class StatsMethods {
     }
 
     public String getWorstTime(String puzzleName){
-        ArrayList<String> times;
+        List<String> times;
         if (puzzleName==null) {
             times = DatabaseMethods.getInstance().getTimes();
         } else{
@@ -55,7 +55,7 @@ public class StatsMethods {
     }
 
     public String getAverage(String puzzleName, int num){
-        ArrayList<String> times;
+        List<String> times;
         if (puzzleName==null) {
             times = DatabaseMethods.getInstance().getTimes();
         } else{
@@ -76,6 +76,8 @@ public class StatsMethods {
                                 break;
                             case 4:
                                 sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*3600 + Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                                break;
+                            default: break;
                         }
                     }
                 }
@@ -92,6 +94,8 @@ public class StatsMethods {
                             break;
                         case 4:
                             sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*3600 + Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                            break;
+                        default: break;
                     }
                 }
                 return formatMillis((float)sum / times.size());
@@ -101,7 +105,7 @@ public class StatsMethods {
         }
     }
 
-    public String formatMillis(Float millis){
+    private String formatMillis(Float millis){
         int milli= (int) (millis%1000);
         int secs=((Float)(millis/1000)).intValue();
         secs= secs%60;
@@ -135,6 +139,8 @@ public class StatsMethods {
                     break;
                 case 4:
                     timesToMillis.add(Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*3600 + Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken()));
+                    break;
+                default: break;
             }
         }
         return timesToMillis;

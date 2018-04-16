@@ -2,7 +2,6 @@ package com.dediegomrt.cubemaster.View.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
@@ -12,13 +11,14 @@ import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
-import com.dediegomrt.cubemaster.View.DetailActivity;
 
 public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
 
     private LinearLayout parent;
     private View child;
     private int numSolve;
+
+    private boolean didSomething = false;
 
     public DeletePuzzleDialog(@NonNull Context context, LinearLayout parent, View child, int numSolve) {
         super(context);
@@ -45,6 +45,7 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
             case R.id.accept:
                 parent.removeView((View)child.getParent().getParent());
                 DatabaseMethods.getInstance().deleteSolve(numSolve);
+                didSomething=true;
                 dismiss();
                 break;
             case R.id.cancel:
@@ -52,5 +53,9 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
                 break;
             default: break;
         }
+    }
+
+    public boolean didSomething(){
+        return didSomething;
     }
 }

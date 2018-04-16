@@ -17,18 +17,17 @@ import android.widget.ListView;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
-import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Adapters.MyPuzzlesAdapter;
 import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
-import com.dediegomrt.cubemaster.View.Dialogs.PuzzleChangeDialog;
 import com.dediegomrt.cubemaster.View.Dialogs.PuzzleOptionsDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PuzzlesFragment extends Fragment {
 
     private ListView puzzlesList;
-    private ArrayList<String> puzzles;
+    private List<String> puzzles;
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -50,8 +49,10 @@ public class PuzzlesFragment extends Fragment {
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
-                public void onDismiss(DialogInterface dialog) {
-                    ((MainActivity)getActivity()).refreshView();
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if (dialog.didSomething()){
+                        ((MainActivity)getActivity()).refreshView();
+                    }
                 }
             });
         }
@@ -72,14 +73,29 @@ public class PuzzlesFragment extends Fragment {
         puzzlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), puzzles.get(position));
-                dialog.show();
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        fillList();
-                    }
-                });
+                if(position==puzzlesList.getCount()-1){
+                    final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
+                    dialog.show();
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            if (dialog.didSomething()){
+                                fillList();
+                            }
+                        }
+                    });
+                } else {
+                    final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), puzzles.get(position), puzzlesList.getCount());
+                    dialog.show();
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            if (dialog.didSomething()){
+                                fillList();
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -88,7 +104,7 @@ public class PuzzlesFragment extends Fragment {
 
     private void fillList() {
         puzzles=new ArrayList<>();
-        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles);
+        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles, getContext());
         MyPuzzlesAdapter adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
         puzzlesList.setAdapter(adapter);
     }

@@ -1,6 +1,5 @@
 package com.dediegomrt.cubemaster.View;
 
-import android.animation.Animator;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,10 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,10 +28,9 @@ import com.dediegomrt.cubemaster.Utils.Detail;
 import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Adapters.SortBySpinnerAdapter;
 import com.dediegomrt.cubemaster.View.Dialogs.DeletePuzzleDialog;
-import com.dediegomrt.cubemaster.View.Dialogs.PuzzleOptionsDialog;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -108,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getTimesDetail(int mode, final Context context){
-        final ArrayList<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(getCurrentPuzzle(), mode);
+        final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(getCurrentPuzzle(), mode);
         switch (mode){
             case 2: Collections.sort(timesDetail, Detail.TimeComparatorAsc);
                 break;
@@ -140,8 +136,10 @@ public class DetailActivity extends AppCompatActivity {
                         dialog.show();
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                refreshView();
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if(dialog.didSomething()){
+                                    refreshView();
+                                }
                             }
                         });
                     }
@@ -154,11 +152,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            default: break;
+        if (item.getItemId()==android.R.id.home) {
+            finish();
         }
         return true;
     }
