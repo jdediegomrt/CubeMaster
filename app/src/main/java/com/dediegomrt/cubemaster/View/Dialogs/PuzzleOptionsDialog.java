@@ -39,6 +39,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         if(listSize<=2) {
             delete.setTextColor(context.getColor(R.color.md_blue_grey_600));
         }
+        delete.setOnClickListener(this);
         showStats.setOnClickListener(this);
         use.setOnClickListener(this);
         reset.setOnClickListener(this);

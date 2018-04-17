@@ -72,6 +72,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
     }
 
     public int countTimes(){
@@ -83,6 +84,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return num;
     }
 
@@ -95,6 +97,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return num;
     }
 
@@ -107,6 +110,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return num;
     }
 
@@ -118,6 +122,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
     }
 
     public void usePuzzle(String puzzle){
@@ -128,6 +133,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
     }
 
     public void deletePuzzle(String puzzle){
@@ -138,9 +144,18 @@ public class DatabaseMethods {
                 deleteId=c.getInt(0);
             }while (c.moveToNext());
         }
+        c.close();
+        closeDatabase();
         makeUpdate("DELETE FROM puzzles where id='"+deleteId+"'");
         if(deleteId == Session.getInstance().currentPuzzleId){
-            Session.getInstance().currentPuzzleId=1;
+            c = makeQuery("select min(id) from puzzles where user_id="+Session.getInstance().currentUserId);
+            if(c.moveToFirst()){
+                do{
+                    Session.getInstance().currentPuzzleId=c.getInt(0);
+                }while (c.moveToNext());
+            }
+            c.close();
+            closeDatabase();
         }
     }
 
@@ -156,6 +171,8 @@ public class DatabaseMethods {
                 deleteId=c.getInt(0);
             }while (c.moveToNext());
         }
+        c.close();
+        closeDatabase();
         makeUpdate("delete from times where puzzle_id="+deleteId+" and user_id="+Session.getInstance().currentUserId);
     }
 
@@ -167,13 +184,14 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
     }
 
     public void resetCurrentPuzzle() {
         makeUpdate("delete from times where puzzle_id="+Session.getInstance().currentPuzzleId);
     }
 
-    public void fillPuzzlesArrayList(List<String> puzzles, Context context){
+    public void fillPuzzlesList(List<String> puzzles, Context context){
         Cursor c = makeQuery("SELECT name FROM puzzles where user_id=" + Session.getInstance().currentUserId + " order by id");
         if (c.moveToFirst()) {
             do {
@@ -182,6 +200,7 @@ public class DatabaseMethods {
         }
         puzzles.add(context.getResources().getString(R.string.add_new));
         c.close();
+        closeDatabase();
     }
 
     public String getCurrentPuzzleName(){
@@ -193,6 +212,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return name;
     }
 
@@ -206,17 +226,20 @@ public class DatabaseMethods {
                 }
             } while (c.moveToNext());
         }
+        c.close();
+        closeDatabase();
         return exist;
     }
 
     public void addNewPuzzle(String puzzle){
-        Cursor c3 = makeQuery("select max(id) from puzzles where user_id=" + Session.getInstance().currentUserId);
-        if (c3.moveToFirst()) {
+        Cursor c = makeQuery("select max(id) from puzzles where user_id=" + Session.getInstance().currentUserId);
+        if (c.moveToFirst()) {
             do {
-                makeUpdate("INSERT INTO puzzles (id, user_id, name) VALUES (" + (c3.getInt(0) + 1) + ", " + Session.getInstance().currentUserId + ", '" + puzzle + "')");
-            } while (c3.moveToNext());
+                makeUpdate("INSERT INTO puzzles (id, user_id, name) VALUES (" + (c.getInt(0) + 1) + ", " + Session.getInstance().currentUserId + ", '" + puzzle + "')");
+            } while (c.moveToNext());
         }
-        c3.close();
+        c.close();
+        closeDatabase();
     }
 
 
@@ -230,6 +253,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return times;
     }
 
@@ -252,6 +276,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return times;
     }
 
@@ -265,6 +290,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         c.close();
+        closeDatabase();
         return times;
     }
 }

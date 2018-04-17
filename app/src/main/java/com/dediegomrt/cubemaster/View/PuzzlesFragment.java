@@ -1,11 +1,15 @@
 package com.dediegomrt.cubemaster.View;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
@@ -28,6 +33,7 @@ public class PuzzlesFragment extends Fragment {
 
     private ListView puzzlesList;
     private List<String> puzzles;
+    private MyPuzzlesAdapter adapter;
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -39,6 +45,55 @@ public class PuzzlesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.menu_puzzles, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.search);
+
+        SearchManager searchManager = (SearchManager)  getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+//        searchView.setIconified(false);
+        searchView.setIconifiedByDefault(false);
+
+        SearchView.SearchAutoComplete searchAutoComplete =
+                (SearchView.SearchAutoComplete)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setHintTextColor(Color.WHITE);
+        searchAutoComplete.setTextColor(Color.WHITE);
+
+        ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageResource(R.drawable.ic_search_white_24dp);
+
+        ImageView voiceIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        voiceIcon.setImageResource(R.drawable.ic_close_white_24dp);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query){
+                if(searchItem != null){
+                    searchItem.collapseActionView();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                puzzlesList.setAdapter(adapter);
+                return false;
+            }
+        });
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener(){
+            @Override
+            public boolean onSuggestionSelect(int position) { return false; }
+            @Override
+            public boolean onSuggestionClick(int position) {
+                if (searchItem != null) {
+                    searchItem.collapseActionView();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -104,8 +159,8 @@ public class PuzzlesFragment extends Fragment {
 
     private void fillList() {
         puzzles=new ArrayList<>();
-        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles, getContext());
-        MyPuzzlesAdapter adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
+        DatabaseMethods.getInstance().fillPuzzlesList(puzzles, getContext());
+        adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
         puzzlesList.setAdapter(adapter);
     }
 

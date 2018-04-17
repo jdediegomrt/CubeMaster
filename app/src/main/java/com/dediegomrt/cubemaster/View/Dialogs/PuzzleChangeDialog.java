@@ -33,7 +33,7 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         final Button addNew = (Button) findViewById(R.id.add_new);
 
         List<String> puzzles = new ArrayList<>();
-        DatabaseMethods.getInstance().fillPuzzlesArrayList(puzzles, context);
+        DatabaseMethods.getInstance().fillPuzzlesList(puzzles, context);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.element_puzzlechange_spinner, puzzles);
         spinner.setAdapter(adapter);
         spinner.setSelection(puzzles.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
