@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ public class PuzzlesFragment extends Fragment {
     private ListView puzzlesList;
     private List<String> puzzles;
     private MyPuzzlesAdapter adapter;
+    private MenuItem searchItem;
+    private SearchView searchView;
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -46,13 +50,12 @@ public class PuzzlesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.menu_puzzles, menu);
 
-        final MenuItem searchItem = menu.findItem(R.id.search);
+        searchItem = menu.findItem(R.id.search);
 
         SearchManager searchManager = (SearchManager)  getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-//        searchView.setIconified(false);
         searchView.setIconifiedByDefault(false);
 
         SearchView.SearchAutoComplete searchAutoComplete =
@@ -66,31 +69,21 @@ public class PuzzlesFragment extends Fragment {
         ImageView voiceIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         voiceIcon.setImageResource(R.drawable.ic_close_white_24dp);
 
+        View searchPlate = searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
+        searchPlate.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
-            public boolean onQueryTextSubmit(String query){
-                if(searchItem != null){
-                    searchItem.collapseActionView();
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+            public boolean onQueryTextSubmit(String filter){
+                adapter.getFilter().filter(filter);
                 puzzlesList.setAdapter(adapter);
                 return false;
             }
-        });
 
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener(){
             @Override
-            public boolean onSuggestionSelect(int position) { return false; }
-            @Override
-            public boolean onSuggestionClick(int position) {
-                if (searchItem != null) {
-                    searchItem.collapseActionView();
-                }
+            public boolean onQueryTextChange(String filter) {
+                adapter.getFilter().filter(filter);
+                puzzlesList.setAdapter(adapter);
                 return false;
             }
         });
@@ -128,24 +121,27 @@ public class PuzzlesFragment extends Fragment {
         puzzlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if(position==puzzlesList.getCount()-1){
+                searchView.clearFocus();
+                if(adapter.getItem(position).equals(getString(R.string.add_new))){
                     final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
                     dialog.show();
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
                             if (dialog.didSomething()){
+                                searchItem.collapseActionView();
                                 fillList();
                             }
                         }
                     });
                 } else {
-                    final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), puzzles.get(position), puzzlesList.getCount());
+                    final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), adapter.getItem(position));
                     dialog.show();
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
                             if (dialog.didSomething()){
+                                searchItem.collapseActionView();
                                 fillList();
                             }
                         }

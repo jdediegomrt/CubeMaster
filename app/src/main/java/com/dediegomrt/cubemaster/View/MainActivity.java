@@ -1,10 +1,13 @@
 package com.dediegomrt.cubemaster.View;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         PrefsConfig.getInstance().initConfig();
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
+        Session.getInstance().currentPuzzleId=DatabaseMethods.getInstance().setDefaultCurrentPuzzle();
 
     /*TODO Eliminar primer setOnboardingShown(false) al subir, es para pruebas*/
         PrefsMethods.getInstance().setOnboardingShown(false);

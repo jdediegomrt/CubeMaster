@@ -15,7 +15,7 @@ public class Session {
     }
 
     public int currentUserId=1;
-    public int currentPuzzleId=1;
+    public int currentPuzzleId;
 
     public int darkColorTheme=0;
     public int lightColorTheme=0;

@@ -125,6 +125,19 @@ public class DatabaseMethods {
         closeDatabase();
     }
 
+    public int setDefaultCurrentPuzzle(){
+        int id=0;
+        Cursor c = makeQuery("select min(id) from puzzles where user_id="+Session.getInstance().currentUserId);
+        if(c.moveToFirst()){
+            do{
+                id=c.getInt(0);
+            }while (c.moveToNext());
+        }
+        c.close();
+        closeDatabase();
+        return id;
+    }
+
     public void usePuzzle(String puzzle){
         Cursor c = makeQuery("select id from puzzles where name='"+puzzle+"' and user_id=" + Session.getInstance().currentUserId);
         if (c.moveToFirst()) {
@@ -148,14 +161,7 @@ public class DatabaseMethods {
         closeDatabase();
         makeUpdate("DELETE FROM puzzles where id='"+deleteId+"'");
         if(deleteId == Session.getInstance().currentPuzzleId){
-            c = makeQuery("select min(id) from puzzles where user_id="+Session.getInstance().currentUserId);
-            if(c.moveToFirst()){
-                do{
-                    Session.getInstance().currentPuzzleId=c.getInt(0);
-                }while (c.moveToNext());
-            }
-            c.close();
-            closeDatabase();
+            Session.getInstance().currentPuzzleId = setDefaultCurrentPuzzle();
         }
     }
 
@@ -292,6 +298,19 @@ public class DatabaseMethods {
         c.close();
         closeDatabase();
         return times;
+    }
+
+    public int countPuzzles(){
+        int num=0;
+        Cursor c = makeQuery("SELECT count(id) FROM puzzles WHERE user_id="+Session.getInstance().currentUserId);
+        if (c.moveToFirst()) {
+            do {
+                num = c.getInt(0);
+            } while(c.moveToNext());
+        }
+        c.close();
+        closeDatabase();
+        return num;
     }
 }
 

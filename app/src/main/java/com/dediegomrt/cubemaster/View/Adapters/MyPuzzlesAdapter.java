@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
@@ -56,6 +57,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
             item = inflater.inflate(R.layout.element_puzzles_list, null);
             holder = new ViewHolder();
             holder.name = (TextView) item.findViewById(R.id.element);
+            holder.more = (ImageView) item.findViewById(R.id.more_icon);
             originalBackground = holder.name.getBackground();
             item.setTag(holder);
         } else {
@@ -70,14 +72,17 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
         }
         if (holder.name.getText().toString().equals(context.getResources().getString(R.string.add_new))) {
             holder.name.setTextColor(context.getColor(Session.getInstance().lightColorTheme));
+            holder.more.setVisibility(View.GONE);
         } else {
             holder.name.setTextColor(context.getColor(R.color.md_black_1000));
+            holder.more.setVisibility(View.VISIBLE);
         }
         return (item);
     }
 
     private class ViewHolder {
         TextView name;
+        ImageView more;
     }
 
     public Filter getFilter() {

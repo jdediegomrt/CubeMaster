@@ -18,15 +18,13 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
 
     private String puzzle;
     private Context context;
-    private int listSize;
 
     private boolean didSomething=false;
 
-    public PuzzleOptionsDialog(@NonNull Context context, String puzzle, int listSize) {
+    public PuzzleOptionsDialog(@NonNull Context context, String puzzle) {
         super(context);
         this.puzzle=puzzle;
         this.context=context;
-        this.listSize=listSize;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_whattodopuzzle);
@@ -36,7 +34,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         final Button use = (Button) findViewById(R.id.use_puzzle);
         final Button reset = (Button) findViewById(R.id.reset_puzzle);
 
-        if(listSize<=2) {
+        if(DatabaseMethods.getInstance().countPuzzles()==1) {
             delete.setTextColor(context.getColor(R.color.md_blue_grey_600));
         }
         delete.setOnClickListener(this);
@@ -49,8 +47,8 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.delete_puzzle:
-                if(listSize<=2) {
-                    Toast.makeText(context, R.string.press_back_again_to_exit, Toast.LENGTH_SHORT).show();
+                if(DatabaseMethods.getInstance().countPuzzles()==1){
+                    Toast.makeText(context, R.string.must_be_one_puzzle, Toast.LENGTH_SHORT).show();
                 } else {
                     areYouSure(R.id.delete_puzzle);
                 }

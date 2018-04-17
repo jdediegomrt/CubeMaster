@@ -17,4 +17,17 @@
         android:gravity="center_vertical"
         android:minHeight="50sp" />
 
+    <ImageView
+        android:id="@+id/more_icon"
+        android:contentDescription="@string/selected"
+        android:src="@drawable/ic_more_horiz_black_18dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10sp"
+        android:paddingStart="10sp"
+        android:gravity="center_vertical"
+        android:minHeight="50sp" />
+
 </RelativeLayout>

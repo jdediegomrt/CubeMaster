@@ -69,4 +69,5 @@
     <string name="onboarding_sub_text_6">It\'s the most important thing</string>
     <string name="skip">skip</string>
     <string name="search_title">Search</string>
+    <string name="must_be_one_puzzle">There must be at least one puzzle</string>
 </resources>
