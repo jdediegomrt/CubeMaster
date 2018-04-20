@@ -57,5 +57,9 @@ public class PrefsConfig {
             editor.putInt("colorAccent", 0);
             editor.apply();
         }
+        if(!prefs.contains("ratedOrNever")){
+            editor.putBoolean("ratedOrNever", false);
+            editor.apply();
+        }
     }
 }

@@ -21,18 +21,34 @@
             android:layout_width="0dp" />
 
         <Button
-            android:id="@+id/accept"
+            android:id="@+id/add_new"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/ok"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/add_new"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_new"
-        android:layout_below="@+id/lay"/>
 
 </RelativeLayout>

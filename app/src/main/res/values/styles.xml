@@ -1,7 +1,7 @@
 <resources>
 
     <style name="Default" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimaryDark">@color/md_grey_600</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

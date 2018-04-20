@@ -1,15 +1,10 @@
 <resources>
 
     <style name="Default" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimaryDark">@color/md_grey_800</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="actionOverflowButtonStyle">@style/DefaultOverflowButtonStyle</item>
-        <item name="dialogTheme">@style/DefaultDialogWithTitle</item>
-    </style>
-
-    <style name="DefaultDialogWithTitle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="windowNoTitle">false</item>
     </style>
 
     <style name="DefaultOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">

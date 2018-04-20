@@ -1,7 +1,6 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.content.Intent;
-import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,11 +43,6 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().initConfig();
 
         setContentView(R.layout.activity_main);
-
-        Session.getInstance().currentPuzzleId=DatabaseMethods.getInstance().setDefaultCurrentPuzzle();
-
-    /*TODO Eliminar primer setOnboardingShown(false) al subir, es para pruebas*/
-        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
             startActivity(new Intent(this, OnboardingActivity.class));
         }
@@ -68,50 +62,33 @@ public class MainActivity extends AppCompatActivity
         settings.setBackground(ThemeConfig.getInstance().getMenuAnimation());
 
         fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
-//        ((TransitionDrawable)timer.getBackground()).startTransition(0);
 
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if(isChecked)
                     fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
-//                    animate(buttonView);
-                } else {
-//                    reverseAnimate(buttonView);
-                }
             }
         });
         stats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if(isChecked)
                     fm.beginTransaction().replace(R.id.container, new StatsFragment(), statsStr).commit();
-//                    animate(buttonView);
-                } else {
-//                    reverseAnimate(buttonView);
-                }
             }
         });
         myPuzzles.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if(isChecked)
                     fm.beginTransaction().replace(R.id.container, new PuzzlesFragment(), puzzlesStr).commit();
-//                    animate(buttonView);
-                } else {
-//                    reverseAnimate(buttonView);
-                }
             }
         });
         settings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if(isChecked)
                     fm.beginTransaction().replace(R.id.container, new SettingsFragment(), settingsStr).commit();
-//                    animate(buttonView);
-                } else {
-//                    reverseAnimate(buttonView);
-                }
             }
         });
     }
@@ -151,14 +128,5 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.container, fr, tag);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    private void reverseAnimate(CompoundButton v) {
-        ((TransitionDrawable)v.getBackground()).startTransition(0);
-        ((TransitionDrawable)v.getBackground()).reverseTransition(300);
-    }
-
-    private void animate(CompoundButton v) {
-        ((TransitionDrawable)v.getBackground()).startTransition(300);
     }
 }

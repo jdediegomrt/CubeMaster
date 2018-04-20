@@ -74,4 +74,17 @@ public class PrefsMethods {
         prefsConfig.editor.putInt("freezingTime", freezingTime);
         prefsConfig.editor.apply();
     }
+
+    public boolean isRatedOrNever(){
+        if(prefsConfig.prefs.getBoolean("ratedOrNever", false)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setRatedOrNever(boolean ratedOrNever){
+        prefsConfig.editor.putBoolean("ratedOrNever", ratedOrNever);
+        prefsConfig.editor.apply();
+    }
 }

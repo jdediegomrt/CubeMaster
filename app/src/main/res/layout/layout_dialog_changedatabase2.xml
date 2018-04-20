@@ -16,11 +16,27 @@
         android:maxLines="1"
         android:singleLine="true"/>
 
-    <Button
+    <LinearLayout
         android:layout_below="@id/new_puzzle"
-        android:id="@+id/accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ok"/>
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

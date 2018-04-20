@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:id="@+id/puzzle_name_container"
-        android:background="?attr/colorAccent"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -17,9 +17,7 @@
             android:id="@+id/puzzle_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textStyle="bold"
-            android:textColor="@color/md_black_1000"
+            android:textColor="@color/md_white_1000"
             android:textSize="15sp"/>
 
     </RelativeLayout>

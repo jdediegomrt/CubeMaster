@@ -25,8 +25,10 @@ public class RestartDialog extends Dialog implements View.OnClickListener{
         setContentView(R.layout.layout_dialog_restart);
 
         final Button accept = (Button)findViewById(R.id.accept);
+        final Button cancel = (Button)findViewById(R.id.cancel);
 
         accept.setOnClickListener(this);
+        cancel.setOnClickListener(this);
     }
 
     @Override
@@ -39,6 +41,9 @@ public class RestartDialog extends Dialog implements View.OnClickListener{
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
+                break;
+            case R.id.cancel:
+                dismiss();
                 break;
             default:
                 break;

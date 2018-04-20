@@ -50,7 +50,7 @@
     <string name="rate_us">Wow! You\'ve reached %1$d times you\'ve solved puzzles with this app!\n\nDo you have a minute to rate it? Please tell me how is your experience, your opinion is the only thing I have to improve and continue growing.</string>
     <string name="later">Later</string>
     <string name="rate_now">Rate now</string>
-    <string name="no_thanks">No, thanks</string>
+    <string name="no_thanks">Never</string>
     <string name="got_it">Got it!</string>
     <string name="info_main_text">Want to know how your timer works? Let\'s go!\n</string>
     <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n\n4. Enjoy!</string>

@@ -191,7 +191,7 @@ public class ChronoFragment extends Fragment {
                                 }
                                 infoButton.setEnabled(true);
                                 DatabaseMethods.getInstance().saveData(time, getDateTime());
-                                if(DatabaseMethods.getInstance().countAllTimes()%50==0){
+                                if(!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes()%50==0){
                                     final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes());
                                     dialog.show();
                                 }

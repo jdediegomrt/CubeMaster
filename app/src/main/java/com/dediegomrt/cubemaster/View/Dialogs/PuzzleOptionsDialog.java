@@ -75,10 +75,12 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     private void areYouSure(final int id){
         setContentView(R.layout.layout_dialog_areyousure);
 
+        TextView currentPuzzle = (TextView) findViewById(R.id.puzzle_name);
         final TextView text = (TextView)findViewById(R.id.info_areyousure);
         final Button ok = (Button)findViewById(R.id.accept);
         final Button cancel = (Button)findViewById(R.id.cancel);
 
+        currentPuzzle.setText(puzzle);
         if(id==R.id.delete_puzzle) {
             text.setText(R.string.areyousuredelete);
         } else {

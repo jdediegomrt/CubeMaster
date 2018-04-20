@@ -30,6 +30,7 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
 
         spinner = (Spinner) findViewById(R.id.puzzle_name);
         final Button ok = (Button) findViewById(R.id.accept);
+        final Button cancel = (Button) findViewById(R.id.cancel);
         final Button addNew = (Button) findViewById(R.id.add_new);
 
         List<String> puzzles = new ArrayList<>();
@@ -40,6 +41,7 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
 
         ok.setOnClickListener(this);
         addNew.setOnClickListener(this);
+        cancel.setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +60,9 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
                         dismiss();
                     }
                 });
+                break;
+            case R.id.cancel:
+                dismiss();
                 break;
             default:
                 break;

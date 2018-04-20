@@ -12,6 +12,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dediegomrt.cubemaster.Methods.PrefsMethods;
+import com.dediegomrt.cubemaster.Methods.StatsMethods;
 import com.dediegomrt.cubemaster.R;
 
 public class RateDialog extends Dialog implements View.OnClickListener{
@@ -43,6 +45,7 @@ public class RateDialog extends Dialog implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.accept:
                 dismiss();
+                PrefsMethods.getInstance().setRatedOrNever(true);
                 Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -59,6 +62,7 @@ public class RateDialog extends Dialog implements View.OnClickListener{
                 break;
             case R.id.cancel:
                 dismiss();
+                PrefsMethods.getInstance().setRatedOrNever(true);
                 break;
             case R.id.later:
                 dismiss();
