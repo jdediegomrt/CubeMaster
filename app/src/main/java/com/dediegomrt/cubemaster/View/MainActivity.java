@@ -1,17 +1,15 @@
 package com.dediegomrt.cubemaster.View;
 
-import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -38,13 +36,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
         PrefsConfig.getInstance().setContext(this);
         PrefsConfig.getInstance().initConfig();
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
+
+        setContentView(R.layout.activity_main);
+
         Session.getInstance().currentPuzzleId=DatabaseMethods.getInstance().setDefaultCurrentPuzzle();
 
     /*TODO Eliminar primer setOnboardingShown(false) al subir, es para pruebas*/
@@ -53,29 +53,31 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         fm = getSupportFragmentManager();
         RadioButton timer = (RadioButton) findViewById(R.id.timer);
         RadioButton stats = (RadioButton) findViewById(R.id.stats);
         RadioButton settings = (RadioButton) findViewById(R.id.settings);
         RadioButton myPuzzles = (RadioButton) findViewById(R.id.mypuzzles);
 
-        getSupportActionBar().setBackgroundDrawable(getDrawable(Session.getInstance().darkColorTheme));
         timer.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         stats.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         myPuzzles.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         settings.setBackground(ThemeConfig.getInstance().getMenuAnimation());
 
         fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
-        ((TransitionDrawable)timer.getBackground()).startTransition(0);
+//        ((TransitionDrawable)timer.getBackground()).startTransition(0);
 
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
-                    animate(buttonView);
+//                    animate(buttonView);
                 } else {
-                    reverseAnimate(buttonView);
+//                    reverseAnimate(buttonView);
                 }
             }
         });
@@ -84,9 +86,9 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     fm.beginTransaction().replace(R.id.container, new StatsFragment(), statsStr).commit();
-                    animate(buttonView);
+//                    animate(buttonView);
                 } else {
-                    reverseAnimate(buttonView);
+//                    reverseAnimate(buttonView);
                 }
             }
         });
@@ -95,9 +97,9 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     fm.beginTransaction().replace(R.id.container, new PuzzlesFragment(), puzzlesStr).commit();
-                    animate(buttonView);
+//                    animate(buttonView);
                 } else {
-                    reverseAnimate(buttonView);
+//                    reverseAnimate(buttonView);
                 }
             }
         });
@@ -106,9 +108,9 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     fm.beginTransaction().replace(R.id.container, new SettingsFragment(), settingsStr).commit();
-                    animate(buttonView);
+//                    animate(buttonView);
                 } else {
-                    reverseAnimate(buttonView);
+//                    reverseAnimate(buttonView);
                 }
             }
         });

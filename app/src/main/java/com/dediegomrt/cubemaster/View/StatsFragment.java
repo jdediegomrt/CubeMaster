@@ -66,7 +66,7 @@ public class StatsFragment extends Fragment {
 		DatabaseMethods.getInstance().setDatabase(getActivity());
 
         RelativeLayout puzzleNameContainer = (RelativeLayout) v.findViewById(R.id.puzzle_name_container);
-        puzzleNameContainer.setBackgroundResource(Session.getInstance().lightColorTheme);
+        puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
 		TextView bestTime = (TextView)v.findViewById(R.id.best_time);
 		TextView worstTime = (TextView)v.findViewById(R.id.worst_time);
 		TextView average = (TextView) v.findViewById(R.id.average);

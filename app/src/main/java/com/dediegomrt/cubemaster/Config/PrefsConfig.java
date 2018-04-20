@@ -56,9 +56,6 @@ public class PrefsConfig {
         if(!prefs.contains("colorAccent")){
             editor.putInt("colorAccent", 0);
             editor.apply();
-            Session.getInstance().darkColorTheme=R.color.md_orange_900;
-            Session.getInstance().lightColorTheme=R.color.md_orange_500;
-            context.setTheme(R.style.AppTheme_CustomBarOrange);
         }
     }
 }

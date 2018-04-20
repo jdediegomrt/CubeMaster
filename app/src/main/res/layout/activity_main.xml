@@ -17,11 +17,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/md_white_1000"
             app:collapseIcon="@drawable/ic_arrow_back_white_24dp"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/activity_main_menu" />
+    <include layout="@layout/activity_main_content" />
 
 </android.support.design.widget.CoordinatorLayout>

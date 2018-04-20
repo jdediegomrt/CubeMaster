@@ -3,11 +3,7 @@ package com.dediegomrt.cubemaster.View;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.dediegomrt.cubemaster.Config.ThemeConfig;
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.View.Adapters.MyPuzzlesAdapter;
@@ -56,21 +52,7 @@ public class PuzzlesFragment extends Fragment {
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        searchView.setIconifiedByDefault(false);
-
-        SearchView.SearchAutoComplete searchAutoComplete =
-                (SearchView.SearchAutoComplete)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchAutoComplete.setHintTextColor(Color.WHITE);
-        searchAutoComplete.setTextColor(Color.WHITE);
-
-        ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        searchIcon.setImageResource(R.drawable.ic_search_white_24dp);
-
-        ImageView voiceIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
-        voiceIcon.setImageResource(R.drawable.ic_close_white_24dp);
-
-        View searchPlate = searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
-        searchPlate.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        ThemeConfig.getInstance().themeSearchView(searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
@@ -93,6 +75,7 @@ public class PuzzlesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.add_new){
+            searchView.clearFocus();
             final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

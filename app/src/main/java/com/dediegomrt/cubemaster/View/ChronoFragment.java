@@ -120,7 +120,7 @@ public class ChronoFragment extends Fragment {
                     infoLayout.setLayoutParams(params);
                     chronoScreen.setEnabled(true);
                 } else {
-                    infoButton.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
+                    infoButton.setColorFilter(Session.getInstance().lightColorTheme);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     infoLayout.setLayoutParams(layoutParams);
                     chronoScreen.setEnabled(false);

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,23 +48,26 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
 
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
+
+        setContentView(R.layout.activity_detail);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.detail);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(Session.getInstance().darkColorTheme)));
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
         RelativeLayout puzzleNameContainer = (RelativeLayout) findViewById(R.id.puzzle_name_container);
-        puzzleNameContainer.setBackgroundResource(Session.getInstance().lightColorTheme);
+        puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
         RelativeLayout detailContainer = (RelativeLayout) findViewById(R.id.times_detail);
-        detailContainer.setBackgroundResource(Session.getInstance().lightColorTheme);
+        detailContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
         timesLayout = (LinearLayout)findViewById(R.id.times);
         bestTime = (TextView)findViewById(R.id.best_time);
         worstTime = (TextView)findViewById(R.id.worst_time);
@@ -125,8 +129,8 @@ public class DetailActivity extends AppCompatActivity {
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());
 
-                button.setColorFilter(ResourcesCompat.getColor(getResources(), Session.getInstance().lightColorTheme, null));
-                divider.setBackgroundColor(getResources().getColor(Session.getInstance().lightColorTheme));
+                button.setColorFilter(Session.getInstance().lighterColorTheme);
+                divider.setBackgroundColor(Session.getInstance().lightColorTheme);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override

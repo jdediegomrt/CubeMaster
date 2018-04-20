@@ -19,5 +19,6 @@ public class Session {
 
     public int darkColorTheme=0;
     public int lightColorTheme=0;
+    public int lighterColorTheme=0;
 
 }

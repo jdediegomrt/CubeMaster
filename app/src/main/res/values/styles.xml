@@ -4,7 +4,6 @@
         <item name="colorPrimaryDark">@color/md_grey_600</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="actionBarTheme">@style/CustomBarOptionsColor</item>
     </style>
 
     <style name="AppTheme.CustomBarRed" parent="Default">
@@ -89,16 +88,12 @@
 
     <style name="AppTheme.CustomBarGrey" parent="Default">
         <item name="colorPrimary">@color/md_grey_900</item>
-        <item name="colorAccent">@color/md_grey_500</item>
+        <item name="colorAccent">@color/md_grey_700</item>
     </style>
 
     <style name="AppTheme.CustomBarBlueGrey" parent="Default">
         <item name="colorPrimary">@color/md_blue_grey_900</item>
         <item name="colorAccent">@color/md_blue_grey_500</item>
-    </style>
-
-    <style name="CustomBarOptionsColor" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/md_white_1000</item>
     </style>
 
     <style name="NumberPickerText">
