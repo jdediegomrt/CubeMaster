@@ -1,7 +1,6 @@
 package com.dediegomrt.cubemaster.View.Handler;
 
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,7 +78,6 @@ public class ChronoThread extends Thread {
                     }
                     start = System.currentTimeMillis();
                 }
-                Log.e("millis ------- ", String.valueOf(millis));
             }
             handler.act();
         }while(!finish);
@@ -88,7 +86,6 @@ public class ChronoThread extends Thread {
     public void finalize(boolean finish) {
         this.finish = finish;
     }
-
 
     public void setPause(boolean pause) {
         this.pause = pause;

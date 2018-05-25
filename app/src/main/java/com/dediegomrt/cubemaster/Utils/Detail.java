@@ -43,8 +43,8 @@ public class Detail {
     public static Comparator<Detail> TimeComparatorAsc = new Comparator<Detail>() {
 
         public int compare(Detail detail1, Detail detail2) {
-            int time1 = StatsMethods.getInstance().timesToMillis(Arrays.asList(detail1.getTime())).get(0);
-            int time2 = StatsMethods.getInstance().timesToMillis(Arrays.asList(detail2.getTime())).get(0);
+            int time1 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail1.getTime())).get(0);
+            int time2 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail2.getTime())).get(0);
             return time1-time2;
         }
     };
@@ -52,8 +52,8 @@ public class Detail {
     public static Comparator<Detail> TimeComparatorDesc = new Comparator<Detail>() {
 
         public int compare(Detail detail1, Detail detail2) {
-            int time1 = StatsMethods.getInstance().timesToMillis(Arrays.asList(detail1.getTime())).get(0);
-            int time2 = StatsMethods.getInstance().timesToMillis(Arrays.asList(detail2.getTime())).get(0);
+            int time1 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail1.getTime())).get(0);
+            int time2 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail2.getTime())).get(0);
             return time2-time1;
         }
     };

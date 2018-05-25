@@ -26,7 +26,7 @@ public class StatsMethods {
             times = DatabaseMethods.getInstance().getTimesByName(puzzleName);
         }
         if(!times.isEmpty()) {
-            return formatMillis(Float.valueOf(Collections.min(timesToMillis(times))));
+            return formatMillis(Float.valueOf(Collections.min(timesListToMillis(times))));
         } else {
             return "...";
         }
@@ -40,7 +40,7 @@ public class StatsMethods {
             times = DatabaseMethods.getInstance().getTimesByName(puzzleName);
         }
         if(!times.isEmpty()) {
-            return formatMillis(Float.valueOf(Collections.max(timesToMillis(times))));
+            return formatMillis(Float.valueOf(Collections.max(timesListToMillis(times))));
         } else {
             return "...";
         }
@@ -126,23 +126,29 @@ public class StatsMethods {
         }
     }
 
-    public List<Integer> timesToMillis(List<String> times){
-        ArrayList<Integer>timesToMillis=new ArrayList<>();
+    public List<Integer> timesListToMillis(List<String> times){
+        List<Integer>timesToMillis=new ArrayList<>();
         for (int i = 0; i < times.size(); i++) {
-            StringTokenizer tokenizer = new StringTokenizer(times.get(i), ":.");
-            switch (tokenizer.countTokens()) {
-                case 2:
-                    timesToMillis.add(Integer.parseInt(tokenizer.nextToken() + tokenizer.nextToken()));
-                    break;
-                case 3:
-                    timesToMillis.add(Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken()));
-                    break;
-                case 4:
-                    timesToMillis.add(Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*3600 + Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken()));
-                    break;
-                default: break;
-            }
+            timesToMillis.add(timeToMillis(times.get(i)));
         }
         return timesToMillis;
+    }
+
+    public Integer timeToMillis(String time){
+        Integer millis = 0;
+        StringTokenizer tokenizer = new StringTokenizer(time, ":.");
+        switch (tokenizer.countTokens()) {
+            case 2:
+                millis=Integer.parseInt(tokenizer.nextToken() + tokenizer.nextToken());
+                break;
+            case 3:
+                millis=Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                break;
+            case 4:
+                millis=Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken())*3600 + Integer.parseInt(tokenizer.nextToken())*60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                break;
+            default: break;
+        }
+        return millis;
     }
 }

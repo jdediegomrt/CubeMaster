@@ -54,6 +54,8 @@
     <string name="got_it">Got it!</string>
     <string name="info_main_text">Want to know how your timer works? Let\'s go!\n</string>
     <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n\n4. Enjoy!</string>
+    <string name="contact_main_text">Is there something you want to tell us?</string>
+    <string name="contact_sub_text">Could you explain a little more?</string>
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
@@ -70,4 +72,6 @@
     <string name="skip">skip</string>
     <string name="search_title">Search</string>
     <string name="must_be_one_puzzle">There must be at least one puzzle</string>
+    <string name="contact_us">Contact us</string>
+    <string name="send">send</string>
 </resources>

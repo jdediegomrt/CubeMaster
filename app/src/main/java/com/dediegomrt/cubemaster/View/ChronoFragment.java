@@ -50,6 +50,7 @@ public class ChronoFragment extends Fragment {
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private int helpCounter=0;
 
     ChronoThread thread = null;
     private boolean holded=false;
@@ -131,6 +132,7 @@ public class ChronoFragment extends Fragment {
                 gotitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        helpCounter=0;
                         infoButton.setColorFilter(null);
                         infoLayout.setLayoutParams(params);
                         chronoScreen.setEnabled(true);
@@ -146,6 +148,9 @@ public class ChronoFragment extends Fragment {
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(helpCounter>0){
+                    helpCounter=0;
+                }
                 if(thread!=null&&thread.isAlive()){
                     if(!thread.getPause()) {
                         thread.setPause(true);
@@ -202,7 +207,7 @@ public class ChronoFragment extends Fragment {
                             @Override
                             public void run() {
                                 holded = true;
-                                if(holded) animatedLine.setBackgroundResource(R.drawable.background_timer_on);
+                                animatedLine.setBackgroundResource(R.drawable.background_timer_on);
                             }
                         }, PrefsMethods.getInstance().getFreezingTime());
                     }
@@ -215,6 +220,7 @@ public class ChronoFragment extends Fragment {
                             activityMenu.getChildAt(i).setEnabled(false);
                         }
                         infoButton.setEnabled(false);
+                        helpCounter=0;
                         thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                         thread.start();
                         if(PrefsMethods.getInstance().isPauseActivated()){
@@ -222,6 +228,10 @@ public class ChronoFragment extends Fragment {
                         }
                     } else {
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
+                        helpCounter++;
+                        if(helpCounter==10){
+                            infoButton.performClick();
+                        }
                     }
                     holded = false;
                     return false;
