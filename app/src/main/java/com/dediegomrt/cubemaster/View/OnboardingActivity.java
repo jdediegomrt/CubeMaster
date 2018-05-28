@@ -104,12 +104,8 @@ public class OnboardingActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(viewPager.getCurrentItem()!=viewPager.getAdapter().getCount()-1){
-                    viewPager.setCurrentItem(viewPager.getAdapter().getCount()-1, true);
-                } else {
-                    PrefsMethods.getInstance().setOnboardingShown(true);
-                    finish();
-                }
+                PrefsMethods.getInstance().setOnboardingShown(true);
+                finish();
             }
         });
     }
