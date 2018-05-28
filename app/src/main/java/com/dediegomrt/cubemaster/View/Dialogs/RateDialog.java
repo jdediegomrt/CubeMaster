@@ -13,27 +13,31 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
-import com.dediegomrt.cubemaster.Methods.StatsMethods;
 import com.dediegomrt.cubemaster.R;
 
 public class RateDialog extends Dialog implements View.OnClickListener{
 
     private Context context;
 
-    public RateDialog(@NonNull final Context context, int numTimes) {
+    public RateDialog(@NonNull final Context context, int numTimes, boolean fromMenu) {
         super(context);
         this.context=context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_rate);
-        setCanceledOnTouchOutside(false);
 
         final Button accept = (Button)findViewById(R.id.accept);
         final Button cancel = (Button)findViewById(R.id.cancel);
         final Button later = (Button)findViewById(R.id.later);
         final TextView text = (TextView)findViewById(R.id.rate_text);
 
-        text.setText(String.format(context.getResources().getString(R.string.rate_us), numTimes));
+        if(fromMenu){
+            text.setText(R.string.rate_us_menu);
+            cancel.setVisibility(View.GONE);
+        } else {
+            setCanceledOnTouchOutside(false);
+            text.setText(String.format(context.getResources().getString(R.string.rate_us), numTimes));
+        }
 
         accept.setOnClickListener(this);
         cancel.setOnClickListener(this);

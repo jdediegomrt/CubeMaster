@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
-import com.dediegomrt.cubemaster.R;
-import com.dediegomrt.cubemaster.Utils.Session;
 
 public class PrefsConfig {
 

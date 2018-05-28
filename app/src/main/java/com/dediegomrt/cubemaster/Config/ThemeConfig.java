@@ -5,11 +5,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,24 +21,24 @@ import java.util.List;
 public class ThemeConfig {
 
     private final List<Integer> colors = Arrays.asList(
-            R.drawable.spinner_of_colors_red,
-            R.drawable.spinner_of_colors_pink,
-            R.drawable.spinner_of_colors_purple,
-            R.drawable.spinner_of_colors_deep_purple,
-            R.drawable.spinner_of_colors_indigo,
-            R.drawable.spinner_of_colors_blue,
-            R.drawable.spinner_of_colors_light_blue,
-            R.drawable.spinner_of_colors_cyan,
-            R.drawable.spinner_of_colors_green,
-            R.drawable.spinner_of_colors_teal,
-            R.drawable.spinner_of_colors_light_green,
-            R.drawable.spinner_of_colors_lime,
-            R.drawable.spinner_of_colors_yellow,
-            R.drawable.spinner_of_colors_orange,
-            R.drawable.spinner_of_colors_deep_orange,
-            R.drawable.spinner_of_colors_brown,
-            R.drawable.spinner_of_colors_grey,
-            R.drawable.spinner_of_colors_blue_grey
+            R.drawable.colors_red,
+            R.drawable.colors_pink,
+            R.drawable.colors_purple,
+            R.drawable.colors_deep_purple,
+            R.drawable.colors_indigo,
+            R.drawable.colors_blue,
+            R.drawable.colors_light_blue,
+            R.drawable.colors_cyan,
+            R.drawable.colors_green,
+            R.drawable.colors_teal,
+            R.drawable.colors_light_green,
+            R.drawable.colors_lime,
+            R.drawable.colors_yellow,
+            R.drawable.colors_orange,
+            R.drawable.colors_deep_orange,
+            R.drawable.colors_brown,
+            R.drawable.colors_grey,
+            R.drawable.colors_blue_grey
     );
 
     private static ThemeConfig instance;

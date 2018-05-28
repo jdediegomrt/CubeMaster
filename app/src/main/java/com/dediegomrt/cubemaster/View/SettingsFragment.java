@@ -1,16 +1,12 @@
 package com.dediegomrt.cubemaster.View;
 
 import android.animation.LayoutTransition;
-import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,13 +23,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.dediegomrt.cubemaster.Config.PrefsConfig;
-import com.dediegomrt.cubemaster.Config.ThemeConfig;
+import com.dediegomrt.cubemaster.Methods.DatabaseMethods;
 import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 import com.dediegomrt.cubemaster.R;
 import com.dediegomrt.cubemaster.Utils.Session;
 import com.dediegomrt.cubemaster.View.Adapters.ColorsAdapter;
 import com.dediegomrt.cubemaster.View.Dialogs.ContactDialog;
-import com.dediegomrt.cubemaster.View.Dialogs.NewPuzzleDialog;
+import com.dediegomrt.cubemaster.View.Dialogs.RateDialog;
 import com.dediegomrt.cubemaster.View.Dialogs.RestartDialog;
 
 public class SettingsFragment extends Fragment {
@@ -58,6 +54,9 @@ public class SettingsFragment extends Fragment {
         if (id == R.id.contact_us){
             final ContactDialog dialog = new ContactDialog(getActivity());
             dialog.show();
+        } else if (id == R.id.rate_us){
+            final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), true);
+            dialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -77,7 +76,6 @@ public class SettingsFragment extends Fragment {
         final GridView gridView = (GridView)v.findViewById(R.id.color_gridview);
         final ImageButton frTimeInfoButton = (ImageButton)v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = (LinearLayout) v.findViewById(R.id.settings_layout);
-//        final RelativeLayout settingsContainer = (RelativeLayout) v.findViewById(R.id.settings_c);
         final TextView frTimeInfoText =(TextView)v.findViewById(R.id.frtime_info_text);
         final TextView stopwatchInfoText =(TextView)v.findViewById(R.id.stopwatch_info_text);
         final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
@@ -85,9 +83,7 @@ public class SettingsFragment extends Fragment {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = settingsLayout.getLayoutTransition();
-//            LayoutTransition layoutTransitionContact = settingsContainer.getLayoutTransition();
             layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-//            layoutTransitionContact.enableTransitionType(LayoutTransition.CHANGING);
         }
 
         freezingTime.setMaxValue(10);

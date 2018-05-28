@@ -48,6 +48,7 @@
     <string name="zero">0</string>
     <string name="zero_millis">000</string>
     <string name="rate_us">Wow! You\'ve reached %1$d times you\'ve solved puzzles with this app!\n\nDo you have a minute to rate it? Please tell me how is your experience, your opinion is the only thing I have to improve and continue growing.</string>
+    <string name="rate_us_menu">Do you want to rate this app? Your opinion helps a lot!</string>
     <string name="later">Later</string>
     <string name="rate_now">Rate now</string>
     <string name="no_thanks">Never</string>
@@ -56,6 +57,9 @@
     <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n\n4. Enjoy!</string>
     <string name="contact_main_text">Is there something you want to tell us?</string>
     <string name="contact_sub_text">Could you explain a little more?</string>
+    <string name="contact_error">I\'ve detected an error!</string>
+    <string name="contact_improvement">I\'ve an idea to make this app better!</string>
+    <string name="contact_other">Other reasons</string>
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
