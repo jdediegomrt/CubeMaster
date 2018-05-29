@@ -65,15 +65,15 @@ public class StatsFragment extends Fragment {
 
 		DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        RelativeLayout puzzleNameContainer = (RelativeLayout) v.findViewById(R.id.puzzle_name_container);
+        RelativeLayout puzzleNameContainer = v.findViewById(R.id.puzzle_name_container);
         puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
-		TextView bestTime = (TextView)v.findViewById(R.id.best_time);
-		TextView worstTime = (TextView)v.findViewById(R.id.worst_time);
-		TextView average = (TextView) v.findViewById(R.id.average);
-		TextView average5 = (TextView) v.findViewById(R.id.averageof5);
-		TextView average10 = (TextView) v.findViewById(R.id.averageof10);
-		TextView timesCount = (TextView) v.findViewById(R.id.times_count);
-		TextView currentPuzzle = (TextView) v.findViewById(R.id.puzzle_name);
+		TextView bestTime = v.findViewById(R.id.best_time);
+		TextView worstTime = v.findViewById(R.id.worst_time);
+		TextView average = v.findViewById(R.id.average);
+		TextView average5 = v.findViewById(R.id.averageof5);
+		TextView average10 = v.findViewById(R.id.averageof10);
+		TextView timesCount = v.findViewById(R.id.times_count);
+		TextView currentPuzzle = v.findViewById(R.id.puzzle_name);
 
 		timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(null)));
 		currentPuzzle.setText(DatabaseMethods.getInstance().getCurrentPuzzleName());

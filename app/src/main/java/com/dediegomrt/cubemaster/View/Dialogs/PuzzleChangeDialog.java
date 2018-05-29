@@ -28,10 +28,10 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_changedatabase);
 
-        spinner = (Spinner) findViewById(R.id.puzzle_name);
-        final Button ok = (Button) findViewById(R.id.accept);
-        final Button cancel = (Button) findViewById(R.id.cancel);
-        final Button addNew = (Button) findViewById(R.id.add_new);
+        spinner = findViewById(R.id.puzzle_name);
+        final Button ok = findViewById(R.id.accept);
+        final Button cancel = findViewById(R.id.cancel);
+        final Button addNew = findViewById(R.id.add_new);
 
         List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, context);

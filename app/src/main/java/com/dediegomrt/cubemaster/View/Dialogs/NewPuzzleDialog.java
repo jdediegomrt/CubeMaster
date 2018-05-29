@@ -25,9 +25,9 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_changedatabase2);
 
-        final Button ok = (Button) findViewById(R.id.accept);
-        final Button cancel = (Button) findViewById(R.id.cancel);
-        name = (EditText) findViewById(R.id.new_puzzle);
+        final Button ok = findViewById(R.id.accept);
+        final Button cancel = findViewById(R.id.cancel);
+        name = findViewById(R.id.new_puzzle);
 
         ok.setOnClickListener(this);
         cancel.setOnClickListener(this);

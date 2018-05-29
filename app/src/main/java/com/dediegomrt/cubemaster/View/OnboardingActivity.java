@@ -33,16 +33,16 @@ public class OnboardingActivity extends AppCompatActivity {
 
         PrefsConfig.getInstance().setContext(this);
 
-        text = (RelativeLayout) findViewById(R.id.text);
-        mainText = (TextView) findViewById(R.id.main_text);
-        subText = (TextView) findViewById(R.id.sub_text);
-        image = (ImageView) findViewById(R.id.image);
-        final ImageView cubemasterImage = (ImageView) findViewById(R.id.cubemaster_image);
+        text = findViewById(R.id.text);
+        mainText = findViewById(R.id.main_text);
+        subText = findViewById(R.id.sub_text);
+        image = findViewById(R.id.image);
+        final ImageView cubemasterImage =  findViewById(R.id.cubemaster_image);
 
-        final Button button = (Button) findViewById(R.id.onboarding_button);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.onboarding_container);
+        final Button button = findViewById(R.id.onboarding_button);
+        final ViewPager viewPager = findViewById(R.id.onboarding_container);
 
-        TabLayout pageIndicator = (TabLayout) findViewById(R.id.pageIndicator);
+        TabLayout pageIndicator = findViewById(R.id.pageIndicator);
         pageIndicator.setupWithViewPager(viewPager, true); // <- magic here
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -129,7 +129,7 @@ public class OnboardingActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            ImageView sectionImage = (ImageView) rootView.findViewById(R.id.section_image);
+            ImageView sectionImage = rootView.findViewById(R.id.section_image);
 
             switch(getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 0:

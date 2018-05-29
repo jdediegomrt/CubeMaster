@@ -26,10 +26,10 @@ public class RateDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_rate);
 
-        final Button accept = (Button)findViewById(R.id.accept);
-        final Button cancel = (Button)findViewById(R.id.cancel);
-        final Button later = (Button)findViewById(R.id.later);
-        final TextView text = (TextView)findViewById(R.id.rate_text);
+        final Button accept = findViewById(R.id.accept);
+        final Button cancel = findViewById(R.id.cancel);
+        final Button later = findViewById(R.id.later);
+        final TextView text = findViewById(R.id.rate_text);
 
         if(fromMenu){
             text.setText(R.string.rate_us_menu);

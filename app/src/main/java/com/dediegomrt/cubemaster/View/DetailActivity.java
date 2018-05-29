@@ -50,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
@@ -60,19 +60,19 @@ public class DetailActivity extends AppCompatActivity {
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
-        RelativeLayout puzzleNameContainer = (RelativeLayout) findViewById(R.id.puzzle_name_container);
+        RelativeLayout puzzleNameContainer = findViewById(R.id.puzzle_name_container);
         puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
-        RelativeLayout detailContainer = (RelativeLayout) findViewById(R.id.times_detail);
+        RelativeLayout detailContainer = findViewById(R.id.times_detail);
         detailContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
-        timesLayout = (LinearLayout)findViewById(R.id.times);
-        bestTime = (TextView)findViewById(R.id.best_time);
-        worstTime = (TextView)findViewById(R.id.worst_time);
-        average = (TextView) findViewById(R.id.average);
-        average5 = (TextView) findViewById(R.id.averageof5);
-        average10 = (TextView) findViewById(R.id.averageof10);
-        timesCount = (TextView) findViewById(R.id.times_count);
-        currentPuzzle = (TextView) findViewById(R.id.puzzle_name);
-        sortMode = (Spinner) findViewById(R.id.sort_mode);
+        timesLayout = findViewById(R.id.times);
+        bestTime = findViewById(R.id.best_time);
+        worstTime = findViewById(R.id.worst_time);
+        average = findViewById(R.id.average);
+        average5 = findViewById(R.id.averageof5);
+        average10 = findViewById(R.id.averageof10);
+        timesCount = findViewById(R.id.times_count);
+        currentPuzzle = findViewById(R.id.puzzle_name);
+        sortMode = findViewById(R.id.sort_mode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = timesLayout.getLayoutTransition();
@@ -117,9 +117,9 @@ public class DetailActivity extends AppCompatActivity {
 
                 final View v = getLayoutInflater().inflate(R.layout.element_timesdetail_list, null);
 
-                final TextView date = (TextView)v.findViewById(R.id.date);
-                final TextView time = (TextView)v.findViewById(R.id.time);
-                final ImageButton button = (ImageButton)v.findViewById(R.id.delete_puzzle);
+                final TextView date = v.findViewById(R.id.date);
+                final TextView time = v.findViewById(R.id.time);
+                final ImageButton button = v.findViewById(R.id.delete_puzzle);
                 final View divider = v.findViewById(R.id.divider);
 
                 date.setText(detail.getDate());

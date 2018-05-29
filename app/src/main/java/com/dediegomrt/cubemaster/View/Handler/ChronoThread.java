@@ -1,6 +1,7 @@
 package com.dediegomrt.cubemaster.View.Handler;
 
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -8,8 +9,12 @@ import com.dediegomrt.cubemaster.Methods.PrefsMethods;
 
 public class ChronoThread extends Thread {
     private MediaPlayer mp;
-    private int secs, mins, hours;
-    private boolean finish, pause, pauseFlag;
+    private int secs;
+    private int mins;
+    private int hours;
+    private boolean finish;
+    private boolean pause;
+    private boolean pauseFlag;
     private ChronoHandler handler;
 
     public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
@@ -34,7 +39,7 @@ public class ChronoThread extends Thread {
             try {
                 Thread.sleep(1);
             }catch (InterruptedException ex) {
-                ex.printStackTrace();
+                Log.e("Thread", "InterruptedException", ex);
             }
             if(pause) {
                 pauseFlag=true;

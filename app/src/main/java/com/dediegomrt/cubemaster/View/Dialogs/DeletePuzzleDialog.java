@@ -29,9 +29,9 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_areyousure);
 
-        final TextView text = (TextView)findViewById(R.id.info_areyousure);
-        final Button ok = (Button)findViewById(R.id.accept);
-        final Button cancel = (Button)findViewById(R.id.cancel);
+        final TextView text = findViewById(R.id.info_areyousure);
+        final Button ok = findViewById(R.id.accept);
+        final Button cancel = findViewById(R.id.cancel);
 
         text.setText(R.string.areyousuredeletepuzzle);
 

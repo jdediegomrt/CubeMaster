@@ -34,10 +34,10 @@ public class ContactDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_contact);
 
-        contactOptions = (RadioGroup) findViewById(R.id.contact_options);
-        editText = (EditText) findViewById(R.id.contact_text);
-        final Button send = (Button)findViewById(R.id.send);
-        final Button cancel = (Button)findViewById(R.id.cancel);
+        contactOptions = findViewById(R.id.contact_options);
+        editText = findViewById(R.id.contact_text);
+        final Button send = findViewById(R.id.send);
+        final Button cancel = findViewById(R.id.cancel);
 
         contactOptions.check(R.id.contact_error);
         send.setOnClickListener(this);
@@ -52,6 +52,7 @@ public class ContactDialog extends Dialog implements View.OnClickListener{
                 if(editText.getText().toString().equals("")){
                     editText.setHint(R.string.cannot_empty);
                 } else {
+                    dismiss();
                     Intent i = new Intent(Intent.ACTION_SENDTO);
                     i.setType("message/rfc822");
                     i.setData(Uri.parse("mailto:cubemaster.app@gmail.com"));

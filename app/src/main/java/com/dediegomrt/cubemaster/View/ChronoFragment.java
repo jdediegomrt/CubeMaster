@@ -39,7 +39,7 @@ import java.util.Locale;
 
 public class ChronoFragment extends Fragment {
 
-    private static MediaPlayer mp;
+    private MediaPlayer mp;
     private RelativeLayout animatedLine;
     private ImageButton infoButton;
     private ImageButton pauseButton;
@@ -91,10 +91,10 @@ public class ChronoFragment extends Fragment {
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        infoButton = (ImageButton) v.findViewById(R.id.info_button);
-        RelativeLayout infoContainer = (RelativeLayout) v.findViewById(R.id.info_container);
-        infoLayout = (RelativeLayout) v.findViewById(R.id.info_layout);
-        pauseButton =(ImageButton) v. findViewById(R.id.pause_button);
+        infoButton = v.findViewById(R.id.info_button);
+        RelativeLayout infoContainer = v.findViewById(R.id.info_container);
+        infoLayout = v.findViewById(R.id.info_layout);
+        pauseButton = v.findViewById(R.id.pause_button);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -103,15 +103,15 @@ public class ChronoFragment extends Fragment {
         }
 
         mp = MediaPlayer.create(getActivity(), R.raw.beep);
-        final RelativeLayout chronoScreen = (RelativeLayout) v.findViewById(R.id.chrono_layout);
-        hours= (TextView)v.findViewById(R.id.hours);
-        mins= (TextView)v.findViewById(R.id.mins);
-        secs = (TextView)v.findViewById(R.id.secs);
-        millis = (TextView)v.findViewById(R.id.millis);
-        hoursLayout = (LinearLayout)v.findViewById(R.id.hours_layout);
-        minsLayout = (LinearLayout)v.findViewById(R.id.mins_layout);
-        animatedLine = (RelativeLayout)v.findViewById(R.id.animated_line);
-        final RadioGroup activityMenu = (RadioGroup)getActivity().findViewById(R.id.menu_layout);
+        final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
+        hours= v.findViewById(R.id.hours);
+        mins= v.findViewById(R.id.mins);
+        secs = v.findViewById(R.id.secs);
+        millis = v.findViewById(R.id.millis);
+        hoursLayout = v.findViewById(R.id.hours_layout);
+        minsLayout = v.findViewById(R.id.mins_layout);
+        animatedLine = v.findViewById(R.id.animated_line);
+        final RadioGroup activityMenu = getActivity().findViewById(R.id.menu_layout);
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +127,7 @@ public class ChronoFragment extends Fragment {
                     chronoScreen.setEnabled(false);
                 }
 
-                Button gotitButton = (Button) v.findViewById(R.id.gotit_button);
+                Button gotitButton = v.findViewById(R.id.gotit_button);
 
                 gotitButton.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         fm = getSupportFragmentManager();
-        RadioButton timer = (RadioButton) findViewById(R.id.timer);
-        RadioButton stats = (RadioButton) findViewById(R.id.stats);
-        RadioButton settings = (RadioButton) findViewById(R.id.settings);
-        RadioButton myPuzzles = (RadioButton) findViewById(R.id.mypuzzles);
+        RadioButton timer = findViewById(R.id.timer);
+        RadioButton stats = findViewById(R.id.stats);
+        RadioButton settings = findViewById(R.id.settings);
+        RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
         timer.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         stats.setBackground(ThemeConfig.getInstance().getMenuAnimation());

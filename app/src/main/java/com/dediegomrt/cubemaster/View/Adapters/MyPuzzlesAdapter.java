@@ -56,8 +56,8 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
             LayoutInflater inflater = LayoutInflater.from(getContext());
             item = inflater.inflate(R.layout.element_puzzles_list, null);
             holder = new ViewHolder();
-            holder.name = (TextView) item.findViewById(R.id.element);
-            holder.more = (ImageView) item.findViewById(R.id.more_icon);
+            holder.name = item.findViewById(R.id.element);
+            holder.more = item.findViewById(R.id.more_icon);
             originalBackground = holder.name.getBackground();
             item.setTag(holder);
         } else {
@@ -85,6 +85,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
         ImageView more;
     }
 
+    @NonNull
     public Filter getFilter() {
         return filter;
     }

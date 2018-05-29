@@ -30,7 +30,6 @@ import java.util.List;
 public class PuzzlesFragment extends Fragment {
 
     private ListView puzzlesList;
-    private List<String> puzzles;
     private MyPuzzlesAdapter adapter;
     private MenuItem searchItem;
     private SearchView searchView;
@@ -98,7 +97,7 @@ public class PuzzlesFragment extends Fragment {
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        puzzlesList = (ListView) v.findViewById(R.id.puzzles_list);
+        puzzlesList = v.findViewById(R.id.puzzles_list);
         fillList();
 
         puzzlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,7 +136,7 @@ public class PuzzlesFragment extends Fragment {
     }
 
     private void fillList() {
-        puzzles=new ArrayList<>();
+        List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, getContext());
         adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
         puzzlesList.setAdapter(adapter);

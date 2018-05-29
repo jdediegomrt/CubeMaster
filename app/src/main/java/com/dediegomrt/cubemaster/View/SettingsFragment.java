@@ -69,15 +69,15 @@ public class SettingsFragment extends Fragment {
 
         PrefsConfig.getInstance().setContext(v.getContext());
 
-        final Switch beep = (Switch)v.findViewById(R.id.beep_switch);
-        final Switch pause = (Switch)v.findViewById(R.id.stopwatch_switch);
-        final ImageButton stopwatchInfoButton = (ImageButton)v.findViewById(R.id.stopwatch_info);
-        final NumberPicker freezingTime = (NumberPicker) v.findViewById(R.id.frtime_setter);
-        final GridView gridView = (GridView)v.findViewById(R.id.color_gridview);
-        final ImageButton frTimeInfoButton = (ImageButton)v.findViewById(R.id.frtime_info);
-        final LinearLayout settingsLayout = (LinearLayout) v.findViewById(R.id.settings_layout);
-        final TextView frTimeInfoText =(TextView)v.findViewById(R.id.frtime_info_text);
-        final TextView stopwatchInfoText =(TextView)v.findViewById(R.id.stopwatch_info_text);
+        final Switch beep = v.findViewById(R.id.beep_switch);
+        final Switch pause = v.findViewById(R.id.stopwatch_switch);
+        final ImageButton stopwatchInfoButton = v.findViewById(R.id.stopwatch_info);
+        final NumberPicker freezingTime = v.findViewById(R.id.frtime_setter);
+        final GridView gridView = v.findViewById(R.id.color_gridview);
+        final ImageButton frTimeInfoButton = v.findViewById(R.id.frtime_info);
+        final LinearLayout settingsLayout = v.findViewById(R.id.settings_layout);
+        final TextView frTimeInfoText = v.findViewById(R.id.frtime_info_text);
+        final TextView stopwatchInfoText = v.findViewById(R.id.stopwatch_info_text);
         final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
         final ViewGroup.LayoutParams stopwatchParams = stopwatchInfoText.getLayoutParams();
 

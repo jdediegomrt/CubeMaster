@@ -29,11 +29,11 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_whattodopuzzle);
 
-        TextView currentPuzzle = (TextView) findViewById(R.id.puzzle_name);
-        final Button delete = (Button) findViewById(R.id.delete_puzzle);
-        final Button showStats = (Button) findViewById(R.id.show_stats);
-        final Button use = (Button) findViewById(R.id.use_puzzle);
-        final Button reset = (Button) findViewById(R.id.reset_puzzle);
+        TextView currentPuzzle = findViewById(R.id.puzzle_name);
+        final Button delete = findViewById(R.id.delete_puzzle);
+        final Button showStats = findViewById(R.id.show_stats);
+        final Button use = findViewById(R.id.use_puzzle);
+        final Button reset = findViewById(R.id.reset_puzzle);
 
         currentPuzzle.setText(puzzle);
         if(DatabaseMethods.getInstance().countPuzzles()==1) {
