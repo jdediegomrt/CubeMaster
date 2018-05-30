@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
@@ -28,6 +29,9 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_areyousure);
+
+        RelativeLayout nameContainer = findViewById(R.id.puzzle_name_container);
+        nameContainer.setVisibility(View.GONE);
 
         final TextView text = findViewById(R.id.info_areyousure);
         final Button ok = findViewById(R.id.accept);
