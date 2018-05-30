@@ -1,7 +1,9 @@
 package com.jaimedediego.cubemaster.view;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,15 +11,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.R;
 
 public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
@@ -28,8 +37,9 @@ public class MainActivity extends AppCompatActivity
     private String statsStr = "Stats";
     private String settingsStr="Settings";
     private String puzzlesStr="Puzzles";
-
     private Boolean exit = false;
+
+    private RelativeLayout bannerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +51,8 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-//        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
+//        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         setContentView(R.layout.activity_main);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
@@ -51,17 +62,40 @@ public class MainActivity extends AppCompatActivity
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fm = getSupportFragmentManager();
+        AdView banner = findViewById(R.id.banner);
+        ImageButton closeBanner = findViewById(R.id.close_banner);
+        bannerLayout = findViewById(R.id.banner_layout);
+        final ViewGroup.LayoutParams params = bannerLayout.getLayoutParams();
+
         RadioButton timer = findViewById(R.id.timer);
         RadioButton stats = findViewById(R.id.stats);
         RadioButton settings = findViewById(R.id.settings);
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            LayoutTransition layoutTransition = ((RelativeLayout)findViewById(R.id.banner_container)).getLayoutTransition();
+            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        }
+
+//        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build();
+        banner.loadAd(adRequest);
+
+        closeBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bannerLayout.getHeight()!=0){
+                    bannerLayout.setLayoutParams(params);
+                }
+            }
+        });
 
         timer.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         stats.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         myPuzzles.setBackground(ThemeConfig.getInstance().getMenuAnimation());
         settings.setBackground(ThemeConfig.getInstance().getMenuAnimation());
 
+        fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
 
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,6 +155,13 @@ public class MainActivity extends AppCompatActivity
             if(fm.findFragmentByTag(puzzlesStr)!=null&&fm.findFragmentByTag(puzzlesStr).isVisible()){
                 replaceFragment(new PuzzlesFragment(), puzzlesStr);
             }
+        }
+    }
+
+    void showBanner(){
+        if(bannerLayout.getHeight()==0) {
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            bannerLayout.setLayoutParams(layoutParams);
         }
     }
 

@@ -200,6 +200,9 @@ public class ChronoFragment extends Fragment {
                                     final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
                                     dialog.show();
                                 }
+                                if(DatabaseMethods.getInstance().countAllTimes()%7==0){
+                                    ((MainActivity)getActivity()).showBanner();
+                                }
                             }
                         }, 10);
                     } else {

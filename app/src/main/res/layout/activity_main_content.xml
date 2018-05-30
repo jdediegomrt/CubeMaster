@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jaimedediego.cubemaster.view.MainActivity"
-    android:orientation="vertical"
     android:clipToPadding="false">
 
     <FrameLayout
@@ -66,5 +65,48 @@
             android:paddingBottom="10dp"/>
 
     </RadioGroup>
+
+    <RelativeLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/banner_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/menu_layout">
+
+        <RelativeLayout
+            android:id="@+id/banner_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+
+            <!--<com.google.android.gms.ads.AdView-->
+            <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/adView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_above="@+id/menu_layout"-->
+            <!--ads:adSize="BANNER"-->
+            <!--ads:adUnitId="ca-app-pub-8962656574856623/5123832428"/>-->
+
+            <!--Testing-->
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            <ImageButton
+                android:layout_alignRight="@+id/banner"
+                android:id="@+id/close_banner"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_cancel_black_18dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>
