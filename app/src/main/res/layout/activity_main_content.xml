@@ -84,8 +84,6 @@
             <!--android:id="@+id/adView"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_above="@+id/menu_layout"-->
             <!--ads:adSize="BANNER"-->
             <!--ads:adUnitId="ca-app-pub-8962656574856623/5123832428"/>-->
 
@@ -93,9 +91,9 @@
             <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adSize="BANNER"
+                ads:adSize="SMART_BANNER"
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
 
             <ImageButton
@@ -103,6 +101,7 @@
                 android:id="@+id/close_banner"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/ic_cancel_black_18dp"/>
 
         </RelativeLayout>

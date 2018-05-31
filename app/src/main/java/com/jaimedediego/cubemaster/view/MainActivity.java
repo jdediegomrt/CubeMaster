@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
 
     private FragmentManager fm;
-    
+
     private String chronoStr = "Chrono";
     private String statsStr = "Stats";
     private String settingsStr="Settings";
@@ -51,18 +52,18 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-//        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-
         setContentView(R.layout.activity_main);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
+//        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AdView banner = findViewById(R.id.banner);
+        final AdView banner = findViewById(R.id.banner);
         ImageButton closeBanner = findViewById(R.id.close_banner);
         bannerLayout = findViewById(R.id.banner_layout);
         final ViewGroup.LayoutParams params = bannerLayout.getLayoutParams();
@@ -77,15 +78,28 @@ public class MainActivity extends AppCompatActivity
             layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
-//        AdRequest adRequest = new AdRequest.Builder().build();
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build();
-        banner.loadAd(adRequest);
+//        banner.loadAd(new AdRequest.Builder().build());
+        banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+
+        banner.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showBanner();
+                    }
+                }, 5000);
+            }
+        });
 
         closeBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(bannerLayout.getHeight()!=0){
                     bannerLayout.setLayoutParams(params);
+                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
             }
         });
@@ -158,7 +172,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    void showBanner(){
+    private void showBanner(){
         if(bannerLayout.getHeight()==0) {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             bannerLayout.setLayoutParams(layoutParams);
