@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 if(bannerLayout.getHeight()!=0){
                     bannerLayout.setLayoutParams(params);
+//                    banner.loadAd(new AdRequest.Builder().build());
                     banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
             }
