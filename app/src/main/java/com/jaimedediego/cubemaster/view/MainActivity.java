@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity
         closeBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bannerLayout.getHeight()!=0){
-                    bannerLayout.setLayoutParams(params);
+                if(bannerLayout.getVisibility()==View.VISIBLE){
+                    bannerLayout.setVisibility(View.GONE);
                     banner.loadAd(new AdRequest.Builder().build());
 //                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showBanner(){
-        if(bannerLayout.getHeight()==0) {
+        if(bannerLayout.getVisibility()==View.GONE) {
+            bannerLayout.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             bannerLayout.setLayoutParams(layoutParams);
         }
