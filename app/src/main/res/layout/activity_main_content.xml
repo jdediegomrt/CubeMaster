@@ -79,25 +79,26 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp">
 
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-8962656574856623/5123832428"/>
+
+            <!--Testing-->
             <!--<com.google.android.gms.ads.AdView-->
                 <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
                 <!--android:id="@+id/banner"-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
-                <!--ads:adSize="SMART_BANNER"-->
-                <!--ads:adUnitId="ca-app-pub-8962656574856623/5123832428"/>-->
-
-            <!--Testing-->
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ads:adSize="SMART_BANNER"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                <!--ads:adSize="BANNER"-->
+                <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>-->
 
             <ImageButton
                 android:layout_alignRight="@+id/banner"
+                android:layout_alignEnd="@+id/banner"
                 android:id="@+id/close_banner"
                 android:layout_width="18dp"
                 android:layout_height="18dp"

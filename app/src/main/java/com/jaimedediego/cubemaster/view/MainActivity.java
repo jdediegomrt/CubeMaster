@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
-//        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
+//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity
             layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
-//        banner.loadAd(new AdRequest.Builder().build());
-        banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+        banner.loadAd(new AdRequest.Builder().build());
+//        banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
 
         banner.setAdListener(new AdListener() {
             @Override
@@ -92,6 +92,11 @@ public class MainActivity extends AppCompatActivity
                     }
                 }, 5000);
             }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+            }
         });
 
         closeBanner.setOnClickListener(new View.OnClickListener() {
@@ -99,8 +104,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 if(bannerLayout.getHeight()!=0){
                     bannerLayout.setLayoutParams(params);
-//                    banner.loadAd(new AdRequest.Builder().build());
-                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+                    banner.loadAd(new AdRequest.Builder().build());
+//                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
             }
         });
