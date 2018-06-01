@@ -1,7 +1,11 @@
 package com.jaimedediego.cubemaster.view;
 
 import android.animation.LayoutTransition;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +37,10 @@ public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
 
     private FragmentManager fm;
+    private BroadcastReceiver broadcastReceiver;
+    private IntentFilter broadcastFilter;
+    private boolean isReceiverRegistered=false;
+    private int waitingMillis = 120000;
 
     private String chronoStr = "Chrono";
     private String statsStr = "Stats";
@@ -74,8 +82,10 @@ public class MainActivity extends AppCompatActivity
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition layoutTransition = ((RelativeLayout)findViewById(R.id.banner_container)).getLayoutTransition();
-            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+            LayoutTransition menulayoutTransition = ((RelativeLayout)findViewById(R.id.content_main)).getLayoutTransition();
+            menulayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+            LayoutTransition bannerLayoutTransition = ((RelativeLayout)findViewById(R.id.banner_container)).getLayoutTransition();
+            bannerLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
         banner.loadAd(new AdRequest.Builder().build());
@@ -90,7 +100,7 @@ public class MainActivity extends AppCompatActivity
                     public void run() {
                         showBanner();
                     }
-                }, 5000);
+                }, waitingMillis);
             }
 
             @Override
@@ -98,6 +108,19 @@ public class MainActivity extends AppCompatActivity
                 super.onAdFailedToLoad(i);
             }
         });
+
+        broadcastFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                final ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isAvailable() || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isAvailable()) {
+                    waitingMillis=0;
+                    banner.loadAd(new AdRequest.Builder().build());
+//                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+                }
+            }
+        };
 
         closeBanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +172,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(!isReceiverRegistered){
+            registerReceiver(broadcastReceiver, broadcastFilter);
+            isReceiverRegistered = true;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(isReceiverRegistered){
+            unregisterReceiver(broadcastReceiver);
+            isReceiverRegistered = false;
+        }
+    }
+
+    @Override
     public void onFragmentInteraction(Uri uri) {/*Do nothing*/}
 
     @Override
@@ -163,7 +204,7 @@ public class MainActivity extends AppCompatActivity
                 public void run() {
                     exit = false;
                 }
-            }, 3000);
+            }, 2000);
         }
     }
 
@@ -180,6 +221,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showBanner(){
         if(bannerLayout.getVisibility()==View.GONE) {
+            waitingMillis=120000;
             bannerLayout.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             bannerLayout.setLayoutParams(layoutParams);

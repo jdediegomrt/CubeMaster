@@ -74,8 +74,12 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
             holder.name.setTextColor(Session.getInstance().lightColorTheme);
             holder.more.setVisibility(View.GONE);
         } else {
-            holder.name.setTextColor(context.getColor(R.color.md_black_1000));
-            holder.more.setVisibility(View.VISIBLE);
+            if(holder.name.getText().equals("")){
+                holder.more.setVisibility(View.GONE);
+            } else {
+                holder.name.setTextColor(context.getColor(R.color.md_black_1000));
+                holder.more.setVisibility(View.VISIBLE);
+            }
         }
         return (item);
     }

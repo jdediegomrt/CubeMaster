@@ -43,7 +43,7 @@ public class OnboardingActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.onboarding_container);
 
         TabLayout pageIndicator = findViewById(R.id.pageIndicator);
-        pageIndicator.setupWithViewPager(viewPager, true); // <- magic here
+        pageIndicator.setupWithViewPager(viewPager, true);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override

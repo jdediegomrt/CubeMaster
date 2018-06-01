@@ -24,13 +24,12 @@ public class DatabaseConfig extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
-
-        db.execSQL("DROP TABLE IF EXISTS users");
-        db.execSQL("DROP TABLE IF EXISTS puzzles");
-        db.execSQL("DROP TABLE IF EXISTS times");
-
-        db.execSQL(sqlUsers);
-        db.execSQL(sqlPuzzles);
-        db.execSQL(sqlTimes);
+//        db.execSQL("DROP TABLE IF EXISTS users");
+//        db.execSQL("DROP TABLE IF EXISTS puzzles");
+//        db.execSQL("DROP TABLE IF EXISTS times");
+//
+//        db.execSQL(sqlUsers);
+//        db.execSQL(sqlPuzzles);
+//        db.execSQL(sqlTimes);
     }
 }

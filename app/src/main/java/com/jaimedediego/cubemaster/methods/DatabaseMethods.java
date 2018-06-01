@@ -205,6 +205,7 @@ public class DatabaseMethods {
             } while(c.moveToNext());
         }
         puzzles.add(context.getResources().getString(R.string.add_new));
+        puzzles.add("");
         c.close();
         closeDatabase();
     }

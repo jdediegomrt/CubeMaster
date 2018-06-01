@@ -28,6 +28,7 @@
             android:textColor="@color/md_white_1000"
             android:textStyle="bold"
             android:textSize="24sp"
+            android:text="@string/onboarding_main_text_1"
             android:textAlignment="center"/>
 
         <TextView
@@ -38,6 +39,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/md_white_1000"
             android:textSize="15sp"
+            android:text="@string/onboarding_sub_text_1"
             android:textAlignment="center"/>
 
     </RelativeLayout>

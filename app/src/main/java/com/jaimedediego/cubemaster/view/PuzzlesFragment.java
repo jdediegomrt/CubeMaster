@@ -3,6 +3,7 @@ package com.jaimedediego.cubemaster.view;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.MyPuzzlesAdapter;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleOptionsDialog;
@@ -98,36 +101,39 @@ public class PuzzlesFragment extends Fragment {
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
         puzzlesList = v.findViewById(R.id.puzzles_list);
+        puzzlesList.getDivider().setColorFilter(Session.getInstance().darkColorTheme, PorterDuff.Mode.SRC_OVER);
         fillList();
 
         puzzlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 searchView.clearFocus();
-                if(adapter.getItem(position).equals(getString(R.string.add_new))){
-                    final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
-                    dialog.show();
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            if (dialog.didSomething()){
-                                searchItem.collapseActionView();
-                                fillList();
+                if(!((TextView)view.findViewById(R.id.element)).getText().equals("")) {
+                    if (adapter.getItem(position).equals(getString(R.string.add_new))) {
+                        final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
+                        dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if (dialog.didSomething()) {
+                                    searchItem.collapseActionView();
+                                    fillList();
+                                }
                             }
-                        }
-                    });
-                } else {
-                    final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), adapter.getItem(position));
-                    dialog.show();
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            if (dialog.didSomething()){
-                                searchItem.collapseActionView();
-                                fillList();
+                        });
+                    } else {
+                        final PuzzleOptionsDialog dialog = new PuzzleOptionsDialog(getActivity(), adapter.getItem(position));
+                        dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if (dialog.didSomething()) {
+                                    searchItem.collapseActionView();
+                                    fillList();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
