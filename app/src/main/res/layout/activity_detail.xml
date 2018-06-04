@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dediegomrt.cubemaster.View.DetailActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.jaimedediego.cubemaster.view.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abbBarLay"
@@ -13,7 +14,9 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="?android:attr/actionBarSize"
+            app:titleTextColor="@color/md_white_1000"
+            app:collapseIcon="@drawable/ic_arrow_back_white_24dp"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -23,8 +26,8 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/puzzleNameContainer"
-            android:background="#cfd8dc"
+            android:id="@+id/puzzle_name_container"
+            android:background="@color/md_blue_grey_100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10sp"
@@ -33,18 +36,17 @@
             android:minHeight="30sp">
 
             <TextView
-                android:id="@+id/currentPuzzle"
+                android:id="@+id/puzzle_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:textSize="18sp"/>
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp"/>
 
         </RelativeLayout>
 
         <ScrollView
-            android:layout_below="@+id/puzzleNameContainer"
+            android:layout_below="@+id/puzzle_name_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -66,18 +68,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/number_of_solves"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/timesCount"
+                        android:id="@+id/times_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
@@ -93,18 +95,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/best_time"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/bestTime"
+                        android:id="@+id/best_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
@@ -120,18 +122,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/worst_time"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/worstTime"
+                        android:id="@+id/worst_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
@@ -147,8 +149,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/average"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
@@ -157,8 +159,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
@@ -174,8 +176,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/current_average_of_5"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
@@ -184,8 +186,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
@@ -201,8 +203,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/current_average_of_10"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
@@ -211,14 +213,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:background="#cfd8dc"
-                    android:id="@+id/timesDetail"
+                    android:background="@color/md_blue_grey_100"
+                    android:id="@+id/times_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="10sp"
@@ -231,8 +233,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/times_detail"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/md_black_1000"
+                        android:textSize="15sp"/>
 
                     <Spinner
                         android:id="@+id/sort_mode"
@@ -247,6 +249,7 @@
                     android:id="@+id/times"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"/>
 
             </LinearLayout>

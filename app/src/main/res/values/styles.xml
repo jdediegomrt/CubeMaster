@@ -1,10 +1,9 @@
 <resources>
 
     <style name="Default" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimaryDark">@color/md_grey_600</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="actionBarTheme">@style/CustomBarOptionsColor</item>
     </style>
 
     <style name="AppTheme.CustomBarRed" parent="Default">
@@ -89,7 +88,7 @@
 
     <style name="AppTheme.CustomBarGrey" parent="Default">
         <item name="colorPrimary">@color/md_grey_900</item>
-        <item name="colorAccent">@color/md_grey_500</item>
+        <item name="colorAccent">@color/md_grey_700</item>
     </style>
 
     <style name="AppTheme.CustomBarBlueGrey" parent="Default">
@@ -97,8 +96,9 @@
         <item name="colorAccent">@color/md_blue_grey_500</item>
     </style>
 
-    <style name="CustomBarOptionsColor" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">#FFF</item>
+    <style name="NumberPickerText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
     </style>
 
 </resources>

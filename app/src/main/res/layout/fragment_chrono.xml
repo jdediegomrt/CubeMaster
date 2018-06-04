@@ -1,21 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dediegomrt.cubemaster.View.ChronoFragment"
-    android:background="#000">
+    tools:context="com.jaimedediego.cubemaster.view.ChronoFragment"
+    android:background="@color/md_black_1000">
 
     <RelativeLayout
-        android:id="@+id/chronoLayout"
+        android:id="@+id/chrono_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/animatedLine"
+            android:id="@+id/animated_line"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/background"/>
+            android:background="@drawable/background_timer_off"/>
 
         <LinearLayout
             android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/layVisible2"
+                android:id="@+id/hours_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -36,22 +36,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/zero"
+                    android:textColor="@color/md_white_1000"/>
                 <TextView
-                    android:id="@+id/dotsHours"
+                    android:id="@+id/hours_dots"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text=":"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/twodots"
+                    android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/layVisible"
+                android:id="@+id/mins_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -61,17 +61,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/zero"
+                    android:textColor="@color/md_white_1000"/>
                 <TextView
-                    android:id="@+id/dots"
+                    android:id="@+id/mins_dots"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text=":"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/twodots"
+                    android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
             <LinearLayout
@@ -84,28 +84,68 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="50dp"
-                    android:text="0"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/zero"
+                    android:textColor="@color/md_white_1000"/>
                 <TextView
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text="."
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/dot"
+                    android:textColor="@color/md_white_1000"/>
                 <TextView
                     android:id="@+id/millis"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="50dp"
-                    android:text="000"
-                    android:textColor="#FFF"/>
+                    android:textSize="50sp"
+                    android:text="@string/zero_millis"
+                    android:textColor="@color/md_white_1000"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/info_container"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/background_display_window"
+        android:animateLayoutChanges="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_info"/>
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/info_button"
+        android:contentDescription="@string/selected"
+        android:background="@drawable/background_info_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_info_white_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"/>
+
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/pause_button"
+        android:contentDescription="@string/selected"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_pause_circle_filled_white_48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="80dp"/>
+
+</RelativeLayout>
