@@ -61,12 +61,14 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().initConfig();
 
         setContentView(R.layout.activity_main);
+
+        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
-        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+//        MobileAds.initialize(this, "ca-app-pub-8962656574856623~3014810195");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,8 +90,8 @@ public class MainActivity extends AppCompatActivity
             bannerLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
-        banner.loadAd(new AdRequest.Builder().build());
-//        banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+//        banner.loadAd(new AdRequest.Builder().build());
+        banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
 
         banner.setAdListener(new AdListener() {
             @Override
@@ -116,8 +118,8 @@ public class MainActivity extends AppCompatActivity
                 final ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isAvailable() || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isAvailable()) {
                     waitingMillis=0;
-                    banner.loadAd(new AdRequest.Builder().build());
-//                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+//                    banner.loadAd(new AdRequest.Builder().build());
+                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
             }
         };
@@ -127,8 +129,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 if(bannerLayout.getVisibility()==View.VISIBLE){
                     bannerLayout.setVisibility(View.GONE);
-                    banner.loadAd(new AdRequest.Builder().build());
-//                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+//                    banner.loadAd(new AdRequest.Builder().build());
+                    banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
             }
         });

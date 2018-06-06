@@ -1,9 +1,11 @@
 package com.jaimedediego.cubemaster.view;
 
+import android.animation.LayoutTransition;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,19 +13,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.view.CustomViews.CustomViewPager;
 
 public class OnboardingActivity extends AppCompatActivity {
 
     private RelativeLayout text;
     private TextView mainText;
     private TextView subText;
+    private ImageButton arrowRight;
+    private ImageButton arrowLeft;
     private ImageView image;
 
     @Override
@@ -36,16 +42,24 @@ public class OnboardingActivity extends AppCompatActivity {
         text = findViewById(R.id.text);
         mainText = findViewById(R.id.main_text);
         subText = findViewById(R.id.sub_text);
+        arrowRight = findViewById(R.id.arrow_right);
+        arrowLeft = findViewById(R.id.arrow_left);
         image = findViewById(R.id.image);
         final ImageView cubemasterImage =  findViewById(R.id.cubemaster_image);
 
         final Button button = findViewById(R.id.onboarding_button);
-        final ViewPager viewPager = findViewById(R.id.onboarding_container);
+        final CustomViewPager viewPager = findViewById(R.id.onboarding_container);
+        viewPager.setScrollDuration(500);
 
-        TabLayout pageIndicator = findViewById(R.id.pageIndicator);
+        final TabLayout pageIndicator = findViewById(R.id.pageIndicator);
         pageIndicator.setupWithViewPager(viewPager, true);
 
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            LayoutTransition arrowsLayoutTransition = ((RelativeLayout)findViewById(R.id.onboarding_button_layout)).getLayoutTransition();
+            arrowsLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        }
+
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return PlaceholderFragment.newInstance(position);
@@ -73,8 +87,21 @@ public class OnboardingActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {/*Do nothing*/}
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    arrowLeft.setEnabled(true);
+                    arrowRight.setEnabled(true);
+                    arrowLeft.setClickable(true);
+                    arrowRight.setClickable(true);
+                    viewPager.setSwipeable(true);
+                } else {
+                    arrowLeft.setEnabled(false);
+                    arrowRight.setEnabled(false);
+                    arrowLeft.setClickable(false);
+                    arrowRight.setClickable(false);
+                }
+            }
 
             @Override
             public void onPageScrolled( int position , float positionOffset , int positionOffsetPixels ) {
@@ -82,23 +109,43 @@ public class OnboardingActivity extends AppCompatActivity {
                     updateText(position + 1);
                     if(position==viewPager.getAdapter().getCount()-2){
                         button.setText(R.string.got_it);
+                        arrowRight.setVisibility(View.GONE);
                     }
                     if(position==0){
                         image.setVisibility(View.VISIBLE);
+                        arrowLeft.setVisibility(View.VISIBLE);
                     }
                 }else{
                     updateText(position);
                     if(position==viewPager.getAdapter().getCount()-2){
+                        arrowRight.setVisibility(View.VISIBLE);
                         button.setText(R.string.skip);
                     }
                     if(position==0){
-                        image.setVisibility(View.INVISIBLE);
+                        image.setVisibility(View.GONE);
+                        arrowLeft.setVisibility(View.GONE);
                     }
                 }
             }
 
             @Override
             public void onPageSelected( int position ) {/*Do nothing*/}
+        });
+
+        arrowRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setSwipeable(false);
+                pageIndicator.getTabAt(viewPager.getCurrentItem()+1).select();
+            }
+        });
+
+        arrowLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setSwipeable(false);
+                pageIndicator.getTabAt(viewPager.getCurrentItem()-1).select();
+            }
         });
 
         button.setOnClickListener(new View.OnClickListener() {

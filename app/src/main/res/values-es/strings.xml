@@ -53,7 +53,7 @@
     <string name="rate_now">Valorar</string>
     <string name="no_thanks">Nunca</string>
     <string name="got_it">Entendido</string>
-    <string name="info_main_text">¿Quieres sabes cómo funciona tu cronómetro?\n</string>
+    <string name="info_main_text">¿Quieres saber cómo funciona tu cronómetro?\n</string>
     <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. ¡Disfruta!</string>
     <string name="contact_main_text">¿Hay algo que quieras comentarnos?</string>
     <string name="contact_sub_text">¿Nos lo podrías explicar un poco más?</string>
@@ -62,7 +62,7 @@
     <string name="contact_other">Otras razones</string>
 
     <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
-    <string name="onboarding_sub_text_1">Veámos qué funciones te ofrece</string>
+    <string name="onboarding_sub_text_1">Veamos qué funciones te ofrece</string>
     <string name="onboarding_main_text_2">Un cronómetro</string>
     <string name="onboarding_sub_text_2">Esto es a por lo que hemos venido, ¿no?</string>
     <string name="onboarding_main_text_3">Estadísticas</string>
