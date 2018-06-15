@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver broadcastReceiver;
     private IntentFilter broadcastFilter;
     private boolean isReceiverRegistered=false;
-    private int waitingMillis = 120000;
+    private int waitingMillis = 60000;
 
     private String chronoStr = "Chrono";
     private String statsStr = "Stats";
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        PrefsMethods.getInstance().setOnboardingShown(false);
+//        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
             startActivity(new Intent(this, OnboardingActivity.class));
         }

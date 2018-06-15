@@ -55,7 +55,7 @@ public class ContactDialog extends Dialog implements View.OnClickListener{
                     dismiss();
                     Intent i = new Intent(Intent.ACTION_SENDTO);
                     i.setType("message/rfc822");
-                    i.setData(Uri.parse("mailto:cubemaster.app@gmail.com"));
+                    i.setData(Uri.parse("mailto:dediegomrt.dev@gmail.com"));
                     i.putExtra(Intent.EXTRA_SUBJECT, ((RadioButton) findViewById(contactOptions.getCheckedRadioButtonId())).getText());
                     i.putExtra(Intent.EXTRA_TEXT, editText.getText());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
