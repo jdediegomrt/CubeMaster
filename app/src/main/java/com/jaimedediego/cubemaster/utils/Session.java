@@ -22,4 +22,9 @@ public class Session {
         }
         return instance;
     }
+
+    public String scramble2x2x2="";
+    public String scramble3x3x3="";
+    public String scramble4x4x4="";
+    public String scramble5x5x5="";
 }
