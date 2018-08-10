@@ -23,14 +23,21 @@ public class ScrambleConfig {
         return instance;
     }
 
-    public void scrambleNxNxN(int size){
+    public List<String> scrambleNxNxN(int size){
         List<String> allSides = new ArrayList<>();
+        if(size%2!=0){
+            allSides.addAll(Constants.getInstance().oddNumberNxNxN);
+        }
         List<String> extSides = Constants.getInstance().NxNxN;
         for(int i = 0; i < (size/2); i++){
             for(int j = 0; j < extSides.size(); j++){
-                allSides.add(extSides.get(j) + (i+1));
+                if(i>0) {
+                    allSides.add(extSides.get(j) + (i + 1));
+                    allSides.add((i + 1) + extSides.get(j));
+                }
             }
         }
         allSides.addAll(extSides);
+        return allSides;
     }
 }

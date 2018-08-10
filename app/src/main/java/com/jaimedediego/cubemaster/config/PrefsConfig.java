@@ -59,5 +59,9 @@ public class PrefsConfig {
             editor.putBoolean("ratedOrNever", false);
             editor.apply();
         }
+        if(!prefs.contains("wholeCubeRotations")){
+            editor.putBoolean("wholeCubeRotations", false);
+            editor.apply();
+        }
     }
 }

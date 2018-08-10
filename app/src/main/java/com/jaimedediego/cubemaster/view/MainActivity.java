@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -29,6 +30,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().initConfig();
 
         setContentView(R.layout.activity_main);
+
+        Log.e("Scramble", ScrambleConfig.getInstance().scrambleNxNxN(5).toString() + ScrambleConfig.getInstance().scrambleNxNxN(5).size());
 
 //        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {

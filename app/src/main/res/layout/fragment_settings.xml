@@ -181,6 +181,69 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:minHeight="50dp"
+            android:layout_height="50dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/wholecuberotations_text"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Hardcoded string"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp"/>
+
+            <ImageButton
+                android:id="@+id/wholecuberotations_info"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/selected"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:background="@drawable/background_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_info_white_18dp"
+                android:layout_toRightOf="@id/wholecuberotations_text"
+                android:layout_toEndOf="@id/wholecuberotations_text"/>
+
+            <Switch
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/wholecuberotations_switch"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/wholecuberotations_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/wholecuberotations_info_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Hardcoded string"
+                android:layout_centerVertical="true"
+                android:textColor="@color/md_black_1000"
+                android:textSize="13sp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp">

@@ -87,4 +87,18 @@ public class PrefsMethods {
         prefsConfig.editor.putBoolean("ratedOrNever", ratedOrNever);
         prefsConfig.editor.apply();
     }
+
+
+    public boolean isWholeCubeRotationsEnabled(){
+        if(prefsConfig.prefs.getBoolean("wholeCubeRotations", false)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setWholeCubeRotations(boolean wholeCubeRotations){
+        prefsConfig.editor.putBoolean("wholeCubeRotations", wholeCubeRotations);
+        prefsConfig.editor.apply();
+    }
 }

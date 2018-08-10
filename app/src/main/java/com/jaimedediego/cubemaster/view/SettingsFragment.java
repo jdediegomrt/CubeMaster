@@ -71,15 +71,19 @@ public class SettingsFragment extends Fragment {
 
         final Switch beep = v.findViewById(R.id.beep_switch);
         final Switch pause = v.findViewById(R.id.stopwatch_switch);
+        final Switch wholeCubeRotation = v.findViewById(R.id.wholecuberotations_switch);
         final ImageButton stopwatchInfoButton = v.findViewById(R.id.stopwatch_info);
+        final ImageButton wholeCubeRotationInfoButton = v.findViewById(R.id.wholecuberotations_info);
         final NumberPicker freezingTime = v.findViewById(R.id.frtime_setter);
         final GridView gridView = v.findViewById(R.id.color_gridview);
         final ImageButton frTimeInfoButton = v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = v.findViewById(R.id.settings_layout);
         final TextView frTimeInfoText = v.findViewById(R.id.frtime_info_text);
         final TextView stopwatchInfoText = v.findViewById(R.id.stopwatch_info_text);
+        final TextView wholeCubeRotationInfoText = v.findViewById(R.id.wholecuberotations_info_text);
         final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
         final ViewGroup.LayoutParams stopwatchParams = stopwatchInfoText.getLayoutParams();
+        final ViewGroup.LayoutParams wholeCubeRotationParams = wholeCubeRotationInfoText.getLayoutParams();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = settingsLayout.getLayoutTransition();
@@ -101,6 +105,10 @@ public class SettingsFragment extends Fragment {
 
         if(PrefsMethods.getInstance().isPauseActivated()){
             pause.setChecked(true);
+        }
+
+        if(PrefsMethods.getInstance().isWholeCubeRotationsEnabled()){
+            wholeCubeRotation.setChecked(true);
         }
 
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +157,31 @@ public class SettingsFragment extends Fragment {
                     stopwatchInfoButton.setColorFilter(Session.getInstance().lightColorTheme);
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     stopwatchInfoText.setLayoutParams(layoutParams);
+                }
+            }
+        });
+
+        wholeCubeRotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(wholeCubeRotation.isChecked()){
+                    PrefsMethods.getInstance().setWholeCubeRotations(true);
+                } else {
+                    PrefsMethods.getInstance().setWholeCubeRotations(false);
+                }
+            }
+        });
+
+        wholeCubeRotationInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(wholeCubeRotationInfoText.getHeight()!=0){
+                    wholeCubeRotationInfoButton.setColorFilter(null);
+                    wholeCubeRotationInfoText.setLayoutParams(wholeCubeRotationParams);
+                } else {
+                    wholeCubeRotationInfoButton.setColorFilter(Session.getInstance().lightColorTheme);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    wholeCubeRotationInfoText.setLayoutParams(layoutParams);
                 }
             }
         });
