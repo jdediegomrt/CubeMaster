@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ScrambleConfig {
 
     private static ScrambleConfig instance;
+    public List<String> puzzlesWithScramble = Arrays.asList("3x3x3", "2x2x2", "4x4x4", "5x5x5");
 
     private ScrambleConfig() {
     }
@@ -23,21 +26,4 @@ public class ScrambleConfig {
         return instance;
     }
 
-    public List<String> scrambleNxNxN(int size){
-        List<String> allSides = new ArrayList<>();
-        if(size%2!=0){
-            allSides.addAll(Constants.getInstance().oddNumberNxNxN);
-        }
-        List<String> extSides = Constants.getInstance().NxNxN;
-        for(int i = 0; i < (size/2); i++){
-            for(int j = 0; j < extSides.size(); j++){
-                if(i>0) {
-                    allSides.add(extSides.get(j) + (i + 1));
-                    allSides.add((i + 1) + extSides.get(j));
-                }
-            }
-        }
-        allSides.addAll(extSides);
-        return allSides;
-    }
 }

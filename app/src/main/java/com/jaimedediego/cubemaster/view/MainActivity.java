@@ -34,6 +34,7 @@ import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 
 public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        Log.e("Scramble", ScrambleConfig.getInstance().scrambleNxNxN(5).toString() + ScrambleConfig.getInstance().scrambleNxNxN(5).size());
+        Log.e("Scramble", ScrambleMethods.getInstance().getNxNxNNotation(5).toString() + " ---- " + ScrambleMethods.getInstance().getNxNxNNotation(5).size());
 
 //        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {

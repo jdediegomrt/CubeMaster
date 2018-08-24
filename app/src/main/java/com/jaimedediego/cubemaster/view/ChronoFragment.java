@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.R;
@@ -112,6 +113,17 @@ public class ChronoFragment extends Fragment {
         minsLayout = v.findViewById(R.id.mins_layout);
         animatedLine = v.findViewById(R.id.animated_line);
         final RadioGroup activityMenu = getActivity().findViewById(R.id.menu_layout);
+
+        final RelativeLayout scrambleLayout = v.findViewById(R.id.scramble_layout);
+        final TextView scrambleText = v.findViewById(R.id.scramble_text);
+        final ImageButton scrambleButton = v.findViewById(R.id.scramble_button);
+
+        if(ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())){
+            scrambleLayout.setVisibility(View.VISIBLE);
+            scrambleText.setText("This puzzle has scramble");
+        } else {
+            scrambleLayout.setVisibility(View.GONE);
+        }
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
