@@ -18,6 +18,14 @@ public class ScrambleMethods {
         return instance;
     }
 
+    public String[] getScrambleLengths(){
+        String[] lengths = new String[Constants.getInstance().maxScrambleLength];
+        for(int i = 0; i< lengths.length; i++){
+            lengths[i] = ""+(i+1);
+        }
+        return lengths;
+    }
+
     public List<String> getNxNxNNotation(int size){
         List<String> allSides = new ArrayList<>();
         if(size%2!=0){

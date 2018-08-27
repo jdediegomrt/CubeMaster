@@ -88,7 +88,6 @@ public class PrefsMethods {
         prefsConfig.editor.apply();
     }
 
-
     public boolean isScrambleEnabled(){
         if(prefsConfig.prefs.getBoolean("scramble", false)){
             return true;
@@ -99,6 +98,15 @@ public class PrefsMethods {
 
     public void setScramble(boolean wholeCubeRotations){
         prefsConfig.editor.putBoolean("scramble", wholeCubeRotations);
+        prefsConfig.editor.apply();
+    }
+
+    public int getScrambleLength(){
+        return prefsConfig.prefs.getInt("scrambleLength", 0);
+    }
+
+    public void setScrambleLength(int scrambleLength){
+        prefsConfig.editor.putInt("scrambleLength", scrambleLength);
         prefsConfig.editor.apply();
     }
 }

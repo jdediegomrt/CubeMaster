@@ -23,9 +23,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.ColorsAdapter;
@@ -41,7 +43,6 @@ public class SettingsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -95,6 +96,12 @@ public class SettingsFragment extends Fragment {
         freezingTime.setWrapSelectorWheel(true);
         freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime()/100);
 
+        scrambleLength.setMaxValue(Constants.getInstance().maxScrambleLength-1);
+        scrambleLength.setMinValue(0);
+        scrambleLength.setDisplayedValues(ScrambleMethods.getInstance().getScrambleLengths());
+        scrambleLength.setWrapSelectorWheel(true);
+        scrambleLength.setValue(PrefsMethods.getInstance().getScrambleLength());
+
         ColorsAdapter adapter = new ColorsAdapter(getActivity());
         gridView.setAdapter(adapter);
 
@@ -108,6 +115,8 @@ public class SettingsFragment extends Fragment {
 
         if(PrefsMethods.getInstance().isScrambleEnabled()){
             scramble.setChecked(true);
+        } else {
+            scrambleLength.setEnabled(false);
         }
 
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +174,10 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if(scramble.isChecked()){
                     PrefsMethods.getInstance().setScramble(true);
+                    scrambleLength.setEnabled(true);
                 } else {
                     PrefsMethods.getInstance().setScramble(false);
+                    scrambleLength.setEnabled(false);
                 }
             }
         });
@@ -176,6 +187,15 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 PrefsMethods.getInstance().setFreezingTime(newVal*100);
+            }
+        });
+
+
+        scrambleLength.setOnValueChangedListener( new NumberPicker.
+                OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                PrefsMethods.getInstance().setScrambleLength(newVal);
             }
         });
 

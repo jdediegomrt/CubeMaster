@@ -87,7 +87,7 @@ public class ChronoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_chrono, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.timer);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.timer);
 
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
@@ -105,8 +105,8 @@ public class ChronoFragment extends Fragment {
 
         mp = MediaPlayer.create(getActivity(), R.raw.beep);
         final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
-        hours= v.findViewById(R.id.hours);
-        mins= v.findViewById(R.id.mins);
+        hours = v.findViewById(R.id.hours);
+        mins = v.findViewById(R.id.mins);
         secs = v.findViewById(R.id.secs);
         millis = v.findViewById(R.id.millis);
         hoursLayout = v.findViewById(R.id.hours_layout);
@@ -118,9 +118,13 @@ public class ChronoFragment extends Fragment {
         final TextView scrambleText = v.findViewById(R.id.scramble_text);
         final ImageButton scrambleButton = v.findViewById(R.id.scramble_button);
 
-        if(ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())){
-            scrambleLayout.setVisibility(View.VISIBLE);
-            scrambleText.setText("This puzzle has scramble");
+        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+            if (PrefsMethods.getInstance().isScrambleEnabled()) {
+                scrambleLayout.setVisibility(View.VISIBLE);
+                scrambleText.setText("This puzzle has scramble");
+            } else {
+                scrambleLayout.setVisibility(View.GONE);
+            }
         } else {
             scrambleLayout.setVisibility(View.GONE);
         }

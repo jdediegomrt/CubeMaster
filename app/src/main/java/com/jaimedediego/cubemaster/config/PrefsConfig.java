@@ -63,5 +63,10 @@ public class PrefsConfig {
             editor.putBoolean("scramble", false);
             editor.apply();
         }
+
+        if(!prefs.contains("scrambleLength")){
+            editor.putInt("scrambleLength", 0);
+            editor.apply();
+        }
     }
 }
