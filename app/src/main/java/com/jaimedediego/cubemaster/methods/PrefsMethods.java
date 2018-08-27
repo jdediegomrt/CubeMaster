@@ -89,16 +89,16 @@ public class PrefsMethods {
     }
 
 
-    public boolean isWholeCubeRotationsEnabled(){
-        if(prefsConfig.prefs.getBoolean("wholeCubeRotations", false)){
+    public boolean isScrambleEnabled(){
+        if(prefsConfig.prefs.getBoolean("scramble", false)){
             return true;
         } else {
             return false;
         }
     }
 
-    public void setWholeCubeRotations(boolean wholeCubeRotations){
-        prefsConfig.editor.putBoolean("wholeCubeRotations", wholeCubeRotations);
+    public void setScramble(boolean wholeCubeRotations){
+        prefsConfig.editor.putBoolean("scramble", wholeCubeRotations);
         prefsConfig.editor.apply();
     }
 }

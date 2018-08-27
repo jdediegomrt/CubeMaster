@@ -27,7 +27,7 @@
     <string name="average">Media</string>
     <string name="current_average_of_5">Media de 5</string>
     <string name="current_average_of_10">Media de 10</string>
-    <string name="change_theme">Cambiar tema</string>
+    <string name="change_theme">Tema</string>
     <string name="coloured_timer">Colores en cronómetro</string>
     <string name="minutes_beep">Sonido cada minuto</string>
     <string name="times_detail">Detalle</string>
@@ -79,4 +79,7 @@
     <string name="contact_us">Contáctanos</string>
     <string name="send">enviar</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
+    <string name="timer_settings">Cronómetro</string>
+    <string name="scramble_settings">Scramble</string>
+    <string name="scramble_length">Tamaño</string>
 </resources>

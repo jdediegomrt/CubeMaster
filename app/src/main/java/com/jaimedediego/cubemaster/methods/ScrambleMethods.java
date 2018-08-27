@@ -23,11 +23,11 @@ public class ScrambleMethods {
         if(size%2!=0){
             allSides.addAll(Constants.getInstance().oddNumberNxNxN);
         }
-        if(PrefsMethods.getInstance().isWholeCubeRotationsEnabled()){
+        /*if(PrefsMethods.getInstance().isWholeCubeRotationsEnabled()){
             allSides.add("X");
             allSides.add("Y");
             allSides.add("Z");
-        }
+        }*/
         List<String> extSides = Constants.getInstance().NxNxN;
         for(int i = 0; i < (size/2); i++){
             for(int j = 0; j < extSides.size(); j++){

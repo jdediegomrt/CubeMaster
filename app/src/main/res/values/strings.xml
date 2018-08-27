@@ -27,7 +27,7 @@
     <string name="average">Average</string>
     <string name="current_average_of_5">Current average of 5</string>
     <string name="current_average_of_10">Current average of 10</string>
-    <string name="change_theme">Change Theme</string>
+    <string name="change_theme">Theme</string>
     <string name="coloured_timer">Coloured Timer</string>
     <string name="minutes_beep">Minutes BEEP</string>
     <string name="times_detail">Times detail</string>
@@ -79,4 +79,7 @@
     <string name="contact_us">Contact us</string>
     <string name="send">send</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
+    <string name="timer_settings">Timer</string>
+    <string name="scramble_settings">Scramble</string>
+    <string name="scramble_length">Length</string>
 </resources>
