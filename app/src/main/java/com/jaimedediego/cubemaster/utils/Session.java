@@ -2,12 +2,16 @@ package com.jaimedediego.cubemaster.utils;
 
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 
+import java.util.List;
+
 public class Session {
 
     private static Session instance;
 
     public int currentUserId=1;
     public int currentPuzzleId;
+    public List<String> currentPuzzleNotation = null;
+    public String currentPuzzleScramble = null;
 
     public int darkColorTheme=0;
     public int lightColorTheme=0;

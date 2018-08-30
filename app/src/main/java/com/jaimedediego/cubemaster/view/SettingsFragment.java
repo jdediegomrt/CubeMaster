@@ -7,12 +7,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -31,6 +34,7 @@ import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.ColorsAdapter;
+import com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText;
 import com.jaimedediego.cubemaster.view.Dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RestartDialog;
@@ -76,7 +80,7 @@ public class SettingsFragment extends Fragment {
         final Switch scramble = v.findViewById(R.id.scramble_switch);
         final ImageButton stopwatchInfoButton = v.findViewById(R.id.stopwatch_info);
         final NumberPicker freezingTime = v.findViewById(R.id.frtime_setter);
-        final NumberPicker scrambleLength = v.findViewById(R.id.scramblelength_setter);
+        final FilteredEditText scrambleLength = v.findViewById(R.id.scramblelength_setter);
         final GridView gridView = v.findViewById(R.id.color_gridview);
         final ImageButton frTimeInfoButton = v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = v.findViewById(R.id.settings_layout);
@@ -96,11 +100,7 @@ public class SettingsFragment extends Fragment {
         freezingTime.setWrapSelectorWheel(true);
         freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime()/100);
 
-        scrambleLength.setMaxValue(Constants.getInstance().maxScrambleLength-1);
-        scrambleLength.setMinValue(0);
-        scrambleLength.setDisplayedValues(ScrambleMethods.getInstance().getScrambleLengths());
-        scrambleLength.setWrapSelectorWheel(true);
-        scrambleLength.setValue(PrefsMethods.getInstance().getScrambleLength());
+        scrambleLength.setText(String.valueOf(PrefsMethods.getInstance().getScrambleLength()));
 
         ColorsAdapter adapter = new ColorsAdapter(getActivity());
         gridView.setAdapter(adapter);
@@ -190,12 +190,15 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-        scrambleLength.setOnValueChangedListener( new NumberPicker.
-                OnValueChangeListener() {
+        scrambleLength.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                PrefsMethods.getInstance().setScrambleLength(newVal);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    PrefsMethods.getInstance().setScrambleLength(Integer.parseInt(v.getText().toString()));
+                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                }
+                return false;
             }
         });
 

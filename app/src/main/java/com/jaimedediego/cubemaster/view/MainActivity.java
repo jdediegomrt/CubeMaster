@@ -35,6 +35,7 @@ import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
+import com.jaimedediego.cubemaster.utils.Session;
 
 public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
@@ -63,9 +64,12 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-        setContentView(R.layout.activity_main);
+        if(PrefsMethods.getInstance().isScrambleEnabled() && ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+            ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+            Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+        }
 
-        Log.e("Scramble", ScrambleMethods.getInstance().getNxNxNNotation(5).toString() + " ---- " + ScrambleMethods.getInstance().getNxNxNNotation(5).size());
+        setContentView(R.layout.activity_main);
 
 //        PrefsMethods.getInstance().setOnboardingShown(false);
         if (!PrefsMethods.getInstance().isOnboardingShown()) {
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity
         final AdView banner = findViewById(R.id.banner);
         ImageButton closeBanner = findViewById(R.id.close_banner);
         bannerLayout = findViewById(R.id.banner_layout);
-        final ViewGroup.LayoutParams params = bannerLayout.getLayoutParams();
 
         RadioButton timer = findViewById(R.id.timer);
         RadioButton stats = findViewById(R.id.stats);
@@ -89,8 +92,8 @@ public class MainActivity extends AppCompatActivity
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition menulayoutTransition = ((RelativeLayout)findViewById(R.id.content_main)).getLayoutTransition();
-            menulayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+            LayoutTransition menuLayoutTransition = ((RelativeLayout)findViewById(R.id.content_main)).getLayoutTransition();
+            menuLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
             LayoutTransition bannerLayoutTransition = ((RelativeLayout)findViewById(R.id.banner_container)).getLayoutTransition();
             bannerLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }

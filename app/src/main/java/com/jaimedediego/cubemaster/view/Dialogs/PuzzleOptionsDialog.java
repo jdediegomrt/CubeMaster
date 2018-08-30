@@ -4,14 +4,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
+import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.DetailActivity;
 
 public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
@@ -60,7 +65,12 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
                 break;
             case R.id.use_puzzle:
                 DatabaseMethods.getInstance().usePuzzle(puzzle);
-                didSomething=true;
+                if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                    Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
+                }
+                didSomething = true;
                 dismiss();
                 break;
             case R.id.show_stats:

@@ -228,8 +228,8 @@
             android:layout_height="50dp"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:paddingEnd="5dp"
-            android:paddingRight="5dp">
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/scramblelength_text"
@@ -241,25 +241,16 @@
                 android:textColor="@color/md_black_1000"
                 android:textSize="15sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/selected"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/scramblelength_setter"
-                android:layout_toStartOf="@+id/scramblelength_setter"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp"/>
-
-            <NumberPicker
-                android:theme="@style/NumberPickerText"
+            <com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/scramblelength_setter"
                 android:layout_centerVertical="true"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:imeOptions="actionDone"
+                android:inputType="number"/>
 
         </RelativeLayout>
 

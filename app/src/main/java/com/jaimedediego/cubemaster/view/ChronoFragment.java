@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
@@ -118,16 +120,21 @@ public class ChronoFragment extends Fragment {
         final TextView scrambleText = v.findViewById(R.id.scramble_text);
         final ImageButton scrambleButton = v.findViewById(R.id.scramble_button);
 
-        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            if (PrefsMethods.getInstance().isScrambleEnabled()) {
-                scrambleLayout.setVisibility(View.VISIBLE);
-                scrambleText.setText("This puzzle has scramble");
-            } else {
-                scrambleLayout.setVisibility(View.GONE);
-            }
+        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+            scrambleLayout.setVisibility(View.VISIBLE);
+            scrambleText.setText(Session.getInstance().currentPuzzleScramble);
         } else {
             scrambleLayout.setVisibility(View.GONE);
         }
+
+        scrambleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+            }
+        });
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override

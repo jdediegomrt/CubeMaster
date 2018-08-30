@@ -1,9 +1,19 @@
 package com.jaimedediego.cubemaster.methods;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.jaimedediego.cubemaster.utils.Constants;
+import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 
 public class ScrambleMethods {
 
@@ -26,7 +36,8 @@ public class ScrambleMethods {
         return lengths;
     }
 
-    public List<String> getNxNxNNotation(int size){
+    public void getCurrentNxNxNPuzzleNotation(){
+        int size = Integer.parseInt(DatabaseMethods.getInstance().getCurrentPuzzleName().substring(0, 1));
         List<String> allSides = new ArrayList<>();
         if(size%2!=0){
             allSides.addAll(Constants.getInstance().oddNumberNxNxN);
@@ -37,20 +48,51 @@ public class ScrambleMethods {
             allSides.add("Z");
         }*/
         List<String> extSides = Constants.getInstance().NxNxN;
-        for(int i = 0; i < (size/2); i++){
+        for(int i = 1; i < (size/2); i++){
             for(int j = 0; j < extSides.size(); j++){
-                if(i>0) {
-                    allSides.add(extSides.get(j) + (i + 1));
-                    allSides.add((i + 1) + extSides.get(j));
-                }
+                allSides.add(extSides.get(j) + (i + 1));
+                allSides.add((i + 1) + extSides.get(j));
             }
         }
         allSides.addAll(extSides);
-        return allSides;
+        Session.getInstance().currentPuzzleNotation = allSides;
     }
 
-    //TODO: implement
-    public List<String> scramble(List<String> notation, int moves){
-        return null;
+    public String scramble(){
+        StringBuilder stringBuilder = new StringBuilder();
+        List<String> movements = new ArrayList<>(Session.getInstance().currentPuzzleNotation);
+        int size = Integer.parseInt(DatabaseMethods.getInstance().getCurrentPuzzleName().substring(0, 1));
+        for (String face : new ArrayList<>(movements)) {
+            movements.add(face+"'");
+            movements.add(face+"2");
+        }
+        Collections.sort(movements);
+        String faceMoved  = "";
+        List<String> prevMovesDisabled = new ArrayList<>();
+        Random random = new Random();
+        for(int i = 0; i < PrefsMethods.getInstance().getScrambleLength(); i++){
+            if(!faceMoved.equals("")){
+                for (String j: new ArrayList<>(movements)) {
+                    if(j.startsWith(faceMoved)){
+                        movements.remove(j);
+                        prevMovesDisabled.add(j);
+                    }
+                }
+            }
+            String movement = movements.get(random.nextInt(movements.size()));
+            stringBuilder.append(movement).append("  ");
+            if(size/2>=2){
+                if(movement.length()==1){
+                    faceMoved = movement.substring(0, 1);
+                } else {
+                    faceMoved = movement.substring(0, 2);
+                }
+            } else {
+                faceMoved = movement.substring(0, 1);
+            }
+            movements.addAll(prevMovesDisabled);
+            prevMovesDisabled.clear();
+        }
+        return stringBuilder.toString();
     }
 }
