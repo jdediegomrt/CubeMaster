@@ -279,7 +279,7 @@ public class DatabaseMethods {
         }
         if (c.moveToFirst()) {
             do {
-                times.add(new Detail(c.getString(0), c.getString(1), c.getInt(2)));
+                times.add(new Detail(c.getString(0), c.getString(1), null, c.getInt(2)));
             } while(c.moveToNext());
         }
         c.close();

@@ -13,7 +13,10 @@
 
         <RelativeLayout
             android:layout_above="@+id/animated_line"
-            android:layout_margin="50dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:id="@+id/scramble_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -34,8 +37,9 @@
                 android:id="@+id/scramble_text"
                 android:textColor="@color/md_white_1000"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:layout_centerVertical="true"
                 android:textSize="13sp"/>
 
