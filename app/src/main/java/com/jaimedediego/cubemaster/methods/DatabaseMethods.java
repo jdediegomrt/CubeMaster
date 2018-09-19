@@ -268,13 +268,13 @@ public class DatabaseMethods {
         List<Detail> times = new ArrayList<>();
         Cursor c;
         switch (mode){
-            case 1: c = DatabaseMethods.getInstance().makeQuery("select time, date, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"') order by num_solve asc");
+            case 1: c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"') order by num_solve asc");
                 break;
-            case 2: c = DatabaseMethods.getInstance().makeQuery("select time, date, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"')");
+            case 2: c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"')");
                 break;
-            case 3: c = DatabaseMethods.getInstance().makeQuery("select time, date, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"')");
+            case 3: c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"')");
                 break;
-            default: c = DatabaseMethods.getInstance().makeQuery("select time, date, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"') order by num_solve desc");
+            default: c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id="+Session.getInstance().currentUserId+" and puzzle_id in (select id from puzzles where name='"+puzzle+"') order by num_solve desc");
                 break;
         }
         if (c.moveToFirst()) {
