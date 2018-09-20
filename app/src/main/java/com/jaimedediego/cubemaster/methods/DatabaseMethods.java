@@ -27,9 +27,10 @@ public class DatabaseMethods {
 
     private SQLiteDatabase db;
     private DatabaseConfig timesdb;
+    private static final int DATABASE_VERSION = 2;
 
     public void setDatabase(Context context){
-        timesdb = new DatabaseConfig(context, "DBSolves", null, 1);
+        timesdb = new DatabaseConfig(context, "DBSolves", null, DATABASE_VERSION);
     }
 
     private void openDatabase(){
@@ -114,11 +115,11 @@ public class DatabaseMethods {
         return num;
     }
 
-    public void saveData(String time, String date) {
+    public void saveData(String time, String date, String scramble) {
         Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id="+ Session.getInstance().currentUserId+" and puzzle_id="+Session.getInstance().currentPuzzleId);
         if (c.moveToFirst()) {
             do {
-                makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date) VALUES (" + Session.getInstance().currentUserId + ", " + Session.getInstance().currentPuzzleId + ", " + (c.getInt(0)+1) + ", '" + time + "', '" + date + "')");
+                makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date, scramble) VALUES (" + Session.getInstance().currentUserId + ", " + Session.getInstance().currentPuzzleId + ", " + (c.getInt(0)+1) + ", '" + time + "', '" + date + "', '" + scramble.replace("'", "*") + "')");
             } while(c.moveToNext());
         }
         c.close();
@@ -279,7 +280,11 @@ public class DatabaseMethods {
         }
         if (c.moveToFirst()) {
             do {
-                times.add(new Detail(c.getString(0), c.getString(1), null, c.getInt(2)));
+                String scramble = c.getString(2);
+                if (scramble!=null){
+                    scramble = scramble.replace("*", "'");
+                }
+                times.add(new Detail(c.getString(0), c.getString(1), scramble, c.getInt(3)));
             } while(c.moveToNext());
         }
         c.close();

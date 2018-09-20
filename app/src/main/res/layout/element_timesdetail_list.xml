@@ -11,9 +11,10 @@
         android:id="@+id/detail">
 
         <RelativeLayout
+            android:id="@+id/detail_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+            android:layout_centerHorizontal="true">
 
             <TextView
                 android:paddingStart="10sp"
@@ -43,11 +44,25 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:paddingBottom="10sp"
+            android:visibility="gone"
+            android:layout_below="@+id/detail_layout"
+            android:id="@+id/scramble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_black_1000"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"/>
+
         <ImageButton
             android:background="@android:color/transparent"
             android:src="@drawable/ic_cancel_black_18dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
