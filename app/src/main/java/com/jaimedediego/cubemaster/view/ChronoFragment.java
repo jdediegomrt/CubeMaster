@@ -2,6 +2,7 @@ package com.jaimedediego.cubemaster.view;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -53,6 +54,7 @@ public class ChronoFragment extends Fragment {
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private TextView scrambleText;
     private int helpCounter=0;
 
     ChronoThread thread = null;
@@ -80,6 +82,14 @@ public class ChronoFragment extends Fragment {
         } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
             dialog.show();
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(dialog.didSomething()){
+                        scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+                    }
+                }
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +127,7 @@ public class ChronoFragment extends Fragment {
         final RadioGroup activityMenu = getActivity().findViewById(R.id.menu_layout);
 
         final RelativeLayout scrambleLayout = v.findViewById(R.id.scramble_layout);
-        final TextView scrambleText = v.findViewById(R.id.scramble_text);
+        scrambleText = v.findViewById(R.id.scramble_text);
         final ImageButton scrambleButton = v.findViewById(R.id.scramble_button);
 
         if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {

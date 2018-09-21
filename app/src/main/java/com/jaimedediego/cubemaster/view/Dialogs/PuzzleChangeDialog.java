@@ -4,14 +4,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
+import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,8 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
 
     private Context context;
     private Spinner spinner;
+
+    private boolean didSomething=false;
 
     public PuzzleChangeDialog(@NonNull final Context context) {
         super(context);
@@ -49,6 +55,12 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.accept:
                 DatabaseMethods.getInstance().usePuzzle(spinner.getSelectedItem().toString());
+                if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                    Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
+                }
+                didSomething = true;
                 dismiss();
                 break;
             case R.id.add_new:
@@ -68,4 +80,9 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
                 break;
         }
     }
+
+    public boolean didSomething (){
+        return didSomething;
+    }
+
 }
