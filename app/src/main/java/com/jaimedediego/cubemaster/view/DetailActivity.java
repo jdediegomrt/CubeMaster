@@ -119,18 +119,22 @@ public class DetailActivity extends AppCompatActivity {
 
                 final TextView date = v.findViewById(R.id.date);
                 final TextView time = v.findViewById(R.id.time);
+                final TextView scramble = v.findViewById(R.id.scramble);
                 final ImageButton button = v.findViewById(R.id.delete_puzzle);
-                final View divider = v.findViewById(R.id.divider);
 
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());
+                if(detail.getScramble()!=null && !detail.getScramble().equals("")){
+                    scramble.setVisibility(View.VISIBLE);
+                    scramble.setText(detail.getScramble());
+                }
 
                 button.setColorFilter(Session.getInstance().lighterColorTheme);
-                divider.setBackgroundColor(Session.getInstance().lightColorTheme);
+                time.setBackgroundColor(Session.getInstance().darkColorTheme);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, timesLayout, v, detail.getNumSolve());
                         dialog.show();
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

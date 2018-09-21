@@ -28,14 +28,6 @@ public class ScrambleMethods {
         return instance;
     }
 
-    public String[] getScrambleLengths(){
-        String[] lengths = new String[Constants.getInstance().maxScrambleLength];
-        for(int i = 0; i< lengths.length; i++){
-            lengths[i] = ""+(i+1);
-        }
-        return lengths;
-    }
-
     public void getCurrentNxNxNPuzzleNotation(){
         int size = Integer.parseInt(DatabaseMethods.getInstance().getCurrentPuzzleName().substring(0, 1));
         List<String> allSides = new ArrayList<>();
@@ -50,7 +42,9 @@ public class ScrambleMethods {
         List<String> extSides = Constants.getInstance().NxNxN;
         for(int i = 1; i < (size/2); i++){
             for(int j = 0; j < extSides.size(); j++){
-                allSides.add(extSides.get(j) + (i + 1));
+                String subindex = extSides.get(j) + (i + 1);
+                subindex = subindex.replace("2", "\u2082");
+                allSides.add(subindex);
                 allSides.add((i + 1) + extSides.get(j));
             }
         }

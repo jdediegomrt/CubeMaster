@@ -47,7 +47,7 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept:
-                parent.removeView((View)child.getParent().getParent());
+                parent.removeView(child);
                 DatabaseMethods.getInstance().deleteSolve(numSolve);
                 didSomething=true;
                 dismiss();
