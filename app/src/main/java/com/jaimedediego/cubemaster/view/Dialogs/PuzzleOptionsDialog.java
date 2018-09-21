@@ -11,25 +11,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.R;
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.DetailActivity;
 
-public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
+public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener {
 
     private String puzzle;
     private Context context;
 
-    private boolean didSomething=false;
+    private boolean didSomething = false;
 
     public PuzzleOptionsDialog(@NonNull Context context, String puzzle) {
         super(context);
-        this.puzzle=puzzle;
-        this.context=context;
+        this.puzzle = puzzle;
+        this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_whattodopuzzle);
@@ -41,7 +40,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         final Button reset = findViewById(R.id.reset_puzzle);
 
         currentPuzzle.setText(puzzle);
-        if(DatabaseMethods.getInstance().countPuzzles()==1) {
+        if (DatabaseMethods.getInstance().countPuzzles() == 1) {
             delete.setTextColor(context.getColor(R.color.md_blue_grey_600));
         }
         delete.setOnClickListener(this);
@@ -54,7 +53,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.delete_puzzle:
-                if(DatabaseMethods.getInstance().countPuzzles()==1){
+                if (DatabaseMethods.getInstance().countPuzzles() == 1) {
                     Toast.makeText(context, R.string.must_be_one_puzzle, Toast.LENGTH_SHORT).show();
                 } else {
                     areYouSure(R.id.delete_puzzle);
@@ -82,7 +81,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         }
     }
 
-    private void areYouSure(final int id){
+    private void areYouSure(final int id) {
         setContentView(R.layout.layout_dialog_areyousure);
 
         TextView currentPuzzle = findViewById(R.id.puzzle_name);
@@ -91,7 +90,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         final Button cancel = findViewById(R.id.cancel);
 
         currentPuzzle.setText(puzzle);
-        if(id==R.id.delete_puzzle) {
+        if (id == R.id.delete_puzzle) {
             text.setText(R.string.areyousuredelete);
         } else {
             text.setText(R.string.areyousurereset);
@@ -100,12 +99,12 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id==R.id.delete_puzzle) {
+                if (id == R.id.delete_puzzle) {
                     DatabaseMethods.getInstance().deletePuzzle(puzzle);
                 } else {
                     DatabaseMethods.getInstance().resetPuzzle(puzzle);
                 }
-                didSomething=true;
+                didSomething = true;
                 dismiss();
             }
         });
@@ -123,7 +122,7 @@ public class PuzzleOptionsDialog extends Dialog implements View.OnClickListener{
         getContext().startActivity(intent);
     }
 
-    public boolean didSomething (){
+    public boolean didSomething() {
         return didSomething;
     }
 }

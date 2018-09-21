@@ -45,7 +45,7 @@ public class OnboardingActivity extends AppCompatActivity {
         arrowRight = findViewById(R.id.arrow_right);
         arrowLeft = findViewById(R.id.arrow_left);
         image = findViewById(R.id.image);
-        final ImageView cubemasterImage =  findViewById(R.id.cubemaster_image);
+        final ImageView cubemasterImage = findViewById(R.id.cubemaster_image);
 
         final Button button = findViewById(R.id.onboarding_button);
         final CustomViewPager viewPager = findViewById(R.id.onboarding_container);
@@ -55,7 +55,7 @@ public class OnboardingActivity extends AppCompatActivity {
         pageIndicator.setupWithViewPager(viewPager, true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition arrowsLayoutTransition = ((RelativeLayout)findViewById(R.id.onboarding_button_layout)).getLayoutTransition();
+            LayoutTransition arrowsLayoutTransition = ((RelativeLayout) findViewById(R.id.onboarding_button_layout)).getLayoutTransition();
             arrowsLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
@@ -75,21 +75,21 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void transformPage(View page, float position) {
                 final float normalizedPosition = Math.abs(Math.abs(position) - 1);
-                if(normalizedPosition<0.5){
-                    text.setAlpha(1-normalizedPosition*2);
-                    image.setAlpha((float)0.5-normalizedPosition);
-                }else{
-                    text.setAlpha(normalizedPosition*2-1);
-                    image.setAlpha(normalizedPosition-(float)0.5);
+                if (normalizedPosition < 0.5) {
+                    text.setAlpha(1 - normalizedPosition * 2);
+                    image.setAlpha((float) 0.5 - normalizedPosition);
+                } else {
+                    text.setAlpha(normalizedPosition * 2 - 1);
+                    image.setAlpha(normalizedPosition - (float) 0.5);
                 }
-                image.setRotation(360-position*360);
-                cubemasterImage.setRotation(position*360-360);
+                image.setRotation(360 - position * 360);
+                cubemasterImage.setRotation(position * 360 - 360);
             }
         });
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {
-                if(ViewPager.SCROLL_STATE_IDLE == state){
+                if (ViewPager.SCROLL_STATE_IDLE == state) {
                     arrowLeft.setEnabled(true);
                     arrowRight.setEnabled(true);
                     arrowLeft.setClickable(true);
@@ -104,24 +104,24 @@ public class OnboardingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrolled( int position , float positionOffset , int positionOffsetPixels ) {
-                if(positionOffset > 0.5) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (positionOffset > 0.5) {
                     updateText(position + 1);
-                    if(position==viewPager.getAdapter().getCount()-2){
+                    if (position == viewPager.getAdapter().getCount() - 2) {
                         button.setText(R.string.got_it);
                         arrowRight.setVisibility(View.GONE);
                     }
-                    if(position==0){
+                    if (position == 0) {
                         image.setVisibility(View.VISIBLE);
                         arrowLeft.setVisibility(View.VISIBLE);
                     }
-                }else{
+                } else {
                     updateText(position);
-                    if(position==viewPager.getAdapter().getCount()-2){
+                    if (position == viewPager.getAdapter().getCount() - 2) {
                         arrowRight.setVisibility(View.VISIBLE);
                         button.setText(R.string.skip);
                     }
-                    if(position==0){
+                    if (position == 0) {
                         image.setVisibility(View.GONE);
                         arrowLeft.setVisibility(View.GONE);
                     }
@@ -129,14 +129,14 @@ public class OnboardingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageSelected( int position ) {/*Do nothing*/}
+            public void onPageSelected(int position) {/*Do nothing*/}
         });
 
         arrowRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setSwipeable(false);
-                pageIndicator.getTabAt(viewPager.getCurrentItem()+1).select();
+                pageIndicator.getTabAt(viewPager.getCurrentItem() + 1).select();
             }
         });
 
@@ -144,7 +144,7 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewPager.setSwipeable(false);
-                pageIndicator.getTabAt(viewPager.getCurrentItem()-1).select();
+                pageIndicator.getTabAt(viewPager.getCurrentItem() - 1).select();
             }
         });
 
@@ -178,7 +178,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
             ImageView sectionImage = rootView.findViewById(R.id.section_image);
 
-            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 0:
                     sectionImage.setBackgroundResource(R.drawable.background_onboarding_1);
                     break;
@@ -197,14 +197,15 @@ public class OnboardingActivity extends AppCompatActivity {
                 case 5:
                     sectionImage.setBackgroundResource(R.drawable.background_onboarding_6);
                     break;
-                default: break;
+                default:
+                    break;
             }
             return rootView;
         }
     }
 
     private void updateText(int position) {
-        switch(position){
+        switch (position) {
             case 0:
                 mainText.setText(R.string.onboarding_main_text_1);
                 subText.setText(R.string.onboarding_sub_text_1);
@@ -234,7 +235,8 @@ public class OnboardingActivity extends AppCompatActivity {
                 subText.setText(R.string.onboarding_sub_text_6);
                 image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.tick, null));
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 

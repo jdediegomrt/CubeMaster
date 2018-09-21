@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.R;
 
 public class ColorsAdapter extends BaseAdapter {
 
@@ -40,7 +40,7 @@ public class ColorsAdapter extends BaseAdapter {
         }
         View color = view.findViewById(R.id.element);
         color.setBackgroundResource(ThemeConfig.getInstance().colors().get(position));
-        if(position == PrefsMethods.getInstance().getColorAccent()) {
+        if (position == PrefsMethods.getInstance().getColorAccent()) {
             color.setAlpha(0.3f);
         }
         return view;

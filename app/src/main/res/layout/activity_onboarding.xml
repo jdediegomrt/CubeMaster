@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:background="@color/md_black_1000"
+    android:fitsSystemWindows="true"
     tools:context="com.jaimedediego.cubemaster.view.OnboardingActivity">
 
     <com.jaimedediego.cubemaster.view.CustomViews.CustomViewPager
         android:id="@+id/onboarding_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:id="@+id/text"
-        android:layout_margin="20dp"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/md_white_1000"
-            android:textStyle="bold"
-            android:textSize="24sp"
             android:text="@string/onboarding_main_text_1"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/md_white_1000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/sub_text"
-            android:layout_below="@+id/main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_text"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/md_white_1000"
-            android:textSize="15sp"
             android:text="@string/onboarding_sub_text_1"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/md_white_1000"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
     <ImageView
-        android:contentDescription="@string/selected"
-        android:layout_centerVertical="true"
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/md_white_1000"
-        android:src="@mipmap/alarm"/>
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/selected"
+        android:src="@mipmap/alarm"
+        android:tint="@color/md_white_1000" />
 
     <RelativeLayout
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="10dp"
         android:orientation="vertical">
 
         <ImageView
-            android:contentDescription="@string/selected"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginEnd="50dp"
             android:id="@+id/cubemaster_image"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@mipmap/cubemaster"/>
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/selected"
+            android:src="@mipmap/cubemaster" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:animateLayoutChanges="true"
         android:id="@+id/onboarding_button_layout"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/onboarding_button"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/background_gotit_button"
             android:text="@string/skip"
-            android:textColor="@color/md_white_1000"
-            android:background="@drawable/background_gotit_button"/>
+            android:textColor="@color/md_white_1000" />
 
 
         <ImageButton
             android:id="@+id/arrow_right"
-            android:contentDescription="@string/selected"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_arrow_forward_white_24dp"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/selected"
+            android:src="@drawable/ic_arrow_forward_white_24dp" />
 
         <ImageButton
-            android:visibility="gone"
             android:id="@+id/arrow_left"
-            android:contentDescription="@string/selected"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_arrow_back_white_24dp"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/selected"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -126,9 +126,9 @@
         android:layout_width="100dp"
         android:layout_height="5dp"
         android:layout_above="@id/onboarding_button_layout"
-        android:background="@color/white_tr"
         android:layout_centerHorizontal="true"
+        android:background="@color/white_tr"
         local:tabIndicatorColor="@color/md_white_1000"
-        local:tabIndicatorHeight="5dp"/>
+        local:tabIndicatorHeight="5dp" />
 
 </RelativeLayout>

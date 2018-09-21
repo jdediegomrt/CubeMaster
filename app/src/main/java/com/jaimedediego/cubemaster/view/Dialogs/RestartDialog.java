@@ -8,18 +8,18 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 
-public class RestartDialog extends Dialog implements View.OnClickListener{
+public class RestartDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
     private int position;
 
     public RestartDialog(@NonNull final Context context, final int position) {
         super(context);
-        this.position=position;
-        this.context=context;
+        this.position = position;
+        this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_restart);

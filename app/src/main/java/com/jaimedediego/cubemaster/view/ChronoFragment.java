@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,11 +25,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
@@ -55,10 +54,10 @@ public class ChronoFragment extends Fragment {
     private TextView secs;
     private TextView millis;
     private TextView scrambleText;
-    private int helpCounter=0;
+    private int helpCounter = 0;
 
     ChronoThread thread = null;
-    private boolean holded=false;
+    private boolean holded = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +68,7 @@ public class ChronoFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_stats, menu);
     }
 
@@ -85,7 +84,7 @@ public class ChronoFragment extends Fragment {
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    if(dialog.didSomething()){
+                    if (dialog.didSomething()) {
                         scrambleText.setText(Session.getInstance().currentPuzzleScramble);
                     }
                 }
@@ -149,7 +148,7 @@ public class ChronoFragment extends Fragment {
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(infoLayout.getHeight()!=0){
+                if (infoLayout.getHeight() != 0) {
                     infoButton.setColorFilter(null);
                     infoLayout.setLayoutParams(params);
                     chronoScreen.setEnabled(true);
@@ -165,7 +164,7 @@ public class ChronoFragment extends Fragment {
                 gotitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        helpCounter=0;
+                        helpCounter = 0;
                         infoButton.setColorFilter(null);
                         infoLayout.setLayoutParams(params);
                         chronoScreen.setEnabled(true);
@@ -174,18 +173,18 @@ public class ChronoFragment extends Fragment {
             }
         });
 
-        if(!PrefsMethods.getInstance().isOnboardingShown()){
+        if (!PrefsMethods.getInstance().isOnboardingShown()) {
             infoButton.performClick();
         }
 
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(helpCounter>0){
-                    helpCounter=0;
+                if (helpCounter > 0) {
+                    helpCounter = 0;
                 }
-                if(thread!=null&&thread.isAlive()){
-                    if(!thread.getPause()) {
+                if (thread != null && thread.isAlive()) {
+                    if (!thread.getPause()) {
                         thread.setPause(true);
                         chronoScreen.setEnabled(false);
                         pauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_play_circle_filled_white_48dp, null));
@@ -198,13 +197,14 @@ public class ChronoFragment extends Fragment {
             }
         });
 
-        chronoScreen.setOnTouchListener(new View.OnTouchListener(){
+        chronoScreen.setOnTouchListener(new View.OnTouchListener() {
             final Handler handler = new Handler();
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     animatedLine.setBackgroundResource(R.drawable.background_timer_freeze);
-                    if(thread!=null&&thread.isAlive()){
+                    if (thread != null && thread.isAlive()) {
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
                         thread.finalize(true);
                         final Handler handleChrono = new Handler();
@@ -212,24 +212,24 @@ public class ChronoFragment extends Fragment {
                             @Override
                             public void run() {
                                 String time;
-                                if(mins.getText().equals("0")){
-                                    time = secs.getText().toString()+'.'+millis.getText().toString();
+                                if (mins.getText().equals("0")) {
+                                    time = secs.getText().toString() + '.' + millis.getText().toString();
                                 } else {
-                                    if(hours.getText().equals("0")){
-                                        time = mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
-                                    } else{
-                                        time = hours.getText().toString()+':'+mins.getText().toString()+':'+secs.getText().toString()+'.'+millis.getText().toString();
+                                    if (hours.getText().equals("0")) {
+                                        time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                                    } else {
+                                        time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
                                     }
                                 }
                                 for (int i = 0; i < activityMenu.getChildCount(); i++) {
                                     activityMenu.getChildAt(i).setEnabled(true);
                                 }
-                                if(PrefsMethods.getInstance().isPauseActivated()){
+                                if (PrefsMethods.getInstance().isPauseActivated()) {
                                     pauseButton.setVisibility(View.GONE);
                                 }
                                 infoButton.setEnabled(true);
                                 DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString());
-                                if(!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes()%50==0){
+                                if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
                                     final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
                                     dialog.show();
                                 }
@@ -248,21 +248,21 @@ public class ChronoFragment extends Fragment {
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     handler.removeCallbacksAndMessages(null);
-                    if(holded) {
+                    if (holded) {
                         for (int i = 0; i < activityMenu.getChildCount(); i++) {
                             activityMenu.getChildAt(i).setEnabled(false);
                         }
                         infoButton.setEnabled(false);
-                        helpCounter=0;
+                        helpCounter = 0;
                         thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                         thread.start();
-                        if(PrefsMethods.getInstance().isPauseActivated()){
+                        if (PrefsMethods.getInstance().isPauseActivated()) {
                             pauseButton.setVisibility(View.VISIBLE);
                         }
                     } else {
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
                         helpCounter++;
-                        if(helpCounter==10){
+                        if (helpCounter == 10) {
                             infoButton.performClick();
                         }
                     }

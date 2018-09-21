@@ -55,7 +55,7 @@ public class Detail {
         public int compare(Detail detail1, Detail detail2) {
             int time1 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail1.getTime())).get(0);
             int time2 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail2.getTime())).get(0);
-            return time1-time2;
+            return time1 - time2;
         }
     };
 
@@ -64,7 +64,7 @@ public class Detail {
         public int compare(Detail detail1, Detail detail2) {
             int time1 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail1.getTime())).get(0);
             int time2 = StatsMethods.getInstance().timesListToMillis(Arrays.asList(detail2.getTime())).get(0);
-            return time2-time1;
+            return time2 - time1;
         }
     };
 }

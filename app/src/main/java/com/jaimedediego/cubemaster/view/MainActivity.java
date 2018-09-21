@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -43,13 +42,13 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fm;
     private BroadcastReceiver broadcastReceiver;
     private IntentFilter broadcastFilter;
-    private boolean isReceiverRegistered=false;
+    private boolean isReceiverRegistered = false;
     private int waitingMillis = 60000;
 
     private String chronoStr = "Chrono";
     private String statsStr = "Stats";
-    private String settingsStr="Settings";
-    private String puzzlesStr="Puzzles";
+    private String settingsStr = "Settings";
+    private String puzzlesStr = "Puzzles";
     private Boolean exit = false;
 
     private RelativeLayout bannerLayout;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-        if(PrefsMethods.getInstance().isScrambleEnabled() && ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+        if (PrefsMethods.getInstance().isScrambleEnabled() && ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
             Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
         }
@@ -92,9 +91,9 @@ public class MainActivity extends AppCompatActivity
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition menuLayoutTransition = ((RelativeLayout)findViewById(R.id.content_main)).getLayoutTransition();
+            LayoutTransition menuLayoutTransition = ((RelativeLayout) findViewById(R.id.content_main)).getLayoutTransition();
             menuLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-            LayoutTransition bannerLayoutTransition = ((RelativeLayout)findViewById(R.id.banner_container)).getLayoutTransition();
+            LayoutTransition bannerLayoutTransition = ((RelativeLayout) findViewById(R.id.banner_container)).getLayoutTransition();
             bannerLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 final ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isAvailable() || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isAvailable()) {
-                    waitingMillis=0;
+                    waitingMillis = 0;
 //                    banner.loadAd(new AdRequest.Builder().build());
                     banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
                 }
@@ -135,7 +134,7 @@ public class MainActivity extends AppCompatActivity
         closeBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bannerLayout.getVisibility()==View.VISIBLE){
+                if (bannerLayout.getVisibility() == View.VISIBLE) {
                     bannerLayout.setVisibility(View.GONE);
 //                    banner.loadAd(new AdRequest.Builder().build());
                     banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
@@ -154,28 +153,28 @@ public class MainActivity extends AppCompatActivity
         timer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     fm.beginTransaction().replace(R.id.container, new ChronoFragment(), chronoStr).commit();
             }
         });
         stats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     fm.beginTransaction().replace(R.id.container, new StatsFragment(), statsStr).commit();
             }
         });
         myPuzzles.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     fm.beginTransaction().replace(R.id.container, new PuzzlesFragment(), puzzlesStr).commit();
             }
         });
         settings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     fm.beginTransaction().replace(R.id.container, new SettingsFragment(), settingsStr).commit();
             }
         });
@@ -184,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isReceiverRegistered){
+        if (!isReceiverRegistered) {
             registerReceiver(broadcastReceiver, broadcastFilter);
             isReceiverRegistered = true;
         }
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        if(isReceiverRegistered){
+        if (isReceiverRegistered) {
             unregisterReceiver(broadcastReceiver);
             isReceiverRegistered = false;
         }
@@ -220,25 +219,25 @@ public class MainActivity extends AppCompatActivity
 
     void refreshView() {
         fm = getSupportFragmentManager();
-        if(fm.findFragmentByTag(statsStr)!=null&&fm.findFragmentByTag(statsStr).isVisible()){
+        if (fm.findFragmentByTag(statsStr) != null && fm.findFragmentByTag(statsStr).isVisible()) {
             replaceFragment(new StatsFragment(), statsStr);
         } else {
-            if(fm.findFragmentByTag(puzzlesStr)!=null&&fm.findFragmentByTag(puzzlesStr).isVisible()){
+            if (fm.findFragmentByTag(puzzlesStr) != null && fm.findFragmentByTag(puzzlesStr).isVisible()) {
                 replaceFragment(new PuzzlesFragment(), puzzlesStr);
             }
         }
     }
 
-    private void showBanner(){
-        if(bannerLayout.getVisibility()==View.GONE) {
-            waitingMillis=120000;
+    private void showBanner() {
+        if (bannerLayout.getVisibility() == View.GONE) {
+            waitingMillis = 120000;
             bannerLayout.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             bannerLayout.setLayoutParams(layoutParams);
         }
     }
 
-    private void replaceFragment(Fragment fr, String tag){
+    private void replaceFragment(Fragment fr, String tag) {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.container, fr, tag);
         fragmentTransaction.addToBackStack(null);

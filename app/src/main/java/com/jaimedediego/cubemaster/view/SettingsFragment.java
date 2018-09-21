@@ -1,13 +1,12 @@
 package com.jaimedediego.cubemaster.view;
 
 import android.animation.LayoutTransition;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,11 +24,10 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
@@ -50,17 +48,17 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_settings, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.contact_us){
+        if (id == R.id.contact_us) {
             final ContactDialog dialog = new ContactDialog(getActivity());
             dialog.show();
-        } else if (id == R.id.rate_us){
+        } else if (id == R.id.rate_us) {
             final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), true);
             dialog.show();
         }
@@ -71,7 +69,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.settings);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings);
 
         PrefsConfig.getInstance().setContext(v.getContext());
 
@@ -98,22 +96,22 @@ public class SettingsFragment extends Fragment {
         freezingTime.setMinValue(0);
         freezingTime.setDisplayedValues(Constants.getInstance().freezingTimeSelector);
         freezingTime.setWrapSelectorWheel(true);
-        freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime()/100);
+        freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime() / 100);
 
         scrambleLength.setText(String.valueOf(PrefsMethods.getInstance().getScrambleLength()));
 
         ColorsAdapter adapter = new ColorsAdapter(getActivity());
         gridView.setAdapter(adapter);
 
-        if(PrefsMethods.getInstance().isBeepActivated()){
+        if (PrefsMethods.getInstance().isBeepActivated()) {
             beep.setChecked(true);
         }
 
-        if(PrefsMethods.getInstance().isPauseActivated()){
+        if (PrefsMethods.getInstance().isPauseActivated()) {
             pause.setChecked(true);
         }
 
-        if(PrefsMethods.getInstance().isScrambleEnabled()){
+        if (PrefsMethods.getInstance().isScrambleEnabled()) {
             scramble.setChecked(true);
         } else {
             scrambleLength.setEnabled(false);
@@ -122,7 +120,7 @@ public class SettingsFragment extends Fragment {
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(frTimeInfoText.getHeight()!=0){
+                if (frTimeInfoText.getHeight() != 0) {
                     frTimeInfoButton.setColorFilter(null);
                     frTimeInfoText.setLayoutParams(frTimeParams);
                 } else {
@@ -136,7 +134,7 @@ public class SettingsFragment extends Fragment {
         beep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(beep.isChecked()){
+                if (beep.isChecked()) {
                     PrefsMethods.getInstance().activateBeep(true);
                 } else {
                     PrefsMethods.getInstance().activateBeep(false);
@@ -147,7 +145,7 @@ public class SettingsFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pause.isChecked()){
+                if (pause.isChecked()) {
                     PrefsMethods.getInstance().activatePause(true);
                 } else {
                     PrefsMethods.getInstance().activatePause(false);
@@ -158,7 +156,7 @@ public class SettingsFragment extends Fragment {
         stopwatchInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stopwatchInfoText.getHeight()!=0){
+                if (stopwatchInfoText.getHeight() != 0) {
                     stopwatchInfoButton.setColorFilter(null);
                     stopwatchInfoText.setLayoutParams(stopwatchParams);
                 } else {
@@ -172,7 +170,7 @@ public class SettingsFragment extends Fragment {
         scramble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(scramble.isChecked()){
+                if (scramble.isChecked()) {
                     PrefsMethods.getInstance().setScramble(true);
                     scrambleLength.setEnabled(true);
                 } else {
@@ -182,11 +180,11 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        freezingTime.setOnValueChangedListener( new NumberPicker.
+        freezingTime.setOnValueChangedListener(new NumberPicker.
                 OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                PrefsMethods.getInstance().setFreezingTime(newVal*100);
+                PrefsMethods.getInstance().setFreezingTime(newVal * 100);
             }
         });
 
@@ -205,7 +203,7 @@ public class SettingsFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if(position!=PrefsMethods.getInstance().getColorAccent()) {
+                if (position != PrefsMethods.getInstance().getColorAccent()) {
                     final RestartDialog dialog = new RestartDialog(getActivity(), position);
                     dialog.show();
                 }

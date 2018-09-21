@@ -1,13 +1,5 @@
 package com.jaimedediego.cubemaster.config;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.utils.Constants;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

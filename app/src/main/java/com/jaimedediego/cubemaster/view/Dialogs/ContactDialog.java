@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.jaimedediego.cubemaster.R;
 
-public class ContactDialog extends Dialog implements View.OnClickListener{
+public class ContactDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
     private RadioGroup contactOptions;
@@ -26,10 +26,10 @@ public class ContactDialog extends Dialog implements View.OnClickListener{
 
     public ContactDialog(@NonNull final Context context) {
         super(context);
-        this.context=context;
+        this.context = context;
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_contact);
@@ -49,7 +49,7 @@ public class ContactDialog extends Dialog implements View.OnClickListener{
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         switch (v.getId()) {
             case R.id.send:
-                if(editText.getText().toString().equals("")){
+                if (editText.getText().toString().equals("")) {
                     editText.setHint(R.string.cannot_empty);
                 } else {
                     dismiss();

@@ -5,71 +5,71 @@
 
     <RelativeLayout
         android:id="@+id/puzzle_name_container"
-        android:background="?android:attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/colorPrimary"
         android:gravity="center_vertical"
-        android:paddingStart="10sp"
+        android:minHeight="30sp"
         android:paddingEnd="10sp"
-        android:minHeight="30sp">
+        android:paddingStart="10sp">
 
         <TextView
             android:id="@+id/puzzle_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/md_white_1000"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_below="@+id/puzzle_name_container"
         android:id="@+id/lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_below="@+id/puzzle_name_container"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <Button
             android:id="@+id/delete_puzzle"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/delete"/>
+            android:layout_weight="1"
+            android:text="@string/delete" />
 
         <Button
             android:id="@+id/show_stats"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/show_detail"/>
+            android:layout_weight="1"
+            android:text="@string/show_detail" />
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_below="@id/lay"
         android:id="@+id/lay2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_below="@id/lay"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <Button
             android:id="@+id/reset_puzzle"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/reset"/>
+            android:layout_weight="1"
+            android:text="@string/reset" />
 
         <Button
             android:id="@+id/use_puzzle"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/use"/>
+            android:layout_weight="1"
+            android:text="@string/use" />
 
     </LinearLayout>
 

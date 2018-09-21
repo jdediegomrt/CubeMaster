@@ -12,8 +12,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
         this.puzzles = puzzles;
         filteredPuzzles = puzzles;
         this.context = context;
-        if (filter == null){
+        if (filter == null) {
             filter = new SearchFilter();
         }
     }
@@ -74,7 +74,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
             holder.name.setTextColor(Session.getInstance().lightColorTheme);
             holder.more.setVisibility(View.GONE);
         } else {
-            if(holder.name.getText().equals("")){
+            if (holder.name.getText().equals("")) {
                 holder.more.setVisibility(View.GONE);
             } else {
                 holder.name.setTextColor(context.getColor(R.color.md_black_1000));
@@ -114,6 +114,7 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
             return filteredResults;
 
         }
+
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {

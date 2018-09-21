@@ -9,76 +9,76 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/md_black_1000"
             android:text="@string/contact_main_text"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textColor="@color/md_black_1000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/contact_options"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
             <RadioButton
                 android:id="@+id/contact_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_error"/>
+                android:text="@string/contact_error" />
 
             <RadioButton
                 android:id="@+id/contact_improvement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_improvement"/>
+                android:text="@string/contact_improvement" />
 
             <RadioButton
                 android:id="@+id/contact_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_other"/>
+                android:text="@string/contact_other" />
 
         </RadioGroup>
 
         <EditText
-            android:hint="@string/contact_sub_text"
-            android:inputType="text|textMultiLine|textCapSentences"
-            android:maxHeight="67dp"
-            android:textSize="15sp"
             android:id="@+id/contact_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:hint="@string/contact_sub_text"
+            android:inputType="text|textMultiLine|textCapSentences"
+            android:maxHeight="67dp"
+            android:text=""
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/cancel"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"/>
+            android:layout_weight="0.5"
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/send"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/send"/>
+            android:layout_weight="0.5"
+            android:text="@string/send" />
 
     </LinearLayout>
 

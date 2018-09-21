@@ -11,7 +11,7 @@ import android.widget.Scroller;
 
 import java.lang.reflect.Field;
 
-public class CustomViewPager extends ViewPager{
+public class CustomViewPager extends ViewPager {
 
     private boolean swipeable;
 
@@ -30,7 +30,7 @@ public class CustomViewPager extends ViewPager{
         return this.swipeable && super.onInterceptTouchEvent(event);
     }
 
-    public void setSwipeable(boolean swipeable){
+    public void setSwipeable(boolean swipeable) {
         this.swipeable = swipeable;
     }
 

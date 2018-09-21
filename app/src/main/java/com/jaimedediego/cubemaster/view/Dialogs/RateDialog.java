@@ -12,16 +12,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 
-public class RateDialog extends Dialog implements View.OnClickListener{
+public class RateDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
 
     public RateDialog(@NonNull final Context context, int numTimes, boolean fromMenu) {
         super(context);
-        this.context=context;
+        this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_rate);
@@ -31,7 +31,7 @@ public class RateDialog extends Dialog implements View.OnClickListener{
         final Button later = findViewById(R.id.later);
         final TextView text = findViewById(R.id.rate_text);
 
-        if(fromMenu){
+        if (fromMenu) {
             text.setText(R.string.rate_us_menu);
             cancel.setVisibility(View.GONE);
         } else {
@@ -58,7 +58,7 @@ public class RateDialog extends Dialog implements View.OnClickListener{
                             Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 }
                 try {
-                     context.startActivity(intent);
+                    context.startActivity(intent);
                 } catch (ActivityNotFoundException e) {
                     context.startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));

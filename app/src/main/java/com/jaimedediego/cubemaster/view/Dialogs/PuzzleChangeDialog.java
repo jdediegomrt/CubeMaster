@@ -11,25 +11,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
+public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
     private Spinner spinner;
 
-    private boolean didSomething=false;
+    private boolean didSomething = false;
 
     public PuzzleChangeDialog(@NonNull final Context context) {
         super(context);
-        this.context=context;
+        this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_changedatabase);
@@ -81,7 +81,7 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener{
         }
     }
 
-    public boolean didSomething (){
+    public boolean didSomething() {
         return didSomething;
     }
 

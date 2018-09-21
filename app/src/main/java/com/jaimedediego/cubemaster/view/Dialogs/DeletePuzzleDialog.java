@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 
-public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
+public class DeletePuzzleDialog extends Dialog implements View.OnClickListener {
 
     private LinearLayout parent;
     private View child;
@@ -23,9 +23,9 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
 
     public DeletePuzzleDialog(@NonNull Context context, LinearLayout parent, View child, int numSolve) {
         super(context);
-        this.parent=parent;
-        this.child=child;
-        this.numSolve=numSolve;
+        this.parent = parent;
+        this.child = child;
+        this.numSolve = numSolve;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog_areyousure);
@@ -49,17 +49,18 @@ public class DeletePuzzleDialog extends Dialog implements View.OnClickListener{
             case R.id.accept:
                 parent.removeView(child);
                 DatabaseMethods.getInstance().deleteSolve(numSolve);
-                didSomething=true;
+                didSomething = true;
                 dismiss();
                 break;
             case R.id.cancel:
                 dismiss();
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
-    public boolean didSomething(){
+    public boolean didSomething() {
         return didSomething;
     }
 }

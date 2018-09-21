@@ -3,39 +3,39 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingLeft="5dp"
-    android:paddingTop="10dp"
-    android:paddingRight="5dp">
+    android:paddingRight="5dp"
+    android:paddingTop="10dp">
 
     <EditText
-        android:textAlignment="center"
-        android:maxLength="20"
-        android:hint="@string/puzzle_hint"
         android:id="@+id/new_puzzle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/puzzle_hint"
+        android:maxLength="20"
         android:maxLines="1"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textAlignment="center" />
 
     <LinearLayout
-        android:layout_below="@id/new_puzzle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:layout_below="@id/new_puzzle"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/cancel"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"/>
+            android:layout_weight="0.5"
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/accept"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/ok"/>
+            android:layout_weight="0.5"
+            android:text="@string/ok" />
 
     </LinearLayout>
 

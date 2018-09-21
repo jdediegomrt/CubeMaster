@@ -50,13 +50,5 @@ public class DatabaseConfig extends SQLiteOpenHelper {
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE times ADD COLUMN scramble TEXT");
         }
-
-//        db.execSQL("DROP TABLE IF EXISTS users");
-//        db.execSQL("DROP TABLE IF EXISTS puzzles");
-//        db.execSQL("DROP TABLE IF EXISTS times");
-//
-//        db.execSQL(sqlUsers);
-//        db.execSQL(sqlPuzzles);
-//        db.execSQL(sqlTimes);
     }
 }

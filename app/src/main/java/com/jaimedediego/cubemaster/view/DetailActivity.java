@@ -17,10 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
-import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.SortBySpinnerAdapter;
@@ -98,20 +98,23 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private String getCurrentPuzzle(){
+    private String getCurrentPuzzle() {
         return getIntent().getStringExtra("puzzleName");
     }
 
-    private void getTimesDetail(int mode, final Context context){
+    private void getTimesDetail(int mode, final Context context) {
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(getCurrentPuzzle(), mode);
-        switch (mode){
-            case 2: Collections.sort(timesDetail, Detail.TimeComparatorAsc);
+        switch (mode) {
+            case 2:
+                Collections.sort(timesDetail, Detail.TimeComparatorAsc);
                 break;
-            case 3: Collections.sort(timesDetail, Detail.TimeComparatorDesc);
+            case 3:
+                Collections.sort(timesDetail, Detail.TimeComparatorDesc);
                 break;
-            default: break;
+            default:
+                break;
         }
-        if(!timesDetail.isEmpty()) {
+        if (!timesDetail.isEmpty()) {
             for (int i = 0; i < timesDetail.size(); i++) {
                 final Detail detail = timesDetail.get(i);
 
@@ -124,7 +127,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());
-                if(detail.getScramble()!=null && !detail.getScramble().equals("")){
+                if (detail.getScramble() != null && !detail.getScramble().equals("")) {
                     scramble.setVisibility(View.VISIBLE);
                     scramble.setText(detail.getScramble());
                 }
@@ -140,7 +143,7 @@ public class DetailActivity extends AppCompatActivity {
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
-                                if(dialog.didSomething()){
+                                if (dialog.didSomething()) {
                                     refreshView();
                                 }
                             }
@@ -155,13 +158,13 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return true;
     }
 
-    private void refreshView(){
+    private void refreshView() {
         timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(getCurrentPuzzle())));
         bestTime.setText(StatsMethods.getInstance().getBestTime(getCurrentPuzzle()));
         worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));

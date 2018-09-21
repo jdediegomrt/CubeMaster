@@ -19,9 +19,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.MyPuzzlesAdapter;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
@@ -45,20 +45,20 @@ public class PuzzlesFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_puzzles, menu);
 
         searchItem = menu.findItem(R.id.search);
 
-        SearchManager searchManager = (SearchManager)  getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
         ThemeConfig.getInstance().themeSearchView(searchView);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String filter){
+            public boolean onQueryTextSubmit(String filter) {
                 adapter.getFilter().filter(filter);
                 puzzlesList.setAdapter(adapter);
                 return false;
@@ -76,15 +76,15 @@ public class PuzzlesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.add_new){
+        if (id == R.id.add_new) {
             searchView.clearFocus();
             final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    if (dialog.didSomething()){
-                        ((MainActivity)getActivity()).refreshView();
+                    if (dialog.didSomething()) {
+                        ((MainActivity) getActivity()).refreshView();
                     }
                 }
             });
@@ -96,7 +96,7 @@ public class PuzzlesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_puzzles, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.my_puzzles);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_puzzles);
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
@@ -108,7 +108,7 @@ public class PuzzlesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 searchView.clearFocus();
-                if(!((TextView)view.findViewById(R.id.element)).getText().equals("")) {
+                if (!((TextView) view.findViewById(R.id.element)).getText().equals("")) {
                     if (adapter.getItem(position).equals(getString(R.string.add_new))) {
                         final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
                         dialog.show();
