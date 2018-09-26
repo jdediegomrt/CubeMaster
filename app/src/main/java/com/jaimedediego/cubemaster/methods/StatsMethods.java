@@ -1,5 +1,7 @@
 package com.jaimedediego.cubemaster.methods;
 
+import com.jaimedediego.cubemaster.utils.Constants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -108,7 +110,12 @@ public class StatsMethods {
         }
     }
 
-    private String formatMillis(Float millis) {
+    public String formatMillis(Float millis) {
+        return formatMillis(millis, Constants.getInstance().MILLIS_FORMATTING);
+    }
+
+    public String formatMillis(Float millis, int mode) {
+        String formattedTime;
         int milli = (int) (millis % 1000);
         int secs = ((Float) (millis / 1000)).intValue();
         secs = secs % 60;
@@ -118,14 +125,27 @@ public class StatsMethods {
         if (hours == 0) {
             if (mins == 0) {
                 if (secs == 0 && millis == 0) {
-                    return "...";
+                    formattedTime = "...";
                 }
-                return String.valueOf(secs) + '.' + String.format("%03d", milli);
+                formattedTime = String.valueOf(secs) + '.' + String.format("%03d", milli);
             } else {
-                return String.valueOf(mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
+                formattedTime = String.valueOf(mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
             }
         } else {
-            return String.valueOf(hours) + ':' + String.format("%02d", mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
+            formattedTime =  String.valueOf(hours) + ':' + String.format("%02d", mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
+        }
+
+        switch (mode) {
+            case 0:
+                return formattedTime;
+            case 1:
+                if(mins!=0){
+                    return formattedTime.substring(0, formattedTime.length()-4);
+                } else {
+                    return String.valueOf(mins) + ':' + formattedTime.substring(0, formattedTime.length()-4);
+                }
+            default:
+                return null;
         }
     }
 

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.jaimedediego.cubemaster.methods.StatsMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
 
 public class CustomLineChart extends LineChart {
 
@@ -21,12 +24,13 @@ public class CustomLineChart extends LineChart {
         getXAxis().setDrawAxisLine(false);
         getXAxis().setDrawGridLines(false);
 
-        Description description = new Description();
-        description.setText("Times chart");
-        setDescription(description);
-    }
+        getAxisRight().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return StatsMethods.getInstance().formatMillis(value, Constants.getInstance().SECS_FORMATTING);
+            }
+        });
 
-    public CustomLineChart(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        setDescription(null);
     }
 }

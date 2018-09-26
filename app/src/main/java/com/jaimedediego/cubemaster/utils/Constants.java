@@ -27,5 +27,9 @@ public class Constants {
         return instance;
     }
 
+    public int MILLIS_FORMATTING = 0;
+    public int SECS_FORMATTING = 1;
+    public int MINS_FORMATTING = 2;
+    public int HOURS_FORMATTING = 3;
 }
 

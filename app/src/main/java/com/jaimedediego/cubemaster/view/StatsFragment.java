@@ -26,6 +26,7 @@ import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomLineChart;
+import com.jaimedediego.cubemaster.view.CustomViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 
 import java.util.ArrayList;
@@ -87,23 +88,23 @@ public class StatsFragment extends Fragment {
         TextView currentPuzzle = v.findViewById(R.id.puzzle_name);
 
         CustomLineChart chart = v.findViewById(R.id.chart);
+        TextView chartName = v.findViewById(R.id.chart_name);
+        chartName.setBackgroundColor(Session.getInstance().darkColorTheme);
+        chartName.setText(R.string.times_chart_name);
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
         if (timesDetail.size()!=0) {
-            List<Entry> entries = new ArrayList<Entry>();
+            List<Entry> entries = new ArrayList<>();
             float i = 0;
             for (Detail data : timesDetail) {
                 i++;
-                entries.add(new Entry(i, Float.parseFloat(data.getTime())));
+                entries.add(new Entry(i, StatsMethods.getInstance().timeToMillis(data.getTime())));
             }
-            LineDataSet dataSet = new LineDataSet(entries, "Times chart"); // add entries to dataset
+            CustomLineDataSet dataSet = new CustomLineDataSet(entries, "Times chart"); // add entries to dataset
             LineData lineData = new LineData(dataSet);
             chart.setData(lineData);
-            dataSet.setColor(Session.getInstance().darkColorTheme);
-            dataSet.setCircleColor(Session.getInstance().darkColorTheme);
             if (entries.size() > 25) {
                 dataSet.setDrawValues(false);
             }
-            dataSet.setCircleRadius(2f);
         } else {
             chart.setVisibility(View.GONE);
         }
