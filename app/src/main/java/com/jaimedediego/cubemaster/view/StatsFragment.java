@@ -15,11 +15,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
+import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.CustomViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StatsFragment extends Fragment {
 
@@ -74,6 +85,29 @@ public class StatsFragment extends Fragment {
         TextView average10 = v.findViewById(R.id.averageof10);
         TextView timesCount = v.findViewById(R.id.times_count);
         TextView currentPuzzle = v.findViewById(R.id.puzzle_name);
+
+        CustomLineChart chart = v.findViewById(R.id.chart);
+        final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
+        if (timesDetail.size()!=0) {
+            List<Entry> entries = new ArrayList<Entry>();
+            float i = 0;
+            for (Detail data : timesDetail) {
+                i++;
+                entries.add(new Entry(i, Float.parseFloat(data.getTime())));
+            }
+            LineDataSet dataSet = new LineDataSet(entries, "Times chart"); // add entries to dataset
+            LineData lineData = new LineData(dataSet);
+            chart.setData(lineData);
+            dataSet.setColor(Session.getInstance().darkColorTheme);
+            dataSet.setCircleColor(Session.getInstance().darkColorTheme);
+            if (entries.size() > 25) {
+                dataSet.setDrawValues(false);
+            }
+            dataSet.setCircleRadius(2f);
+        } else {
+            chart.setVisibility(View.GONE);
+        }
+        chart.invalidate();
 
         timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(null)));
         currentPuzzle.setText(DatabaseMethods.getInstance().getCurrentPuzzleName());
