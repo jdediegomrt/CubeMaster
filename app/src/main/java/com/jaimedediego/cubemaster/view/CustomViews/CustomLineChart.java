@@ -18,10 +18,8 @@ public class CustomLineChart extends LineChart {
 
         getLegend().setEnabled(false);
         getAxisLeft().setDrawLabels(false);
-        getAxisLeft().setDrawAxisLine(false);
         getAxisLeft().setDrawGridLines(false);
         getXAxis().setDrawLabels(false);
-        getXAxis().setDrawAxisLine(false);
         getXAxis().setDrawGridLines(false);
 
         getAxisRight().setValueFormatter(new IAxisValueFormatter() {

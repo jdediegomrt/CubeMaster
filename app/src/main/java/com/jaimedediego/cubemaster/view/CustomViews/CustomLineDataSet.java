@@ -15,6 +15,7 @@ public class CustomLineDataSet extends LineDataSet {
         setColor(Session.getInstance().darkColorTheme);
         setCircleColor(Session.getInstance().darkColorTheme);
         setCircleRadius(2f);
+        setDrawValues(false);
 
         setValueFormatter(new MillisecondsFormatter());
     }
