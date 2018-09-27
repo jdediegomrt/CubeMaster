@@ -60,6 +60,10 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    public String newPuzzleName(){
+        return name.getText().toString();
+    };
+
     public boolean didSomething() {
         return didSomething;
     }

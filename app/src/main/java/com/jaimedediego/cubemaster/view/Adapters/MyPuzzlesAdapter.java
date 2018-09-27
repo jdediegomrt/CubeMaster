@@ -1,32 +1,36 @@
 package com.jaimedediego.cubemaster.view.Adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.DetailActivity;
 import com.jaimedediego.cubemaster.view.Dialogs.AreYouSureDialog;
+import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable {
+public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.ViewHolder> implements Filterable {
 
     private List<String> puzzles;
     private List<String> filteredPuzzles;
@@ -35,7 +39,6 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
     private SearchFilter filter;
 
     public MyPuzzlesAdapter(Context context, List<String> puzzles) {
-        super(context, R.layout.element_puzzles_list, puzzles);
         this.puzzles = puzzles;
         filteredPuzzles = puzzles;
         this.context = context;
@@ -44,46 +47,30 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
         }
     }
 
-    public int getCount() {
-        return filteredPuzzles.size();
-    }
-
-    public String getItem(int position) {
+    String getItem(int position) {
         return filteredPuzzles.get(position);
     }
 
     @NonNull
-    public View getView(final int position, View convertView, @NonNull final ViewGroup parent) {
-        View item = convertView;
-        final ViewHolder holder;
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.element_puzzles_list,parent, false);
+        return new ViewHolder(v);
+    }
 
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
         DatabaseMethods.getInstance().setDatabase(context);
+        holder.setPosition(position);
 
-        if (item == null) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            item = inflater.inflate(R.layout.element_puzzles_list, null);
-            holder = new ViewHolder();
-            holder.element = item.findViewById(R.id.element);
-            holder.name = item.findViewById(R.id.name);
-            holder.optionsLayout = item.findViewById(R.id.options_layout);
-            holder.detail = item.findViewById(R.id.detail_icon);
-            holder.reset = item.findViewById(R.id.reset_icon);
-            holder.delete = item.findViewById(R.id.delete_icon);
-            holder.use = item.findViewById(R.id.use_icon);
-            holder.optionsLayout.setBackgroundColor(Session.getInstance().darkColorTheme);
-            originalBackground = holder.name.getBackground();
-            item.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        holder.name.setText(filteredPuzzles.get(position));
+        holder.name.setText(getItem(position));
         if (holder.name.getText().toString().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            holder.name.setBackgroundColor(Session.getInstance().lighterColorTheme);
+            holder.element.setBackgroundColor(Session.getInstance().lighterColorTheme);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setVisibility(View.GONE);
         } else {
-            holder.name.setBackground(originalBackground);
+            holder.element.setBackground(originalBackground);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setVisibility(View.VISIBLE);
         }
@@ -101,34 +88,14 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
                 holder.element.setVisibility(View.VISIBLE);
             }
         }
-
-        holder.detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToDetail(position);
-            }
-        });
-
-        holder.reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.reset_icon);
-                areYouSureDialog.show();
-            }
-        });
-
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.delete_icon);
-                areYouSureDialog.show();
-            }
-        });
-
-        return (item);
     }
 
-    private class ViewHolder {
+    @Override
+    public int getItemCount() {
+        return filteredPuzzles.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout element;
         TextView name;
         LinearLayout optionsLayout;
@@ -136,6 +103,99 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
         ImageButton reset;
         ImageButton delete;
         Button use;
+        int position;
+
+        void setPosition (int position) {
+            this.position = position;
+        }
+
+        ViewHolder(View view) {
+            super(view);
+            element = view.findViewById(R.id.element);
+            name = view.findViewById(R.id.name);
+            optionsLayout = view.findViewById(R.id.options_layout);
+            detail = view.findViewById(R.id.detail_icon);
+            reset = view.findViewById(R.id.reset_icon);
+            delete = view.findViewById(R.id.delete_icon);
+            use = view.findViewById(R.id.use_icon);
+
+            detail.setColorFilter(Session.getInstance().lightColorTheme);
+            reset.setColorFilter(Session.getInstance().lightColorTheme);
+            delete.setColorFilter(Session.getInstance().lightColorTheme);
+            use.setTextColor(Session.getInstance().lightColorTheme);
+
+            originalBackground = name.getBackground();
+
+            element.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (getItem(position).equals(context.getString(R.string.add_new))) {
+                        final NewPuzzleDialog dialog = new NewPuzzleDialog(context);
+                        dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if (dialog.didSomething()) {
+                                    filteredPuzzles.add(position, dialog.newPuzzleName());
+                                    notifyItemInserted(position);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goToDetail(position);
+                }
+            });
+
+            reset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.reset_icon);
+                    areYouSureDialog.show();
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.delete_icon);
+                    areYouSureDialog.show();
+                    areYouSureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            if(areYouSureDialog.didSomething()){
+                                filteredPuzzles.remove(position);
+                                notifyItemRemoved(position);
+                                for(int i = 0; i < filteredPuzzles.size(); i++){
+                                    notifyItemChanged(i);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            use.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    element.setBackgroundColor(Session.getInstance().lighterColorTheme);
+                    DatabaseMethods.getInstance().usePuzzle(getItem(position));
+                    if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                        ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                        Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                        Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
+                    }
+                    for(int i = 0; i < filteredPuzzles.size(); i++){
+                        notifyItemChanged(i);
+                    }
+                }
+            });
+        }
     }
 
     @NonNull
@@ -175,6 +235,6 @@ public class MyPuzzlesAdapter extends ArrayAdapter<String> implements Filterable
     private void goToDetail(int position) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("puzzleName", getItem(position));
-        getContext().startActivity(intent);
+        context.startActivity(intent);
     }
 }
