@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -87,6 +88,7 @@ public class StatsFragment extends Fragment {
         TextView timesCount = v.findViewById(R.id.times_count);
         TextView currentPuzzle = v.findViewById(R.id.puzzle_name);
 
+        CardView chartCard = v.findViewById(R.id.chart_card);
         CustomLineChart chart = v.findViewById(R.id.chart);
         TextView chartName = v.findViewById(R.id.chart_name);
         chartName.setBackgroundColor(Session.getInstance().darkColorTheme);
@@ -106,7 +108,7 @@ public class StatsFragment extends Fragment {
                 dataSet.setDrawValues(false);
             }
         } else {
-            chart.setVisibility(View.GONE);
+            chartCard.setVisibility(View.GONE);
         }
         chart.invalidate();
 

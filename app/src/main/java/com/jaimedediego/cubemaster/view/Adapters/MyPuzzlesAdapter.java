@@ -1,12 +1,10 @@
 package com.jaimedediego.cubemaster.view.Adapters;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +22,9 @@ import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
 import com.jaimedediego.cubemaster.view.DetailActivity;
 import com.jaimedediego.cubemaster.view.Dialogs.AreYouSureDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
@@ -63,7 +63,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.element_puzzles_list,parent, false);
+                .inflate(R.layout.element_puzzles_list, parent, false);
         viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -115,7 +115,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         Button use;
         int position;
 
-        void setPosition (int position) {
+        void setPosition(int position) {
             this.position = position;
         }
 
@@ -173,21 +173,25 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.delete_icon);
-                    areYouSureDialog.show();
-                    areYouSureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            if(areYouSureDialog.didSomething()){
-                                String removed = filteredPuzzles.remove(position);
-                                puzzles.remove(removed);
-                                notifyItemRemoved(position);
-                                for(int i = 0; i < filteredPuzzles.size(); i++){
-                                    notifyItemChanged(i);
+                    if (DatabaseMethods.getInstance().countPuzzles() == 1) {
+                        new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
+                    } else {
+                        final AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.delete_icon);
+                        areYouSureDialog.show();
+                        areYouSureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if (areYouSureDialog.didSomething()) {
+                                    String removed = filteredPuzzles.remove(position);
+                                    puzzles.remove(removed);
+                                    notifyItemRemoved(position);
+                                    for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                        notifyItemChanged(i);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             });
 
@@ -201,20 +205,20 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                         Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
                         Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
                     }
-                    for(int i = 0; i < filteredPuzzles.size(); i++){
+                    for (int i = 0; i < filteredPuzzles.size(); i++) {
                         notifyItemChanged(i);
                     }
                 }
             });
         }
 
-        public void addNewPuzzle(String newPuzzleName, int position){
+        public void addNewPuzzle(String newPuzzleName, int position) {
             filteredPuzzles.add(position, newPuzzleName);
-            if(filteredPuzzles.size() != puzzles.size()) {
+            if (filteredPuzzles.size() != puzzles.size()) {
                 puzzles.add(puzzles.size() - 2, newPuzzleName);
             }
-            if(filterSequence!=null && !filterSequence.equals("")) {
-                if(newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())){
+            if (filterSequence != null && !filterSequence.equals("")) {
+                if (newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())) {
                     notifyItemInserted(position);
                     for (int i = 0; i < filteredPuzzles.size(); i++) {
                         notifyItemChanged(i);

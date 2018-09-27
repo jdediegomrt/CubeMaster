@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class PuzzlesFragment extends Fragment {
     private MyPuzzlesAdapter adapter;
     private SearchView searchView;
     private boolean isFiltering = false;
+    private boolean filterMatchAddNew = false;
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -53,15 +55,34 @@ public class PuzzlesFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String filter) {
+                if(!filter.equals("")){
+                    isFiltering = true;
+                } else {
+                    isFiltering = false;
+                }
                 adapter.getFilter().filter(filter);
-                isFiltering = true;
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String filter) {
+                if(!filter.equals("")){
+                    isFiltering = true;
+                    if (getString(R.string.add_new).toLowerCase().contains(filter.toLowerCase())) {
+                        filterMatchAddNew = true;
+                    }
+                } else {
+                    isFiltering = false;
+                }
                 adapter.getFilter().filter(filter);
-                isFiltering = true;
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                isFiltering = false;
                 return false;
             }
         });
@@ -79,7 +100,11 @@ public class PuzzlesFragment extends Fragment {
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
                         if(isFiltering){
-                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount());
+                            if(filterMatchAddNew){
+                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1);
+                            } else {
+                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount());
+                            }
                         } else {
                             adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2);
                         }
@@ -91,7 +116,7 @@ public class PuzzlesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_puzzles, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_puzzles);

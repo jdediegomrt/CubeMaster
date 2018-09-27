@@ -26,7 +26,7 @@ public class ScrambleMethods {
         int size = Integer.parseInt(DatabaseMethods.getInstance().getCurrentPuzzleName().substring(0, 1));
         List<String> allSides = new ArrayList<>();
         if (size % 2 != 0) {
-            allSides.addAll(Constants.getInstance().oddNumberNxNxN);
+            allSides.addAll(Constants.getInstance().ODD_NUMBER_NxNxN);
         }
         /*if(PrefsMethods.getInstance().isWholeCubeRotationsEnabled()){
             allSides.add("X");

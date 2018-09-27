@@ -94,7 +94,7 @@ public class SettingsFragment extends Fragment {
 
         freezingTime.setMaxValue(10);
         freezingTime.setMinValue(0);
-        freezingTime.setDisplayedValues(Constants.getInstance().freezingTimeSelector);
+        freezingTime.setDisplayedValues(Constants.getInstance().FREEZING_TIME_SELECTOR);
         freezingTime.setWrapSelectorWheel(true);
         freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime() / 100);
 
