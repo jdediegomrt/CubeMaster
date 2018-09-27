@@ -75,7 +75,7 @@ public class PuzzlesFragment extends Fragment {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
-                        ((MainActivity) getActivity()).refreshView();
+                        adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2);
                     }
                 }
             });

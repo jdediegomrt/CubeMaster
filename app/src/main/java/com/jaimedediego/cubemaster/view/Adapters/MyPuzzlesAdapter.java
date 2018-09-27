@@ -1,5 +1,6 @@
 package com.jaimedediego.cubemaster.view.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +40,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
     private Drawable originalBackground;
     private SearchFilter filter;
     private CharSequence filterSequence;
+    private ViewHolder viewHolder;
 
     public MyPuzzlesAdapter(Context context, List<String> puzzles) {
         this.puzzles = puzzles;
@@ -53,12 +55,17 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         return filteredPuzzles.get(position);
     }
 
+    public ViewHolder getViewHolder() {
+        return viewHolder;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.element_puzzles_list,parent, false);
-        return new ViewHolder(v);
+        viewHolder = new ViewHolder(v);
+        return viewHolder;
     }
 
     @Override
@@ -97,7 +104,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         return filteredPuzzles.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout element;
         RelativeLayout elementCard;
         TextView name;
@@ -140,22 +147,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
                                 if (dialog.didSomething()) {
-                                    filteredPuzzles.add(position, dialog.newPuzzleName());
-                                    if(filterSequence!=null && !filterSequence.equals("")) {
-                                        if(dialog.newPuzzleName().toLowerCase().contains(filterSequence.toString().toLowerCase())){
-                                            notifyItemInserted(position);
-                                            for (int i = 0; i < filteredPuzzles.size(); i++) {
-                                                notifyItemChanged(i);
-                                            }
-                                        } else {
-                                            filter.filter(filterSequence);
-                                        }
-                                    } else {
-                                        notifyItemInserted(position);
-                                        for (int i = 0; i < filteredPuzzles.size(); i++) {
-                                            notifyItemChanged(i);
-                                        }
-                                    }
+                                    addNewPuzzle(dialog.newPuzzleName(), position);
                                 }
                             }
                         });
@@ -187,7 +179,8 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
                             if(areYouSureDialog.didSomething()){
-                                filteredPuzzles.remove(position);
+                                String removed = filteredPuzzles.remove(position);
+                                puzzles.remove(removed);
                                 notifyItemRemoved(position);
                                 for(int i = 0; i < filteredPuzzles.size(); i++){
                                     notifyItemChanged(i);
@@ -213,6 +206,28 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                     }
                 }
             });
+        }
+
+        public void addNewPuzzle(String newPuzzleName, int position){
+            filteredPuzzles.add(position, newPuzzleName);
+            if(filteredPuzzles.size() != puzzles.size()) {
+                puzzles.add(puzzles.size() - 2, newPuzzleName);
+            }
+            if(filterSequence!=null && !filterSequence.equals("")) {
+                if(newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())){
+                    notifyItemInserted(position);
+                    for (int i = 0; i < filteredPuzzles.size(); i++) {
+                        notifyItemChanged(i);
+                    }
+                } else {
+                    filter.filter(filterSequence);
+                }
+            } else {
+                notifyItemInserted(position);
+                for (int i = 0; i < filteredPuzzles.size(); i++) {
+                    notifyItemChanged(i);
+                }
+            }
         }
     }
 
