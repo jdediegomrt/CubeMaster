@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
     private Context context;
     private Drawable originalBackground;
     private SearchFilter filter;
+    private CharSequence filterSequence;
 
     public MyPuzzlesAdapter(Context context, List<String> puzzles) {
         this.puzzles = puzzles;
@@ -60,17 +62,17 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DatabaseMethods.getInstance().setDatabase(context);
         holder.setPosition(position);
 
         holder.name.setText(getItem(position));
         if (holder.name.getText().toString().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            holder.element.setBackgroundColor(Session.getInstance().lighterColorTheme);
+            holder.elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setVisibility(View.GONE);
         } else {
-            holder.element.setBackground(originalBackground);
+            holder.elementCard.setBackground(originalBackground);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setVisibility(View.VISIBLE);
         }
@@ -97,6 +99,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout element;
+        RelativeLayout elementCard;
         TextView name;
         LinearLayout optionsLayout;
         ImageButton detail;
@@ -112,6 +115,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         ViewHolder(View view) {
             super(view);
             element = view.findViewById(R.id.element);
+            elementCard = view.findViewById(R.id.element_card);
             name = view.findViewById(R.id.name);
             optionsLayout = view.findViewById(R.id.options_layout);
             detail = view.findViewById(R.id.detail_icon);
@@ -137,7 +141,21 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                             public void onDismiss(DialogInterface dialogInterface) {
                                 if (dialog.didSomething()) {
                                     filteredPuzzles.add(position, dialog.newPuzzleName());
-                                    notifyItemInserted(position);
+                                    if(filterSequence!=null && !filterSequence.equals("")) {
+                                        if(dialog.newPuzzleName().toLowerCase().contains(filterSequence.toString().toLowerCase())){
+                                            notifyItemInserted(position);
+                                            for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                                notifyItemChanged(i);
+                                            }
+                                        } else {
+                                            filter.filter(filterSequence);
+                                        }
+                                    } else {
+                                        notifyItemInserted(position);
+                                        for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                            notifyItemChanged(i);
+                                        }
+                                    }
                                 }
                             }
                         });
@@ -183,7 +201,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             use.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    element.setBackgroundColor(Session.getInstance().lighterColorTheme);
+                    elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
                     DatabaseMethods.getInstance().usePuzzle(getItem(position));
                     if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
                         ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
@@ -227,6 +245,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            filterSequence = constraint;
             filteredPuzzles = (ArrayList<String>) results.values;
             notifyDataSetChanged();
         }

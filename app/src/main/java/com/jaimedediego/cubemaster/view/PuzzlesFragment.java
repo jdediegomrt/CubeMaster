@@ -15,9 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
@@ -27,12 +24,12 @@ import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PuzzlesFragment extends Fragment {
 
     private RecyclerView puzzlesList;
     private MyPuzzlesAdapter adapter;
-    private MenuItem searchItem;
     private SearchView searchView;
     private OnFragmentInteractionListener mListener;
 
@@ -46,9 +43,7 @@ public class PuzzlesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_puzzles, menu);
 
-        searchItem = menu.findItem(R.id.search);
-
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
@@ -58,14 +53,12 @@ public class PuzzlesFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String filter) {
                 adapter.getFilter().filter(filter);
-                puzzlesList.setAdapter(adapter);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String filter) {
                 adapter.getFilter().filter(filter);
-                puzzlesList.setAdapter(adapter);
                 return false;
             }
         });
@@ -99,16 +92,12 @@ public class PuzzlesFragment extends Fragment {
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
         puzzlesList = v.findViewById(R.id.puzzles_list);
-        fillList();
-
-        return v;
-    }
-
-    private void fillList() {
         List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, getContext());
         adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
         puzzlesList.setAdapter(adapter);
+
+        return v;
     }
 
     @Override
