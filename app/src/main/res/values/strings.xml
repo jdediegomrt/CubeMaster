@@ -81,6 +81,6 @@
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Timer</string>
     <string name="scramble_settings">Scramble</string>
-    <string name="scramble_length">Length</string>
+    <string name="scramble_length">Length(60 Max)</string>
     <string name="times_chart_name">Times Chart</string>
 </resources>

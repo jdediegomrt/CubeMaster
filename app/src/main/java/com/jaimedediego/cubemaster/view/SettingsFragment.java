@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
@@ -111,10 +112,16 @@ public class SettingsFragment extends Fragment {
             pause.setChecked(true);
         }
 
-        if (PrefsMethods.getInstance().isScrambleEnabled()) {
-            scramble.setChecked(true);
-        } else {
+        if (!ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())){
+            scramble.setEnabled(false);
             scrambleLength.setEnabled(false);
+        } else {
+            if (PrefsMethods.getInstance().isScrambleEnabled()) {
+                scramble.setEnabled(true);
+                scramble.setChecked(true);
+            } else {
+                scrambleLength.setEnabled(false);
+            }
         }
 
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {

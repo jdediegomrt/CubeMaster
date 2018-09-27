@@ -81,6 +81,6 @@
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Cronómetro</string>
     <string name="scramble_settings">Scramble</string>
-    <string name="scramble_length">Tamaño</string>
+    <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
 </resources>
