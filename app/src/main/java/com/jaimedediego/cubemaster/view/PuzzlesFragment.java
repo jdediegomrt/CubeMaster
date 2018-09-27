@@ -31,6 +31,7 @@ public class PuzzlesFragment extends Fragment {
     private RecyclerView puzzlesList;
     private MyPuzzlesAdapter adapter;
     private SearchView searchView;
+    private boolean isFiltering = false;
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -53,12 +54,14 @@ public class PuzzlesFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String filter) {
                 adapter.getFilter().filter(filter);
+                isFiltering = true;
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String filter) {
                 adapter.getFilter().filter(filter);
+                isFiltering = true;
                 return false;
             }
         });
@@ -75,7 +78,11 @@ public class PuzzlesFragment extends Fragment {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
-                        adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2);
+                        if(isFiltering){
+                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount());
+                        } else {
+                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2);
+                        }
                     }
                 }
             });
