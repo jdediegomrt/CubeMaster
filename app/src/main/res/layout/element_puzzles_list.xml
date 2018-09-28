@@ -29,20 +29,23 @@
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
-                <Button
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/use_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/selected"
                     android:gravity="center"
                     android:minHeight="50sp"
-                    android:text="@string/use"/>
+                    android:src="@drawable/baseline_check_circle_outline_white_24"/>
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/more_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/semi_circle"
+                    android:tint="@color/md_white_1000"
                     android:contentDescription="@string/selected"
                     android:gravity="center"
                     android:minHeight="50sp"

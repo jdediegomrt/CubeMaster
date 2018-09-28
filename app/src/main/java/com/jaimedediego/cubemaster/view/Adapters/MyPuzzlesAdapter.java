@@ -3,6 +3,8 @@ package com.jaimedediego.cubemaster.view.Adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -81,11 +84,17 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         if (holder.name.getText().toString().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             holder.elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
             holder.element.setVisibility(View.VISIBLE);
-            holder.use.setVisibility(View.GONE);
+            holder.use.setImageResource(R.drawable.baseline_check_circle_outline_white_24);
+
+            holder.more.getBackground().setTint(Color.WHITE);
+            holder.more.setColorFilter(Session.getInstance().lightColorTheme);
         } else {
             holder.elementCard.setBackground(originalBackground);
             holder.element.setVisibility(View.VISIBLE);
-            holder.use.setVisibility(View.VISIBLE);
+            holder.use.setImageResource(R.drawable.baseline_radio_button_unchecked_white_24);
+
+            holder.more.getBackground().setTint(Session.getInstance().lighterColorTheme);
+            holder.more.setColorFilter(Color.WHITE);
         }
 
         if (holder.name.getText().toString().equals(context.getResources().getString(R.string.add_new))) {
@@ -113,8 +122,8 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         RelativeLayout elementCard;
         TextView name;
         LinearLayout optionsLayout;
-        ImageView more;
-        Button use;
+        ImageButton more;
+        ImageView use;
         int position;
 
         void setPosition(int position) {
@@ -130,13 +139,81 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             more = view.findViewById(R.id.more_icon);
             use = view.findViewById(R.id.use_icon);
 
-            more.setColorFilter(Session.getInstance().lightColorTheme);
-            use.setTextColor(Session.getInstance().lightColorTheme);
+            use.setColorFilter(Session.getInstance().lightColorTheme);
             originalBackground = name.getBackground();
+
+            more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(context, more);
+                    popup.inflate(R.menu.menu_puzzle_options);
+
+                    popup.getMenu().findItem(R.id.detail).getIcon().setTint(Session.getInstance().lightColorTheme);
+                    popup.getMenu().findItem(R.id.reset).getIcon().setTint(Session.getInstance().lightColorTheme);
+                    popup.getMenu().findItem(R.id.delete).getIcon().setTint(Session.getInstance().lightColorTheme);
+
+                    try {
+                        Field[] fields = popup.getClass().getDeclaredFields();
+                        for (Field field : fields) {
+                            if ("mPopup".equals(field.getName())) {
+                                field.setAccessible(true);
+                                Object menuPopupHelper = field.get(popup);
+                                Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                                Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                                setForceIcons.invoke(menuPopupHelper, true);
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.detail:
+                                    goToDetail(position);
+                                    return true;
+                                case R.id.reset:
+                                    AreYouSureDialog areYouSureReset = new AreYouSureDialog(context, getItem(position), R.id.reset);
+                                    areYouSureReset.show();
+                                    return true;
+                                case R.id.delete:
+                                    if (DatabaseMethods.getInstance().countPuzzles() == 1) {
+                                        new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
+                                    } else {
+                                        final AreYouSureDialog areYouSureDelete = new AreYouSureDialog(context, getItem(position), R.id.delete);
+                                        areYouSureDelete.show();
+                                        areYouSureDelete.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialogInterface) {
+                                                if (areYouSureDelete.didSomething()) {
+                                                    String removed = filteredPuzzles.remove(position);
+                                                    puzzles.remove(removed);
+                                                    notifyItemRemoved(position);
+                                                    for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                                        notifyItemChanged(i);
+                                                        //TODO: notify only first puzzle instead of all
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popup.show();
+                }
+            });
 
             element.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    final String previousPuzzle = DatabaseMethods.getInstance().getCurrentPuzzleName();
                     if (getItem(position).equals(context.getString(R.string.add_new))) {
                         final NewPuzzleDialog dialog = new NewPuzzleDialog(context);
                         dialog.show();
@@ -144,95 +221,29 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
                                 if (dialog.didSomething()) {
-                                    addNewPuzzle(dialog.newPuzzleName(), position);
+                                    addNewPuzzle(dialog.newPuzzleName(), position, previousPuzzle);
                                 }
                             }
                         });
                     } else {
-                        PopupMenu popup = new PopupMenu(context, more);
-                        popup.inflate(R.menu.menu_puzzle_options);
-
-                        popup.getMenu().findItem(R.id.detail).getIcon().setTint(Session.getInstance().lightColorTheme);
-                        popup.getMenu().findItem(R.id.reset).getIcon().setTint(Session.getInstance().lightColorTheme);
-                        popup.getMenu().findItem(R.id.delete).getIcon().setTint(Session.getInstance().lightColorTheme);
-
-                        try {
-                            Field[] fields = popup.getClass().getDeclaredFields();
-                            for (Field field : fields) {
-                                if ("mPopup".equals(field.getName())) {
-                                    field.setAccessible(true);
-                                    Object menuPopupHelper = field.get(popup);
-                                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
-                                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
-                                    setForceIcons.invoke(menuPopupHelper, true);
-                                    break;
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
+                        DatabaseMethods.getInstance().usePuzzle(getItem(position));
+                        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                            ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+                            Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+                            Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
                         }
-
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.detail:
-                                        goToDetail(position);
-                                        return true;
-                                    case R.id.reset:
-                                        AreYouSureDialog areYouSureReset = new AreYouSureDialog(context, getItem(position), R.id.reset);
-                                        areYouSureReset.show();
-                                        return true;
-                                    case R.id.delete:
-                                        if (DatabaseMethods.getInstance().countPuzzles() == 1) {
-                                            new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
-                                        } else {
-                                            final AreYouSureDialog areYouSureDelete = new AreYouSureDialog(context, getItem(position), R.id.delete);
-                                            areYouSureDelete.show();
-                                            areYouSureDelete.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                                @Override
-                                                public void onDismiss(DialogInterface dialogInterface) {
-                                                    if (areYouSureDelete.didSomething()) {
-                                                        String removed = filteredPuzzles.remove(position);
-                                                        puzzles.remove(removed);
-                                                        notifyItemRemoved(position);
-                                                        for (int i = 0; i < filteredPuzzles.size(); i++) {
-                                                            notifyItemChanged(i);
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                        }
-                                        return true;
-                                    default:
-                                        return false;
-                                }
+                        for (int i = 0; i < filteredPuzzles.size(); i++) {
+                            if(getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
+                                notifyItemChanged(i);
                             }
-                        });
-
-                        popup.show();
-                    }
-                }
-            });
-
-            use.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
-                    DatabaseMethods.getInstance().usePuzzle(getItem(position));
-                    if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                        ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-                        Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-                        Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
-                    }
-                    for (int i = 0; i < filteredPuzzles.size(); i++) {
-                        notifyItemChanged(i);
+                        }
                     }
                 }
             });
         }
 
-        public void addNewPuzzle(String newPuzzleName, int position) {
+        public void addNewPuzzle(String newPuzzleName, int position, String previousPuzzle) {
             filteredPuzzles.add(position, newPuzzleName);
             if (filteredPuzzles.size() != puzzles.size()) {
                 puzzles.add(puzzles.size() - 2, newPuzzleName);
@@ -241,7 +252,9 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                 if (newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())) {
                     notifyItemInserted(position);
                     for (int i = 0; i < filteredPuzzles.size(); i++) {
-                        notifyItemChanged(i);
+                        if(getItem(i).equals(previousPuzzle)) {
+                            notifyItemChanged(i);
+                        }
                     }
                 } else {
                     filter.filter(filterSequence);
@@ -249,7 +262,9 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             } else {
                 notifyItemInserted(position);
                 for (int i = 0; i < filteredPuzzles.size(); i++) {
-                    notifyItemChanged(i);
+                    if(getItem(i).equals(previousPuzzle)) {
+                        notifyItemChanged(i);
+                    }
                 }
             }
         }

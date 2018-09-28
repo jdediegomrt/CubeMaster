@@ -93,6 +93,7 @@ public class PuzzlesFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.add_new) {
             searchView.clearFocus();
+            final String previousPuzzle = DatabaseMethods.getInstance().getCurrentPuzzleName();
             final NewPuzzleDialog dialog = new NewPuzzleDialog(getActivity());
             dialog.show();
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -101,12 +102,12 @@ public class PuzzlesFragment extends Fragment {
                     if (dialog.didSomething()) {
                         if(isFiltering){
                             if(filterMatchAddNew){
-                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1);
+                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1, previousPuzzle);
                             } else {
-                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount());
+                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount(), previousPuzzle);
                             }
                         } else {
-                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2);
+                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2, previousPuzzle);
                         }
                     }
                 }
