@@ -194,7 +194,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                                                     notifyItemRemoved(position);
                                                     for (int i = 0; i < filteredPuzzles.size(); i++) {
                                                         notifyItemChanged(i);
-                                                        //TODO: notify only first puzzle instead of all
+                                                        //TODO: notify only first puzzle instead of all exception when deleted puzzle is the first one
                                                     }
                                                 }
                                             }
