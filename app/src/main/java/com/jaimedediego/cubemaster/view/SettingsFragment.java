@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -27,6 +26,7 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
+import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.ScrambleMethods;
@@ -36,7 +36,6 @@ import com.jaimedediego.cubemaster.view.Adapters.ColorsAdapter;
 import com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText;
 import com.jaimedediego.cubemaster.view.Dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
-import com.jaimedediego.cubemaster.view.Dialogs.RestartDialog;
 
 public class SettingsFragment extends Fragment {
 
@@ -80,7 +79,7 @@ public class SettingsFragment extends Fragment {
         final ImageButton stopwatchInfoButton = v.findViewById(R.id.stopwatch_info);
         final NumberPicker freezingTime = v.findViewById(R.id.frtime_setter);
         final FilteredEditText scrambleLength = v.findViewById(R.id.scramblelength_setter);
-        final GridView gridView = v.findViewById(R.id.color_gridview);
+        final GridLayout colorGrid = v.findViewById(R.id.color_grid);
         final ImageButton frTimeInfoButton = v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = v.findViewById(R.id.settings_layout);
         final TextView frTimeInfoText = v.findViewById(R.id.frtime_info_text);
@@ -101,8 +100,9 @@ public class SettingsFragment extends Fragment {
 
         scrambleLength.setText(String.valueOf(PrefsMethods.getInstance().getScrambleLength()));
 
-        ColorsAdapter adapter = new ColorsAdapter(getActivity());
-        gridView.setAdapter(adapter);
+        for (int i = 0; i < ThemeConfig.getInstance().colors().size(); i++) {
+            colorGrid.addView(new ColorsAdapter(getActivity()).getView(i, colorGrid));
+        }
 
         if (PrefsMethods.getInstance().isBeepActivated()) {
             beep.setChecked(true);
@@ -112,7 +112,7 @@ public class SettingsFragment extends Fragment {
             pause.setChecked(true);
         }
 
-        if (!ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())){
+        if (!ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             scramble.setEnabled(false);
             scrambleLength.setEnabled(false);
         } else {
@@ -204,16 +204,6 @@ public class SettingsFragment extends Fragment {
                     Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
                 }
                 return false;
-            }
-        });
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position != PrefsMethods.getInstance().getColorAccent()) {
-                    final RestartDialog dialog = new RestartDialog(getActivity(), position);
-                    dialog.show();
-                }
             }
         });
 

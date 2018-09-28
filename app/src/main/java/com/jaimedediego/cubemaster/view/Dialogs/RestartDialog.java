@@ -40,6 +40,7 @@ public class RestartDialog extends Dialog implements View.OnClickListener {
                         getLaunchIntentForPackage(context.getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                dismiss();
                 context.startActivity(i);
                 break;
             case R.id.cancel:

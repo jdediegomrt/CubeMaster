@@ -29,7 +29,6 @@ import java.util.Objects;
 
 public class PuzzlesFragment extends Fragment {
 
-    private RecyclerView puzzlesList;
     private MyPuzzlesAdapter adapter;
     private SearchView searchView;
     private boolean isFiltering = false;
@@ -124,7 +123,7 @@ public class PuzzlesFragment extends Fragment {
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        puzzlesList = v.findViewById(R.id.puzzles_list);
+        RecyclerView puzzlesList = v.findViewById(R.id.puzzles_list);
         List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, getContext());
         adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
