@@ -29,51 +29,26 @@
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
 
-                <ImageButton
-                    android:id="@+id/detail_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/selected"
-                    android:gravity="center"
-                    android:minHeight="50sp"
-                    android:paddingRight="5sp"
-                    android:src="@drawable/baseline_description_white_18" />
-
-                <ImageButton
-                    android:id="@+id/reset_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/selected"
-                    android:gravity="center"
-                    android:minHeight="50sp"
-                    android:paddingLeft="5sp"
-                    android:paddingRight="5sp"
-                    android:src="@drawable/baseline_autorenew_white_18" />
-
-                <ImageButton
-                    android:id="@+id/delete_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/selected"
-                    android:gravity="center"
-                    android:minHeight="50sp"
-                    android:paddingLeft="5sp"
-                    android:paddingRight="5sp"
-                    android:src="@drawable/baseline_delete_white_18" />
-
                 <Button
                     android:id="@+id/use_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/selected"
+                    android:gravity="center"
+                    android:minHeight="50sp"
+                    android:text="@string/use"/>
+
+                <ImageView
+                    android:id="@+id/more_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/selected"
                     android:gravity="center"
                     android:minHeight="50sp"
-                    android:text="@string/use"
-                    android:textColor="@color/md_white_1000" />
+                    android:paddingLeft="5sp"
+                    android:paddingRight="5sp"
+                    android:src="@drawable/baseline_more_vert_white_18"/>
 
             </LinearLayout>
 

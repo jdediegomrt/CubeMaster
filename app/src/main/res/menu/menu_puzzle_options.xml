@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/detail"
+        android:icon="@drawable/baseline_description_white_18"
+        android:title="@string/detail"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/reset"
+        android:icon="@drawable/baseline_autorenew_white_18"
+        android:title="@string/reset"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/baseline_delete_white_18"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+</menu>

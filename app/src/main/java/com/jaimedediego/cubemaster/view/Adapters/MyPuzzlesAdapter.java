@@ -5,15 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ import com.jaimedediego.cubemaster.view.DetailActivity;
 import com.jaimedediego.cubemaster.view.Dialogs.AreYouSureDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,9 +113,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         RelativeLayout elementCard;
         TextView name;
         LinearLayout optionsLayout;
-        ImageButton detail;
-        ImageButton reset;
-        ImageButton delete;
+        ImageView more;
         Button use;
         int position;
 
@@ -125,16 +127,11 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             elementCard = view.findViewById(R.id.element_card);
             name = view.findViewById(R.id.name);
             optionsLayout = view.findViewById(R.id.options_layout);
-            detail = view.findViewById(R.id.detail_icon);
-            reset = view.findViewById(R.id.reset_icon);
-            delete = view.findViewById(R.id.delete_icon);
+            more = view.findViewById(R.id.more_icon);
             use = view.findViewById(R.id.use_icon);
 
-            detail.setColorFilter(Session.getInstance().lightColorTheme);
-            reset.setColorFilter(Session.getInstance().lightColorTheme);
-            delete.setColorFilter(Session.getInstance().lightColorTheme);
+            more.setColorFilter(Session.getInstance().lightColorTheme);
             use.setTextColor(Session.getInstance().lightColorTheme);
-
             originalBackground = name.getBackground();
 
             element.setOnClickListener(new View.OnClickListener() {
@@ -151,46 +148,69 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                                 }
                             }
                         });
-                    }
-                }
-            });
-
-            detail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goToDetail(position);
-                }
-            });
-
-            reset.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.reset_icon);
-                    areYouSureDialog.show();
-                }
-            });
-
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (DatabaseMethods.getInstance().countPuzzles() == 1) {
-                        new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
                     } else {
-                        final AreYouSureDialog areYouSureDialog = new AreYouSureDialog(context, getItem(position), R.id.delete_icon);
-                        areYouSureDialog.show();
-                        areYouSureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        PopupMenu popup = new PopupMenu(context, more);
+                        popup.inflate(R.menu.menu_puzzle_options);
+
+                        popup.getMenu().findItem(R.id.detail).getIcon().setTint(Session.getInstance().lightColorTheme);
+                        popup.getMenu().findItem(R.id.reset).getIcon().setTint(Session.getInstance().lightColorTheme);
+                        popup.getMenu().findItem(R.id.delete).getIcon().setTint(Session.getInstance().lightColorTheme);
+
+                        try {
+                            Field[] fields = popup.getClass().getDeclaredFields();
+                            for (Field field : fields) {
+                                if ("mPopup".equals(field.getName())) {
+                                    field.setAccessible(true);
+                                    Object menuPopupHelper = field.get(popup);
+                                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                                    setForceIcons.invoke(menuPopupHelper, true);
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                if (areYouSureDialog.didSomething()) {
-                                    String removed = filteredPuzzles.remove(position);
-                                    puzzles.remove(removed);
-                                    notifyItemRemoved(position);
-                                    for (int i = 0; i < filteredPuzzles.size(); i++) {
-                                        notifyItemChanged(i);
-                                    }
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.detail:
+                                        goToDetail(position);
+                                        return true;
+                                    case R.id.reset:
+                                        AreYouSureDialog areYouSureReset = new AreYouSureDialog(context, getItem(position), R.id.reset);
+                                        areYouSureReset.show();
+                                        return true;
+                                    case R.id.delete:
+                                        if (DatabaseMethods.getInstance().countPuzzles() == 1) {
+                                            new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
+                                        } else {
+                                            final AreYouSureDialog areYouSureDelete = new AreYouSureDialog(context, getItem(position), R.id.delete);
+                                            areYouSureDelete.show();
+                                            areYouSureDelete.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                                @Override
+                                                public void onDismiss(DialogInterface dialogInterface) {
+                                                    if (areYouSureDelete.didSomething()) {
+                                                        String removed = filteredPuzzles.remove(position);
+                                                        puzzles.remove(removed);
+                                                        notifyItemRemoved(position);
+                                                        for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                                            notifyItemChanged(i);
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        return true;
+                                    default:
+                                        return false;
                                 }
                             }
                         });
+
+                        popup.show();
                     }
                 }
             });

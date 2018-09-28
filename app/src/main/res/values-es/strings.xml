@@ -11,9 +11,9 @@
     <string name="areyousuredelete">¿Estas seguro que quieres borrar este puzzle? (Esta acción no se puede deshacer)</string>
     <string name="areyousurereset">¿Estas seguro que quieres reestablecer este puzzle? Perderás todos los tiempos registrados</string>
     <string name="areyousuredeletepuzzle">¿Estas seguro que quieres borrar este tiempo? Esta acción actualizará tus estadísticas</string>
-    <string name="delete">BORRAR</string>
-    <string name="cancel">CANCELAR</string>
-    <string name="show_detail">VER DETALLES</string>
+    <string name="delete">Borrar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="show_detail">Ver detalles</string>
     <string name="sort_by">Ordenar por: </string>
     <string name="recent">Más reciente</string>
     <string name="latest">Más antiguo </string>

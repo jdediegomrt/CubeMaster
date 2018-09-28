@@ -38,7 +38,7 @@ public class AreYouSureDialog extends Dialog {
 
         currentPuzzle.setText(puzzle);
         
-        if (id == R.id.reset_icon) {
+        if (id == R.id.reset) {
             text.setText(R.string.areyousurereset);
         } else {
             text.setText(R.string.areyousuredelete);
@@ -47,7 +47,7 @@ public class AreYouSureDialog extends Dialog {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (id == R.id.reset_icon) {
+                if (id == R.id.reset) {
                     DatabaseMethods.getInstance().resetPuzzle(puzzle);
                 } else {
                     DatabaseMethods.getInstance().deletePuzzle(puzzle);
