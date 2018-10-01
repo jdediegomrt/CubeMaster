@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -183,6 +181,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                                     if (DatabaseMethods.getInstance().countPuzzles() == 1) {
                                         new CustomToast(context, R.string.must_be_one_puzzle).showAndHide(Constants.getInstance().TOAST_MEDIUM_DURATION);
                                     } else {
+                                        final String currentPuzzle = DatabaseMethods.getInstance().getCurrentPuzzleName();
                                         final AreYouSureDialog areYouSureDelete = new AreYouSureDialog(context, getItem(position), R.id.delete);
                                         areYouSureDelete.show();
                                         areYouSureDelete.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -192,9 +191,11 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                                                     String removed = filteredPuzzles.remove(position);
                                                     puzzles.remove(removed);
                                                     notifyItemRemoved(position);
-                                                    for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                                    for (int i = position; i < filteredPuzzles.size(); i++) {
                                                         notifyItemChanged(i);
-                                                        //TODO: notify only first puzzle instead of all exception when deleted puzzle is the first one
+                                                    }
+                                                    if (removed.toLowerCase().equals(currentPuzzle.toLowerCase())) {
+                                                        notifyItemChanged(0);
                                                     }
                                                 }
                                             }
@@ -234,7 +235,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                             Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
                         }
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
-                            if(getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
+                            if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
                                 notifyItemChanged(i);
                             }
                         }
@@ -252,7 +253,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                 if (newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())) {
                     notifyItemInserted(position);
                     for (int i = 0; i < filteredPuzzles.size(); i++) {
-                        if(getItem(i).equals(previousPuzzle)) {
+                        if (getItem(i).equals(previousPuzzle)) {
                             notifyItemChanged(i);
                         }
                     }
@@ -262,7 +263,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             } else {
                 notifyItemInserted(position);
                 for (int i = 0; i < filteredPuzzles.size(); i++) {
-                    if(getItem(i).equals(previousPuzzle)) {
+                    if (getItem(i).equals(previousPuzzle)) {
                         notifyItemChanged(i);
                     }
                 }

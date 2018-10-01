@@ -1,307 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_c"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/default_background_grey"
     tools:context="com.jaimedediego.cubemaster.view.SettingsFragment">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/settings_c"
+    <LinearLayout
+        android:id="@+id/settings_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="@color/default_background_grey"
-        tools:context="com.jaimedediego.cubemaster.view.SettingsFragment">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/settings_layout"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/timer_settings"
+                android:textColor="@color/md_black_1000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/minutes_beep"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
+
+            <Switch
+                android:id="@+id/beep_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/frtime_text"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/time_holding"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/frtime_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/frtime_text"
+                android:layout_toRightOf="@id/frtime_text"
+                android:background="@drawable/background_info_button"
+                android:contentDescription="@string/selected"
+                android:gravity="center"
+                android:src="@drawable/ic_info_white_18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/frtime_setter"
+                android:layout_toStartOf="@+id/frtime_setter"
+                android:text="@string/selected"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
+
+            <NumberPicker
+                android:id="@+id/frtime_setter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/NumberPickerText" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/frtime_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical">
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/frtime_info_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerVertical="true"
+                android:text="@string/frtime_info"
+                android:textColor="@color/md_black_1000"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="50dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/stopwatch_text"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp">
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/stopwatch_mode"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/timer_settings"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/stopwatch_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/stopwatch_text"
+                android:layout_toRightOf="@id/stopwatch_text"
+                android:background="@drawable/background_info_button"
+                android:contentDescription="@string/selected"
+                android:gravity="center"
+                android:src="@drawable/ic_info_white_18dp" />
 
-            </RelativeLayout>
+            <Switch
+                android:id="@+id/stopwatch_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/stopwatch_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/stopwatch_info_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerVertical="true"
+                android:text="@string/stopwatch_info"
+                android:textColor="@color/md_black_1000"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp">
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/scramble_settings"
+                android:textColor="@color/md_black_1000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/minutes_beep"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
+            <Switch
+                android:id="@+id/scramble_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
 
-                <Switch
-                    android:id="@+id/beep_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/scramblelength_text"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:paddingEnd="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:paddingStart="10dp">
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/scramble_length"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/frtime_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/time_holding"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
+            <com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText
+                android:id="@+id/scramblelength_setter"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:textAlignment="center" />
 
-                <ImageButton
-                    android:id="@+id/frtime_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/frtime_text"
-                    android:layout_toRightOf="@id/frtime_text"
-                    android:background="@drawable/background_info_button"
-                    android:contentDescription="@string/selected"
-                    android:gravity="center"
-                    android:src="@drawable/ic_info_white_18dp" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/frtime_setter"
-                    android:layout_toStartOf="@+id/frtime_setter"
-                    android:text="@string/selected"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
-                <NumberPicker
-                    android:id="@+id/frtime_setter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:descendantFocusability="blocksDescendants"
-                    android:theme="@style/NumberPickerText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/change_theme"
+                android:textColor="@color/md_black_1000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/frtime_info_layout"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
+
+            <android.support.v7.widget.GridLayout
+                android:id="@+id/color_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp">
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                app:columnCount="6" />
 
-                <TextView
-                    android:id="@+id/frtime_info_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_centerVertical="true"
-                    android:text="@string/frtime_info"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="13sp" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:minHeight="50dp"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp">
-
-                <TextView
-                    android:id="@+id/stopwatch_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/stopwatch_mode"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <ImageButton
-                    android:id="@+id/stopwatch_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/stopwatch_text"
-                    android:layout_toRightOf="@id/stopwatch_text"
-                    android:background="@drawable/background_info_button"
-                    android:contentDescription="@string/selected"
-                    android:gravity="center"
-                    android:src="@drawable/ic_info_white_18dp" />
-
-                <Switch
-                    android:id="@+id/stopwatch_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/stopwatch_info_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp">
-
-                <TextView
-                    android:id="@+id/stopwatch_info_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_centerVertical="true"
-                    android:text="@string/stopwatch_info"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/scramble_settings"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <Switch
-                    android:id="@+id/scramble_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp">
-
-                <TextView
-                    android:id="@+id/scramblelength_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/scramble_length"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText
-                    android:id="@+id/scramblelength_setter"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:textAlignment="center" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/change_theme"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingStart="10dp"
-                android:layout_marginBottom="10dp">
-
-                <android.support.v7.widget.GridLayout
-                    android:id="@+id/color_grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    app:columnCount="6" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</RelativeLayout>
+</ScrollView>
