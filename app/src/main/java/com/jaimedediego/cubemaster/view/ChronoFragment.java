@@ -181,12 +181,6 @@ public class ChronoFragment extends Fragment {
             scrambleLayout.setVisibility(View.GONE);
         }
 
-//        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-//            scrambleLayout.setVisibility(View.VISIBLE);
-//            scrambleText.setText(Session.getInstance().currentPuzzleScramble);
-//        } else {
-//        }
-
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,7 +348,7 @@ public class ChronoFragment extends Fragment {
     }
 
     private void doScramble() {
-        scrambleText.setText("Scrambling...");
+        scrambleText.setText(R.string.scrambling);
 
         cancelScrambleIfScrambling();
         scrambleTask = new ScrambleTask();
