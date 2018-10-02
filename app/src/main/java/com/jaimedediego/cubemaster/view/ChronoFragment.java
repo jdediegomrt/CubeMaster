@@ -1,16 +1,23 @@
 package com.jaimedediego.cubemaster.view;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,27 +25,44 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.Handler.ChronoThread;
 
+import net.gnehzr.tnoodle.scrambles.Puzzle;
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
+import net.gnehzr.tnoodle.svglite.Dimension;
+import net.gnehzr.tnoodle.svglite.Svg;
+import net.gnehzr.tnoodle.utils.BadLazyClassDescriptionException;
+import net.gnehzr.tnoodle.utils.LazyInstantiator;
+import net.gnehzr.tnoodle.utils.LazyInstantiatorException;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import static android.content.ContentValues.TAG;
 
 public class ChronoFragment extends Fragment {
 
@@ -53,10 +77,18 @@ public class ChronoFragment extends Fragment {
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private RelativeLayout scrambleLayout;
     private TextView scrambleText;
+    private ImageView scrambleImage;
     private int helpCounter = 0;
 
+    private ScrambleTask scrambleTask;
+    private Puzzle puzzle;
+
+    private static final String TAG = ChronoFragment.class.getName();
+
     ChronoThread thread = null;
+
     private boolean holded = false;
 
     private OnFragmentInteractionListener mListener;
@@ -125,23 +157,41 @@ public class ChronoFragment extends Fragment {
         animatedLine = v.findViewById(R.id.animated_line);
         final RadioGroup activityMenu = getActivity().findViewById(R.id.menu_layout);
 
-        final RelativeLayout scrambleLayout = v.findViewById(R.id.scramble_layout);
+        scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
+        scrambleImage = v.findViewById(R.id.scramble_image);
         final ImageButton scrambleButton = v.findViewById(R.id.scramble_button);
 
-        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            scrambleLayout.setVisibility(View.VISIBLE);
-            scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+        String shortName = DatabaseMethods.getInstance().getCurrentPuzzleName();
+        LazyInstantiator<Puzzle> lazyPuzzle = Constants.getInstance().puzzles.get(shortName);
+        try {
+            puzzle = lazyPuzzle.cachedInstance();
+        } catch (LazyInstantiatorException e) {
+            Log.wtf(TAG, e);
+        }
+
+        if (Constants.getInstance().shortNames.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+            if(Session.getInstance().CURRENT_SCRAMBLE.equals("") || Session.getInstance().CURRENT_SCRAMBLE == null) {
+                doScramble();
+            } else {
+                scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
+                scrambleImage.setImageDrawable(Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE);
+            }
         } else {
             scrambleLayout.setVisibility(View.GONE);
         }
 
+//        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+//            scrambleLayout.setVisibility(View.VISIBLE);
+//            scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+//        } else {
+//        }
+
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-                Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-                scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+                doScramble();
+                scrambleImage.setImageDrawable(null);
             }
         });
 
@@ -301,5 +351,86 @@ public class ChronoFragment extends Fragment {
 
     interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void doScramble() {
+        scrambleText.setText("Scrambling...");
+
+        cancelScrambleIfScrambling();
+        scrambleTask = new ScrambleTask();
+        scrambleTask.execute(puzzle);
+    }
+
+    private void cancelScrambleIfScrambling() {
+        if (scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING) {
+            scrambleTask.cancel(true);
+        }
+    }
+
+    private class ScrambleAndSvg {
+        String scramble;
+        Svg svg;
+
+        public ScrambleAndSvg(String scramble, Svg svg) {
+            this.scramble = scramble;
+            this.svg = svg;
+        }
+    }
+
+    private class ScrambleTask extends AsyncTask<Puzzle, Void, ScrambleAndSvg> {
+
+        private Exception exception;
+
+        public ScrambleTask() {
+        }
+
+        protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
+            try {
+                assert puzzles.length == 1;
+                Puzzle puzzle = puzzles[0];
+                String scramble = puzzle.generateScramble();
+                Svg svg = puzzle.drawScramble(scramble, null);
+                return new ScrambleAndSvg(scramble, svg);
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        private void handleException() {
+            Log.w(TAG, exception);
+        }
+
+        protected void onCancelled(ScrambleAndSvg scrambleAndSvg) {
+            if (exception != null) {
+                handleException();
+                return;
+            }
+        }
+
+        protected void onPostExecute(ScrambleAndSvg scrambleAndSvg) {
+            if (exception != null) {
+                handleException();
+                return;
+            }
+            String scramble = scrambleAndSvg.scramble;
+            Svg svgLite = scrambleAndSvg.svg;
+
+            scrambleText.setText(scramble);
+            Session.getInstance().CURRENT_SCRAMBLE = scramble;
+
+            try {
+                SVG svg = SVG.getFromString(svgLite.toString());
+                Drawable drawable = new PictureDrawable(svg.renderToPicture());
+                // See https://code.google.com/p/svg-android/wiki/Tutorial
+                // for why we must disable hw rendering.
+                scrambleImage.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                scrambleImage.setImageDrawable(drawable);
+                Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE = drawable;
+
+            } catch (SVGParseException e) {
+                Log.wtf(TAG, e);
+            }
+        }
     }
 }

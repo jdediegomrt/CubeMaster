@@ -1,10 +1,23 @@
 package com.jaimedediego.cubemaster.utils;
 
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import net.gnehzr.tnoodle.scrambles.Puzzle;
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
+import net.gnehzr.tnoodle.utils.BadLazyClassDescriptionException;
+import net.gnehzr.tnoodle.utils.LazyInstantiator;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Constants {
     private static Constants instance;
+    private static final String TAG = Constants.class.getName();
 
     private Constants() {
     }
@@ -26,13 +39,20 @@ public class Constants {
     public int HOURS_FORMATTING = 3;
 
     //Scramble constants
-    public int maxScrambleLength = 60;
+    public SortedMap<String, LazyInstantiator<Puzzle>> puzzles;
 
-    public List<String> NxNxN = Arrays.asList("U", "F", "R", "B", "L", "D");
+    public ArrayList<String> shortNames;
+    {
+        try {
+            puzzles = new TreeMap<>(PuzzlePlugins.getScramblers());
+            shortNames = new ArrayList<>(puzzles.keySet());
 
-    public List<String> NxNxN_ROTATIONS = Arrays.asList("X", "Y", "Z");
-
-    public List<String> ODD_NUMBER_NxNxN = Arrays.asList("M", "E", "S");
+        } catch (BadLazyClassDescriptionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Time selector constant
     public String FREEZING_TIME_SELECTOR[] = {"0.0s", "0.1s", "0.2s", "0.3s", "0.4s", "0.5s", "0.6s", "0.7s", "0.8s", "0.9s", "1.0s"};

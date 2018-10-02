@@ -22,15 +22,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
 import com.jaimedediego.cubemaster.view.DetailActivity;
 import com.jaimedediego.cubemaster.view.Dialogs.AreYouSureDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
+
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -78,8 +78,13 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         DatabaseMethods.getInstance().setDatabase(context);
         holder.setPosition(position);
 
-        holder.name.setText(getItem(position));
-        if (holder.name.getText().toString().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+        if(Constants.getInstance().shortNames.contains(getItem(position))) {
+            holder.name.setText(PuzzlePlugins.getScramblerLongName(getItem(position)));
+        } else {
+            holder.name.setText(getItem(position));
+        }
+
+        if (getItem(position).equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             holder.elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setImageResource(R.drawable.baseline_check_circle_outline_white_24);
@@ -95,7 +100,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             holder.more.setColorFilter(Color.WHITE);
         }
 
-        if (holder.name.getText().toString().equals(context.getResources().getString(R.string.add_new))) {
+        if (getItem(position).equals(context.getResources().getString(R.string.add_new))) {
             holder.name.setTextColor(Session.getInstance().lightColorTheme);
             holder.element.setVisibility(View.VISIBLE);
             holder.optionsLayout.setVisibility(View.GONE);
@@ -229,10 +234,8 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                     } else {
                         elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
-                        if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                            ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-                            Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-                            Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
+                        if(Constants.getInstance().shortNames.contains(getItem(position))) {
+                            Session.getInstance().CURRENT_SCRAMBLE = "";
                         }
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
                             if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {

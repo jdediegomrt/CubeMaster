@@ -1,5 +1,7 @@
 package com.jaimedediego.cubemaster.utils;
 
+import android.graphics.drawable.Drawable;
+
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 
 import java.util.List;
@@ -16,6 +18,10 @@ public class Session {
     public int darkColorTheme = 0;
     public int lightColorTheme = 0;
     public int lighterColorTheme = 0;
+
+
+    public String CURRENT_SCRAMBLE = "";
+    public Drawable CURRENT_SCRAMBLE_DRAWABLE;
 
     private Session() {
     }

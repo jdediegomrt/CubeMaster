@@ -28,11 +28,9 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
@@ -64,10 +62,10 @@ public class MainActivity extends AppCompatActivity
         ThemeConfig.getInstance().setActivity(this);
         ThemeConfig.getInstance().initConfig();
 
-        if (PrefsMethods.getInstance().isScrambleEnabled() && ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-            Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-        }
+//        if (PrefsMethods.getInstance().isScrambleEnabled() && ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+//            ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+//            Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+//        }
 
         setContentView(R.layout.activity_main);
 

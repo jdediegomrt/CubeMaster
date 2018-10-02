@@ -2,21 +2,14 @@ package com.jaimedediego.cubemaster.view.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jaimedediego.cubemaster.R;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
-import com.jaimedediego.cubemaster.utils.Session;
-import com.jaimedediego.cubemaster.view.DetailActivity;
 
 public class AreYouSureDialog extends Dialog {
 

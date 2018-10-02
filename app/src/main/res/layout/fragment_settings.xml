@@ -228,37 +228,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp">
-
-            <TextView
-                android:id="@+id/scramblelength_text"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="@string/scramble_length"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
-
-            <com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText
-                android:id="@+id/scramblelength_setter"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:textAlignment="center" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp">
 
             <TextView

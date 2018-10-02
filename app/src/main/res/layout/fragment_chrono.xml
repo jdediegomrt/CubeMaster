@@ -10,16 +10,121 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/animated_line"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/background_timer_off">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/hours_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/zero"
+                        android:textAlignment="center"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/hours_dots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/twodots"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mins_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/mins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/zero"
+                        android:textAlignment="center"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/mins_dots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/twodots"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/secs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/zero"
+                        android:textAlignment="center"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/dot"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/millis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/zero_millis"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="50sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/scramble_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/animated_line"
-            android:layout_marginBottom="50dp"
+            android:layout_below="@+id/animated_line"
+            android:layout_marginBottom="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="25dp">
 
             <ImageButton
                 android:id="@+id/scramble_button"
@@ -31,122 +136,37 @@
                 android:padding="10dp"
                 android:src="@drawable/baseline_refresh_white_18" />
 
-            <TextView
-                android:id="@+id/scramble_text"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/scramble_button"
-                android:layout_toRightOf="@+id/scramble_button"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/md_white_1000"
-                android:textSize="13sp" />
+                android:layout_toRightOf="@+id/scramble_button">
+
+                <TextView
+                    android:id="@+id/scramble_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/scramble_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/scramble_text"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/animated_line"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/background_timer_off" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/hours_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/hours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/zero"
-                    android:textAlignment="center"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-
-                <TextView
-                    android:id="@+id/hours_dots"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/twodots"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mins_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/mins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/zero"
-                    android:textAlignment="center"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-
-                <TextView
-                    android:id="@+id/mins_dots"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/twodots"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:id="@+id/secs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/zero"
-                    android:textAlignment="center"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/dot"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-
-                <TextView
-                    android:id="@+id/millis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/zero_millis"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="50sp" />
-            </LinearLayout>
-
-        </LinearLayout>
 
     </RelativeLayout>
 

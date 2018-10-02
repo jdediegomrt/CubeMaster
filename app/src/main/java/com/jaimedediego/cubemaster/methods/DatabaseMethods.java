@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.DatabaseConfig;
+import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 
@@ -57,20 +58,15 @@ public class DatabaseMethods {
         closeDatabase();
     }
 
-    public void addUser() {
+    public void addUserAndDefaultPuzzles() {
         Cursor c = makeQuery("select count(id) from users");
         if (c.moveToFirst()) {
             do {
                 int newUserId = c.getInt(0) + 1;
                 makeUpdate("insert into users (id, name) values (" + newUserId + ", '" + "Default" + "')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 1 + ", " + newUserId + ", '3x3x3')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 2 + ", " + newUserId + ", '2x2x2')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 3 + ", " + newUserId + ", '4x4x4')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 4 + ", " + newUserId + ", '5x5x5')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 5 + ", " + newUserId + ", 'Megaminx')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 6 + ", " + newUserId + ", 'Pyraminx')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 7 + ", " + newUserId + ", 'Skewb')");
-                makeUpdate("insert into puzzles (id, user_id, name) values (" + 8 + ", " + newUserId + ", 'Square-1')");
+                for(int i = 0; i< Constants.getInstance().shortNames.size(); i++){
+                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (i+1) + ", " + newUserId + ", '" + Constants.getInstance().shortNames.get(i) +"')");
+                }
             } while (c.moveToNext());
         }
         c.close();

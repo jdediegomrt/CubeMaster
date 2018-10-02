@@ -12,9 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.jaimedediego.cubemaster.R;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
@@ -55,11 +53,11 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.accept:
                 DatabaseMethods.getInstance().usePuzzle(spinner.getSelectedItem().toString());
-                if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-                    Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
-                }
+//                if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+//                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
+//                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
+//                    Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
+//                }
                 didSomething = true;
                 dismiss();
                 break;

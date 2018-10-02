@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayout;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -25,17 +23,17 @@ import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.methods.ScrambleMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.ColorsAdapter;
-import com.jaimedediego.cubemaster.view.CustomViews.FilteredEditText;
 import com.jaimedediego.cubemaster.view.Dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
+
+import net.gnehzr.tnoodle.scrambles.Puzzle;
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 
 public class SettingsFragment extends Fragment {
 
@@ -78,7 +76,6 @@ public class SettingsFragment extends Fragment {
         final Switch scramble = v.findViewById(R.id.scramble_switch);
         final ImageButton stopwatchInfoButton = v.findViewById(R.id.stopwatch_info);
         final NumberPicker freezingTime = v.findViewById(R.id.frtime_setter);
-        final FilteredEditText scrambleLength = v.findViewById(R.id.scramblelength_setter);
         final GridLayout colorGrid = v.findViewById(R.id.color_grid);
         final ImageButton frTimeInfoButton = v.findViewById(R.id.frtime_info);
         final LinearLayout settingsLayout = v.findViewById(R.id.settings_layout);
@@ -98,8 +95,6 @@ public class SettingsFragment extends Fragment {
         freezingTime.setWrapSelectorWheel(true);
         freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime() / 100);
 
-        scrambleLength.setText(String.valueOf(PrefsMethods.getInstance().getScrambleLength()));
-
         for (int i = 0; i < ThemeConfig.getInstance().colors().size(); i++) {
             colorGrid.addView(new ColorsAdapter(getActivity()).getView(i, colorGrid));
         }
@@ -112,15 +107,12 @@ public class SettingsFragment extends Fragment {
             pause.setChecked(true);
         }
 
-        if (!ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+        if (!Constants.getInstance().shortNames.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             scramble.setEnabled(false);
-            scrambleLength.setEnabled(false);
         } else {
             if (PrefsMethods.getInstance().isScrambleEnabled()) {
                 scramble.setEnabled(true);
                 scramble.setChecked(true);
-            } else {
-                scrambleLength.setEnabled(false);
             }
         }
 
@@ -179,10 +171,8 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (scramble.isChecked()) {
                     PrefsMethods.getInstance().setScramble(true);
-                    scrambleLength.setEnabled(true);
                 } else {
                     PrefsMethods.getInstance().setScramble(false);
-                    scrambleLength.setEnabled(false);
                 }
             }
         });
@@ -192,18 +182,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 PrefsMethods.getInstance().setFreezingTime(newVal * 100);
-            }
-        });
-
-        scrambleLength.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    PrefsMethods.getInstance().setScrambleLength(Integer.parseInt(v.getText().toString()));
-                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-                }
-                return false;
             }
         });
 

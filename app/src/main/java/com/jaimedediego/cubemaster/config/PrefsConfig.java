@@ -47,7 +47,7 @@ public class PrefsConfig {
             editor.apply();
         }
         if (!prefs.contains("user")) {
-            DatabaseMethods.getInstance().addUser();
+            DatabaseMethods.getInstance().addUserAndDefaultPuzzles();
             editor.putBoolean("user", true);
             editor.apply();
         }

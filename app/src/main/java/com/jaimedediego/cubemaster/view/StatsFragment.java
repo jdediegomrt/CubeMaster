@@ -30,6 +30,8 @@ import com.jaimedediego.cubemaster.view.CustomViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,7 +95,7 @@ public class StatsFragment extends Fragment {
         TextView chartName = v.findViewById(R.id.chart_name);
         chartName.setBackgroundColor(Session.getInstance().darkColorTheme);
         chartName.setText(R.string.times_chart_name);
-        final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
+        final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(PuzzlePlugins.getScramblerLongName(DatabaseMethods.getInstance().getCurrentPuzzleName()), 1);
         if (timesDetail.size()!=0) {
             List<Entry> entries = new ArrayList<>();
             float i = 0;
@@ -113,7 +115,7 @@ public class StatsFragment extends Fragment {
         chart.invalidate();
 
         timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(null)));
-        currentPuzzle.setText(DatabaseMethods.getInstance().getCurrentPuzzleName());
+        currentPuzzle.setText(PuzzlePlugins.getScramblerLongName(DatabaseMethods.getInstance().getCurrentPuzzleName()));
         bestTime.setText(StatsMethods.getInstance().getBestTime(null));
         worstTime.setText(StatsMethods.getInstance().getWorstTime(null));
         average.setText(StatsMethods.getInstance().getAverage(null, 0));
