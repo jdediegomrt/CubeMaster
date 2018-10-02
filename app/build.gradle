@@ -39,6 +39,8 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
+    implementation project(":TNoodleWCA-library-release")
+
     testImplementation 'junit:junit:4.12'
 }
 
