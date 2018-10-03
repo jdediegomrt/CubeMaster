@@ -127,7 +127,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 date.setText(detail.getDate());
                 time.setText(detail.getTime());
-                if (detail.getScramble() != null && !detail.getScramble().equals("")) {
+                if (detail.getScramble() != null && !detail.getScramble().isEmpty()) {
                     scramble.setVisibility(View.VISIBLE);
                     scramble.setText(detail.getScramble());
                 }

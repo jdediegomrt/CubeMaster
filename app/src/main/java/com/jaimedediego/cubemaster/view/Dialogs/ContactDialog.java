@@ -49,7 +49,7 @@ public class ContactDialog extends Dialog implements View.OnClickListener {
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         switch (v.getId()) {
             case R.id.send:
-                if (editText.getText().toString().equals("")) {
+                if (editText.getText().toString().isEmpty()) {
                     editText.setHint(R.string.cannot_empty);
                 } else {
                     dismiss();

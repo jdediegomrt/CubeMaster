@@ -37,7 +37,7 @@ public class NewPuzzleDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept:
-                if (!name.getText().toString().equals("")) {
+                if (!name.getText().toString().isEmpty()) {
                     if (!DatabaseMethods.getInstance().existPuzzle(name.getText().toString())
                             && !name.getText().toString().equals(context.getString(R.string.add_new))) {
                         DatabaseMethods.getInstance().addNewPuzzle(name.getText().toString());

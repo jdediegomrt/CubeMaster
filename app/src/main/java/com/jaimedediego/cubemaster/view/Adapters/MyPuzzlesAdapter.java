@@ -105,7 +105,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             holder.element.setVisibility(View.VISIBLE);
             holder.optionsLayout.setVisibility(View.GONE);
         } else {
-            if (holder.name.getText().equals("")) {
+            if (holder.name.getText().toString().isEmpty()) {
                 holder.element.setVisibility(View.INVISIBLE);
             } else {
                 holder.name.setTextColor(context.getColor(R.color.md_black_1000));
@@ -234,9 +234,10 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                     } else {
                         elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
-                        if(Constants.getInstance().shortNames.contains(getItem(position))) {
-                            Session.getInstance().CURRENT_SCRAMBLE = "";
-                        }
+                        Session.getInstance().CURRENT_SCRAMBLE = "";
+                        Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE = null;
+                        Session.getInstance().NEXT_SCRAMBLE = "";
+                        Session.getInstance().NEXT_SCRAMBLE_DRAWABLE = null;
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
                             if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
                                 notifyItemChanged(i);
@@ -252,7 +253,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
             if (filteredPuzzles.size() != puzzles.size()) {
                 puzzles.add(puzzles.size() - 2, newPuzzleName);
             }
-            if (filterSequence != null && !filterSequence.equals("")) {
+            if (filterSequence != null && !filterSequence.toString().isEmpty()) {
                 if (newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())) {
                     notifyItemInserted(position);
                     for (int i = 0; i < filteredPuzzles.size(); i++) {

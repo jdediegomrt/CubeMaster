@@ -22,6 +22,8 @@ public class Session {
 
     public String CURRENT_SCRAMBLE = "";
     public Drawable CURRENT_SCRAMBLE_DRAWABLE;
+    public String NEXT_SCRAMBLE = "";
+    public Drawable NEXT_SCRAMBLE_DRAWABLE;
 
     private Session() {
     }

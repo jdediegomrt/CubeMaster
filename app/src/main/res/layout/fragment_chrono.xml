@@ -149,6 +149,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
+                    android:text="@string/scrambling"
                     android:textAlignment="center"
                     android:textColor="@color/md_white_1000"
                     android:textSize="13sp" />
@@ -159,10 +160,7 @@
                     android:layout_height="match_parent"
                     android:layout_above="@+id/scramble_text"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="13sp" />
+                    android:gravity="center"/>
 
             </RelativeLayout>
 

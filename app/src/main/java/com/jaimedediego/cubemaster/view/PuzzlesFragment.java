@@ -54,7 +54,7 @@ public class PuzzlesFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String filter) {
-                if(!filter.equals("")){
+                if(!filter.isEmpty()){
                     isFiltering = true;
                 } else {
                     isFiltering = false;
@@ -65,7 +65,7 @@ public class PuzzlesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String filter) {
-                if(!filter.equals("")){
+                if(!filter.isEmpty()){
                     isFiltering = true;
                     if (getString(R.string.add_new).toLowerCase().contains(filter.toLowerCase())) {
                         filterMatchAddNew = true;
