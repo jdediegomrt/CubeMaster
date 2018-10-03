@@ -2,6 +2,7 @@ package com.jaimedediego.cubemaster.utils;
 
 import android.graphics.drawable.Drawable;
 
+import com.caverock.androidsvg.SVG;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 
 import java.util.List;
@@ -21,9 +22,9 @@ public class Session {
 
 
     public String CURRENT_SCRAMBLE = "";
-    public Drawable CURRENT_SCRAMBLE_DRAWABLE;
+    public SVG CURRENT_SCRAMBLE_SVG;
     public String NEXT_SCRAMBLE = "";
-    public Drawable NEXT_SCRAMBLE_DRAWABLE;
+    public SVG NEXT_SCRAMBLE_SVG;
 
     private Session() {
     }

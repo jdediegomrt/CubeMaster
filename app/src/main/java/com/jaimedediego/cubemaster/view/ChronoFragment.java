@@ -31,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
@@ -66,7 +67,7 @@ public class ChronoFragment extends Fragment {
     private TextView millis;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
-    private ImageView scrambleImage;
+    private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
     private int helpCounter = 0;
 
@@ -162,7 +163,7 @@ public class ChronoFragment extends Fragment {
                 doScramble();
             } else {
                 scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
-                scrambleImage.setImageDrawable(Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE);
+                scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
             }
         } else {
             scrambleLayout.setVisibility(View.GONE);
@@ -173,13 +174,14 @@ public class ChronoFragment extends Fragment {
             public void onClick(View view) {
                 if (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null) {
                     scrambleText.setText(R.string.scrambling);
-                    scrambleImage.setImageDrawable(null);
+                    scrambleImage.setVisibility(View.INVISIBLE);
                     Session.getInstance().CURRENT_SCRAMBLE = "";
                 } else {
                     Session.getInstance().CURRENT_SCRAMBLE = Session.getInstance().NEXT_SCRAMBLE;
-                    Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE = Session.getInstance().NEXT_SCRAMBLE_DRAWABLE;
+                    Session.getInstance().CURRENT_SCRAMBLE_SVG = Session.getInstance().NEXT_SCRAMBLE_SVG;
                     scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
-                    scrambleImage.setImageDrawable(Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE);
+                    scrambleImage.setVisibility(View.VISIBLE);
+                    scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
                     Session.getInstance().NEXT_SCRAMBLE = "";
                 }
                 doScramble();
@@ -407,21 +409,22 @@ public class ChronoFragment extends Fragment {
 
             try {
                 SVG svg = SVG.getFromString(svgLite.toString());
-                Drawable drawable = new PictureDrawable(svg.renderToPicture());
-                // See https://code.google.com/p/svg-android/wiki/Tutorial
-                // for why we must disable hw rendering.
 
                 if (Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) {
-                    scrambleImage.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                    scrambleImage.setImageDrawable(drawable);
-                    Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE = drawable;
+//                    scrambleImage.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//                    scrambleImage.setImageDrawable(drawable);
+                    scrambleImage.setSVG(svg);
+                    if(scrambleImage.getVisibility()==View.INVISIBLE){
+                        scrambleImage.setVisibility(View.VISIBLE);
+                    }
+                    Session.getInstance().CURRENT_SCRAMBLE_SVG = svg;
                     scrambleText.setText(scramble);
                     Session.getInstance().CURRENT_SCRAMBLE = scramble;
                     if (Session.getInstance().NEXT_SCRAMBLE.isEmpty()) {
                         new ScrambleTask().execute(puzzle);
                     }
                 } else {
-                    Session.getInstance().NEXT_SCRAMBLE_DRAWABLE = drawable;
+                    Session.getInstance().NEXT_SCRAMBLE_SVG = svg;
                     Session.getInstance().NEXT_SCRAMBLE = scramble;
                 }
 

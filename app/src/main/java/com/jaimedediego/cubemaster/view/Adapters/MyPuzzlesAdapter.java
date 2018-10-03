@@ -235,9 +235,9 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
                         elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
                         Session.getInstance().CURRENT_SCRAMBLE = "";
-                        Session.getInstance().CURRENT_SCRAMBLE_DRAWABLE = null;
+                        Session.getInstance().CURRENT_SCRAMBLE_SVG = null;
                         Session.getInstance().NEXT_SCRAMBLE = "";
-                        Session.getInstance().NEXT_SCRAMBLE_DRAWABLE = null;
+                        Session.getInstance().NEXT_SCRAMBLE_SVG = null;
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
                             if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
                                 notifyItemChanged(i);
