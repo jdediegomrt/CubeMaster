@@ -164,6 +164,7 @@ public class ChronoFragment extends Fragment {
             } else {
                 scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
                 scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
+                scrambleButton.setVisibility(View.VISIBLE);
             }
         } else {
             scrambleLayout.setVisibility(View.GONE);
@@ -175,6 +176,7 @@ public class ChronoFragment extends Fragment {
                 if (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null) {
                     scrambleText.setText(R.string.scrambling);
                     scrambleImage.setVisibility(View.INVISIBLE);
+                    scrambleButton.setVisibility(View.GONE);
                     Session.getInstance().CURRENT_SCRAMBLE = "";
                 } else {
                     Session.getInstance().CURRENT_SCRAMBLE = Session.getInstance().NEXT_SCRAMBLE;
@@ -183,8 +185,8 @@ public class ChronoFragment extends Fragment {
                     scrambleImage.setVisibility(View.VISIBLE);
                     scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
                     Session.getInstance().NEXT_SCRAMBLE = "";
+                    doScramble();
                 }
-                doScramble();
             }
         });
 
@@ -411,17 +413,19 @@ public class ChronoFragment extends Fragment {
                 SVG svg = SVG.getFromString(svgLite.toString());
 
                 if (Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) {
-//                    scrambleImage.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//                    scrambleImage.setImageDrawable(drawable);
                     scrambleImage.setSVG(svg);
                     if(scrambleImage.getVisibility()==View.INVISIBLE){
                         scrambleImage.setVisibility(View.VISIBLE);
+                    }
+                    if(scrambleButton.getVisibility()==View.GONE){
+                        scrambleButton.setVisibility(View.VISIBLE);
                     }
                     Session.getInstance().CURRENT_SCRAMBLE_SVG = svg;
                     scrambleText.setText(scramble);
                     Session.getInstance().CURRENT_SCRAMBLE = scramble;
                     if (Session.getInstance().NEXT_SCRAMBLE.isEmpty()) {
-                        new ScrambleTask().execute(puzzle);
+                        scrambleTask = new ScrambleTask();
+                        scrambleTask.execute(puzzle);
                     }
                 } else {
                     Session.getInstance().NEXT_SCRAMBLE_SVG = svg;

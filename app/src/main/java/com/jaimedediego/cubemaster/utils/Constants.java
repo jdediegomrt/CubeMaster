@@ -1,8 +1,5 @@
 package com.jaimedediego.cubemaster.utils;
 
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-
 import net.gnehzr.tnoodle.scrambles.Puzzle;
 import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 import net.gnehzr.tnoodle.utils.BadLazyClassDescriptionException;
@@ -10,8 +7,6 @@ import net.gnehzr.tnoodle.utils.LazyInstantiator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -42,6 +37,7 @@ public class Constants {
     public SortedMap<String, LazyInstantiator<Puzzle>> puzzles;
 
     public ArrayList<String> shortNames;
+
     {
         try {
             puzzles = new TreeMap<>(PuzzlePlugins.getScramblers());
@@ -59,6 +55,7 @@ public class Constants {
 
     //Toasts timing constants
     public int TOAST_MEDIUM_DURATION = 1000;
+
     public int TOAST_SHORT_DURATION = 500;
 
 }
