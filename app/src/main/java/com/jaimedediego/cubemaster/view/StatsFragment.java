@@ -16,14 +16,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
@@ -35,7 +31,6 @@ import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StatsFragment extends Fragment {
@@ -116,11 +111,7 @@ public class StatsFragment extends Fragment {
         }
         chart.invalidate();
 
-        if (Constants.getInstance().shortNames.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            currentPuzzle.setText(PuzzlePlugins.getScramblerLongName(DatabaseMethods.getInstance().getCurrentPuzzleName()));
-        } else {
-            currentPuzzle.setText(DatabaseMethods.getInstance().getCurrentPuzzleName());
-        }
+        currentPuzzle.setText(DatabaseMethods.getInstance().getCurrentPuzzleName());
         timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(null)));
         bestTime.setText(StatsMethods.getInstance().getBestTime(null));
         worstTime.setText(StatsMethods.getInstance().getWorstTime(null));

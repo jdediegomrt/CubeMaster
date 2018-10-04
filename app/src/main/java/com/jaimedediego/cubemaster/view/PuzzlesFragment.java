@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.view.Adapters.MyPuzzlesAdapter;
+import com.jaimedediego.cubemaster.view.Adapters.PuzzlesListAdapter;
 import com.jaimedediego.cubemaster.view.Dialogs.NewPuzzleDialog;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class PuzzlesFragment extends Fragment {
 
-    private MyPuzzlesAdapter adapter;
+    private PuzzlesListAdapter adapter;
     private SearchView searchView;
     private boolean isFiltering = false;
     private boolean filterMatchAddNew = false;
@@ -126,7 +126,7 @@ public class PuzzlesFragment extends Fragment {
         RecyclerView puzzlesList = v.findViewById(R.id.puzzles_list);
         List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, getContext());
-        adapter = new MyPuzzlesAdapter(getActivity(), puzzles);
+        adapter = new PuzzlesListAdapter(getActivity(), puzzles);
         puzzlesList.setAdapter(adapter);
 
         return v;

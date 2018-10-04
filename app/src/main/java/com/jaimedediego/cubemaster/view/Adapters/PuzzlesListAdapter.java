@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +36,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.ViewHolder> implements Filterable {
+public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.ViewHolder> implements Filterable {
 
     private List<String> puzzles;
     private List<String> filteredPuzzles;
@@ -47,7 +46,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
     private CharSequence filterSequence;
     private ViewHolder viewHolder;
 
-    public MyPuzzlesAdapter(Context context, List<String> puzzles) {
+    public PuzzlesListAdapter(Context context, List<String> puzzles) {
         this.puzzles = puzzles;
         filteredPuzzles = puzzles;
         this.context = context;
@@ -78,12 +77,7 @@ public class MyPuzzlesAdapter extends RecyclerView.Adapter<MyPuzzlesAdapter.View
         DatabaseMethods.getInstance().setDatabase(context);
         holder.setPosition(position);
 
-        if(Constants.getInstance().shortNames.contains(getItem(position))) {
-            holder.name.setText(PuzzlePlugins.getScramblerLongName(getItem(position)));
-        } else {
-            holder.name.setText(getItem(position));
-        }
-
+        holder.name.setText(getItem(position));
         if (getItem(position).equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             holder.elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
             holder.element.setVisibility(View.VISIBLE);

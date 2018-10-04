@@ -32,9 +32,6 @@ import com.jaimedediego.cubemaster.view.Adapters.ColorsAdapter;
 import com.jaimedediego.cubemaster.view.Dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 
-import net.gnehzr.tnoodle.scrambles.Puzzle;
-import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
-
 public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -107,7 +104,7 @@ public class SettingsFragment extends Fragment {
             pause.setChecked(true);
         }
 
-        if (!Constants.getInstance().shortNames.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+        if (!Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             scramble.setEnabled(false);
         } else {
             if (PrefsMethods.getInstance().isScrambleEnabled()) {

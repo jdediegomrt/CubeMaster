@@ -21,10 +21,13 @@ import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Adapters.SortBySpinnerAdapter;
 import com.jaimedediego.cubemaster.view.Dialogs.DeletePuzzleDialog;
+
+import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 
 import java.util.Collections;
 import java.util.List;

@@ -151,9 +151,9 @@ public class ChronoFragment extends Fragment {
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
 
-        if (Constants.getInstance().shortNames.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            String shortName = DatabaseMethods.getInstance().getCurrentPuzzleName();
-            LazyInstantiator<Puzzle> lazyPuzzle = Constants.getInstance().puzzles.get(shortName);
+        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+            String shortName = Constants.getInstance().WCA_PUZZLES_SHORT_NAMES.get(Constants.getInstance().WCA_PUZZLES_LONG_NAMES.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
+            LazyInstantiator<Puzzle> lazyPuzzle = Constants.getInstance().WCA_PUZZLES.get(shortName);
             try {
                 puzzle = lazyPuzzle.cachedInstance();
             } catch (LazyInstantiatorException e) {
@@ -273,6 +273,7 @@ public class ChronoFragment extends Fragment {
                                     pauseButton.setVisibility(View.GONE);
                                 }
                                 infoButton.setEnabled(true);
+                                scrambleButton.setVisibility(View.VISIBLE);
                                 DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString());
                                 if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
                                     final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
@@ -298,6 +299,7 @@ public class ChronoFragment extends Fragment {
                             activityMenu.getChildAt(i).setEnabled(false);
                         }
                         infoButton.setEnabled(false);
+                        scrambleButton.setVisibility(View.GONE);
                         helpCounter = 0;
                         thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                         thread.start();
