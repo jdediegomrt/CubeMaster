@@ -21,11 +21,9 @@ public class PrefsConfig {
 
     public SharedPreferences prefs;
     public SharedPreferences.Editor editor;
-    private Context context;
 
     public void setContext(Context context) {
-        this.context = context;
-        prefs = this.context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         editor = prefs.edit();
     }
 

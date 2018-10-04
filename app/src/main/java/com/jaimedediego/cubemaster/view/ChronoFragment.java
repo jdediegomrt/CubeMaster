@@ -35,6 +35,7 @@ import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
@@ -70,9 +71,6 @@ public class ChronoFragment extends Fragment {
     private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
     private int helpCounter = 0;
-
-    private ScrambleTask scrambleTask;
-    private Puzzle puzzle;
 
     private static final String TAG = ChronoFragment.class.getName();
 
@@ -152,15 +150,9 @@ public class ChronoFragment extends Fragment {
         scrambleButton = v.findViewById(R.id.scramble_button);
 
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            String shortName = Constants.getInstance().WCA_PUZZLES_SHORT_NAMES.get(Constants.getInstance().WCA_PUZZLES_LONG_NAMES.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
-            LazyInstantiator<Puzzle> lazyPuzzle = Constants.getInstance().WCA_PUZZLES.get(shortName);
-            try {
-                puzzle = lazyPuzzle.cachedInstance();
-            } catch (LazyInstantiatorException e) {
-                Log.wtf(TAG, e);
-            }
+
             if ((Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) && (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null)) {
-                doScramble();
+                ScrambleConfig.getInstance().doScramble(scrambleText, scrambleImage, scrambleButton);
             } else {
                 scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
                 scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
@@ -185,7 +177,7 @@ public class ChronoFragment extends Fragment {
                     scrambleImage.setVisibility(View.VISIBLE);
                     scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
                     Session.getInstance().NEXT_SCRAMBLE = "";
-                    doScramble();
+                    ScrambleConfig.getInstance().doScramble(scrambleText, scrambleImage, scrambleButton);
                 }
             }
         });
@@ -348,95 +340,5 @@ public class ChronoFragment extends Fragment {
 
     interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
-
-    private void doScramble() {
-        cancelScrambleIfScrambling();
-        scrambleTask = new ScrambleTask();
-        scrambleTask.execute(puzzle);
-    }
-
-    private void cancelScrambleIfScrambling() {
-        if (scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING) {
-            scrambleTask.cancel(true);
-        }
-    }
-
-    private class ScrambleAndSvg {
-        String scramble;
-        Svg svg;
-
-        ScrambleAndSvg(String scramble, Svg svg) {
-            this.scramble = scramble;
-            this.svg = svg;
-        }
-    }
-
-    private class ScrambleTask extends AsyncTask<Puzzle, Void, ScrambleAndSvg> {
-
-        private Exception exception;
-
-        public ScrambleTask() {
-        }
-
-        protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
-            try {
-                assert puzzles.length == 1;
-                Puzzle puzzle = puzzles[0];
-                String scramble = puzzle.generateScramble();
-                Svg svg = puzzle.drawScramble(scramble, null);
-                return new ScrambleAndSvg(scramble, svg);
-            } catch (Exception e) {
-                this.exception = e;
-                return null;
-            }
-        }
-
-        private void handleException() {
-            Log.w(TAG, exception);
-        }
-
-        protected void onCancelled(ScrambleAndSvg scrambleAndSvg) {
-            if (exception != null) {
-                handleException();
-                return;
-            }
-        }
-
-        protected void onPostExecute(ScrambleAndSvg scrambleAndSvg) {
-            if (exception != null) {
-                handleException();
-                return;
-            }
-            String scramble = scrambleAndSvg.scramble;
-            Svg svgLite = scrambleAndSvg.svg;
-
-            try {
-                SVG svg = SVG.getFromString(svgLite.toString());
-
-                if (Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) {
-                    scrambleImage.setSVG(svg);
-                    if(scrambleImage.getVisibility()==View.INVISIBLE){
-                        scrambleImage.setVisibility(View.VISIBLE);
-                    }
-                    if(scrambleButton.getVisibility()==View.GONE){
-                        scrambleButton.setVisibility(View.VISIBLE);
-                    }
-                    Session.getInstance().CURRENT_SCRAMBLE_SVG = svg;
-                    scrambleText.setText(scramble);
-                    Session.getInstance().CURRENT_SCRAMBLE = scramble;
-                    if (Session.getInstance().NEXT_SCRAMBLE.isEmpty()) {
-                        scrambleTask = new ScrambleTask();
-                        scrambleTask.execute(puzzle);
-                    }
-                } else {
-                    Session.getInstance().NEXT_SCRAMBLE_SVG = svg;
-                    Session.getInstance().NEXT_SCRAMBLE = scramble;
-                }
-
-            } catch (SVGParseException e) {
-                Log.wtf(TAG, e);
-            }
-        }
     }
 }

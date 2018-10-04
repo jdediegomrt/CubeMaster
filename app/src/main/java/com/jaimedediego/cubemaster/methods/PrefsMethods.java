@@ -19,11 +19,7 @@ public class PrefsMethods {
     private PrefsConfig prefsConfig = PrefsConfig.getInstance();
 
     public boolean isBeepActivated() {
-        if (prefsConfig.prefs.getBoolean("beep", false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return prefsConfig.prefs.getBoolean("beep", false);
     }
 
     public void activateBeep(boolean activate) {
@@ -32,11 +28,7 @@ public class PrefsMethods {
     }
 
     public boolean isPauseActivated() {
-        if (prefsConfig.prefs.getBoolean("stopwatch", false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return prefsConfig.prefs.getBoolean("stopwatch", false);
     }
 
     public void activatePause(boolean activate) {
@@ -45,11 +37,7 @@ public class PrefsMethods {
     }
 
     public boolean isOnboardingShown() {
-        if (prefsConfig.prefs.getBoolean("onboarding", false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return prefsConfig.prefs.getBoolean("onboarding", false);
     }
 
     public void setOnboardingShown(boolean shown) {
@@ -76,11 +64,7 @@ public class PrefsMethods {
     }
 
     public boolean isRatedOrNever() {
-        if (prefsConfig.prefs.getBoolean("ratedOrNever", false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return prefsConfig.prefs.getBoolean("ratedOrNever", false);
     }
 
     public void setRatedOrNever(boolean ratedOrNever) {
@@ -89,11 +73,7 @@ public class PrefsMethods {
     }
 
     public boolean isScrambleEnabled() {
-        if (prefsConfig.prefs.getBoolean("scramble", false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return prefsConfig.prefs.getBoolean("scramble", false);
     }
 
     public void setScramble(boolean wholeCubeRotations) {

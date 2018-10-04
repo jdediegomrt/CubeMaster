@@ -44,7 +44,7 @@ public class DatabaseMethods {
         db.close();
     }
 
-    public Cursor makeQuery(String query) {
+    private Cursor makeQuery(String query) {
         openDatabase();
         return db.rawQuery(query, null);
     }
