@@ -12,8 +12,8 @@ import java.util.List;
 public class CustomLineDataSet extends LineDataSet {
     public CustomLineDataSet(List<Entry> yVals, String label) {
         super(yVals, label);
-        setColor(Session.getInstance().darkColorTheme);
-        setCircleColor(Session.getInstance().darkColorTheme);
+        setColor(Session.getInstance().getDarkColorTheme());
+        setCircleColor(Session.getInstance().getDarkColorTheme());
         setCircleRadius(2f);
         setDrawValues(false);
 

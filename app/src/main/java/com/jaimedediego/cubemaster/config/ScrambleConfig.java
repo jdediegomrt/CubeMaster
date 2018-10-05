@@ -120,7 +120,7 @@ public class ScrambleConfig {
             try {
                 SVG svg = SVG.getFromString(svgLite.toString());
 
-                if (Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) {
+                if (Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) {
                     scrambleImage.setSVG(svg);
                     if (scrambleImage.getVisibility() == View.INVISIBLE) {
                         scrambleImage.setVisibility(View.VISIBLE);
@@ -128,15 +128,15 @@ public class ScrambleConfig {
                     if (scrambleButton.getVisibility() == View.GONE) {
                         scrambleButton.setVisibility(View.VISIBLE);
                     }
-                    Session.getInstance().CURRENT_SCRAMBLE_SVG = svg;
+                    Session.getInstance().setCurrentScrambleSvg(svg);
                     scrambleText.setText(scramble);
-                    Session.getInstance().CURRENT_SCRAMBLE = scramble;
-                    if (Session.getInstance().NEXT_SCRAMBLE.isEmpty()) {
+                    Session.getInstance().setCurrentScramble(scramble);
+                    if (Session.getInstance().getNextScramble().isEmpty()) {
                         doScramble();
                     }
                 } else {
-                    Session.getInstance().NEXT_SCRAMBLE_SVG = svg;
-                    Session.getInstance().NEXT_SCRAMBLE = scramble;
+                    Session.getInstance().setNextScrambleSvg(svg);
+                    Session.getInstance().setNextScramble(scramble);
                 }
 
             } catch (SVGParseException e) {

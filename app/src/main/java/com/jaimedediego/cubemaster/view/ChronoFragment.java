@@ -82,7 +82,7 @@ public class ChronoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().currentPuzzleId);
+            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().getCurrentPuzzleId());
             return true;
         } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
@@ -91,7 +91,7 @@ public class ChronoFragment extends Fragment {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
-                        scrambleText.setText(Session.getInstance().currentPuzzleScramble);
+                        scrambleText.setText(Session.getInstance().getCurrentPuzzleScramble());
                     }
                 }
             });
@@ -138,7 +138,7 @@ public class ChronoFragment extends Fragment {
         ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton);
 
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            if ((Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) && (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null)) {
+            if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) && (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null)) {
                 if (!ScrambleConfig.getInstance().isScrambling()) {
                     ScrambleConfig.getInstance().doScramble();
                 } else {
@@ -147,8 +147,8 @@ public class ChronoFragment extends Fragment {
                     scrambleButton.setVisibility(View.GONE);
                 }
             } else {
-                scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
-                scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
+                scrambleText.setText(Session.getInstance().getCurrentScramble());
+                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
                 scrambleButton.setVisibility(View.VISIBLE);
             }
         } else {
@@ -158,18 +158,18 @@ public class ChronoFragment extends Fragment {
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null) {
+                if (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null) {
                     scrambleText.setText(R.string.scrambling);
                     scrambleImage.setVisibility(View.INVISIBLE);
                     scrambleButton.setVisibility(View.GONE);
-                    Session.getInstance().CURRENT_SCRAMBLE = "";
+                    Session.getInstance().setCurrentScramble("");
                 } else {
-                    Session.getInstance().CURRENT_SCRAMBLE = Session.getInstance().NEXT_SCRAMBLE;
-                    Session.getInstance().CURRENT_SCRAMBLE_SVG = Session.getInstance().NEXT_SCRAMBLE_SVG;
-                    scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
+                    Session.getInstance().setCurrentScramble(Session.getInstance().getNextScramble());
+                    Session.getInstance().setCurrentScrambleSvg(Session.getInstance().getNextScrambleSvg());
+                    scrambleText.setText(Session.getInstance().getCurrentScramble());
                     scrambleImage.setVisibility(View.VISIBLE);
-                    scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
-                    Session.getInstance().NEXT_SCRAMBLE = "";
+                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                    Session.getInstance().setNextScramble("");
                     ScrambleConfig.getInstance().doScramble();
                 }
             }
@@ -183,7 +183,7 @@ public class ChronoFragment extends Fragment {
                     infoLayout.setLayoutParams(params);
                     chronoScreen.setEnabled(true);
                 } else {
-                    infoButton.setColorFilter(Session.getInstance().lightColorTheme);
+                    infoButton.setColorFilter(Session.getInstance().getLightColorTheme());
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     infoLayout.setLayoutParams(layoutParams);
                     chronoScreen.setEnabled(false);
@@ -203,7 +203,7 @@ public class ChronoFragment extends Fragment {
             }
         });
 
-        if (!PrefsMethods.getInstance().isOnboardingShown()) {
+        if (PrefsMethods.getInstance().isOnboardingNotShown()) {
             infoButton.performClick();
         }
 

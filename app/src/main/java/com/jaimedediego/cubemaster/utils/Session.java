@@ -9,20 +9,20 @@ public class Session {
 
     private static Session instance;
 
-    public int currentUserId = 1;
-    public int currentPuzzleId;
-    public List<String> currentPuzzleNotation = null;
-    public String currentPuzzleScramble = null;
+    private int currentUserId = 1;
+    private int currentPuzzleId;
+    private List<String> currentPuzzleNotation = null;
+    private String currentPuzzleScramble = null;
 
-    public int darkColorTheme = 0;
-    public int lightColorTheme = 0;
-    public int lighterColorTheme = 0;
+    private int darkColorTheme = 0;
+    private int lightColorTheme = 0;
+    private int lighterColorTheme = 0;
 
 
-    public String CURRENT_SCRAMBLE = "";
-    public SVG CURRENT_SCRAMBLE_SVG;
-    public String NEXT_SCRAMBLE = "";
-    public SVG NEXT_SCRAMBLE_SVG;
+    private String currentScramble = "";
+    private SVG currentScrambleSvg;
+    private String nextScramble = "";
+    private SVG nextScrambleSvg;
 
     private Session() {
     }
@@ -33,5 +33,90 @@ public class Session {
             instance.currentPuzzleId = DatabaseMethods.getInstance().setDefaultCurrentPuzzle();
         }
         return instance;
+    }
+
+    public int getCurrentUserId() {
+        return currentUserId;
+    }
+
+
+    public int getCurrentPuzzleId() {
+        return currentPuzzleId;
+    }
+
+    public void setCurrentPuzzleId(int currentPuzzleId) {
+        this.currentPuzzleId = currentPuzzleId;
+    }
+
+    public List<String> getCurrentPuzzleNotation() {
+        return currentPuzzleNotation;
+    }
+
+    public void setCurrentPuzzleNotation(List<String> currentPuzzleNotation) {
+        this.currentPuzzleNotation = currentPuzzleNotation;
+    }
+
+    public String getCurrentPuzzleScramble() {
+        return currentPuzzleScramble;
+    }
+
+    public void setCurrentPuzzleScramble(String currentPuzzleScramble) {
+        this.currentPuzzleScramble = currentPuzzleScramble;
+    }
+
+    public int getDarkColorTheme() {
+        return darkColorTheme;
+    }
+
+    public void setDarkColorTheme(int darkColorTheme) {
+        this.darkColorTheme = darkColorTheme;
+    }
+
+    public int getLightColorTheme() {
+        return lightColorTheme;
+    }
+
+    public void setLightColorTheme(int lightColorTheme) {
+        this.lightColorTheme = lightColorTheme;
+    }
+
+    public int getLighterColorTheme() {
+        return lighterColorTheme;
+    }
+
+    public void setLighterColorTheme(int lighterColorTheme) {
+        this.lighterColorTheme = lighterColorTheme;
+    }
+
+    public String getCurrentScramble() {
+        return currentScramble;
+    }
+
+    public void setCurrentScramble(String currentScramble) {
+        this.currentScramble = currentScramble;
+    }
+
+    public SVG getCurrentScrambleSvg() {
+        return currentScrambleSvg;
+    }
+
+    public void setCurrentScrambleSvg(SVG currentScrambleSvg) {
+        this.currentScrambleSvg = currentScrambleSvg;
+    }
+
+    public String getNextScramble() {
+        return nextScramble;
+    }
+
+    public void setNextScramble(String nextScramble) {
+        this.nextScramble = nextScramble;
+    }
+
+    public SVG getNextScrambleSvg() {
+        return nextScrambleSvg;
+    }
+
+    public void setNextScrambleSvg(SVG nextScrambleSvg) {
+        this.nextScrambleSvg = nextScrambleSvg;
     }
 }

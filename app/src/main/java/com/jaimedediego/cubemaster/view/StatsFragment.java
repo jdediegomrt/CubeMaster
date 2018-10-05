@@ -52,7 +52,7 @@ public class StatsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().currentPuzzleId);
+            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().getCurrentPuzzleId());
             ((MainActivity) getActivity()).refreshView();
             return true;
         } else if (id == R.id.change_database) {
@@ -78,7 +78,7 @@ public class StatsFragment extends Fragment {
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
         RelativeLayout puzzleNameContainer = v.findViewById(R.id.puzzle_name_container);
-        puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
+        puzzleNameContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
         TextView bestTime = v.findViewById(R.id.best_time);
         TextView worstTime = v.findViewById(R.id.worst_time);
         TextView average = v.findViewById(R.id.average);
@@ -90,7 +90,7 @@ public class StatsFragment extends Fragment {
         CardView chartCard = v.findViewById(R.id.chart_card);
         CustomLineChart chart = v.findViewById(R.id.chart);
         TextView chartName = v.findViewById(R.id.chart_name);
-        chartName.setBackgroundColor(Session.getInstance().darkColorTheme);
+        chartName.setBackgroundColor(Session.getInstance().getDarkColorTheme());
         chartName.setText(R.string.times_chart_name);
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
         if (timesDetail.size()!=0) {

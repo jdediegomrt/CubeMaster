@@ -120,7 +120,7 @@ public class SettingsFragment extends Fragment {
                     frTimeInfoButton.setColorFilter(null);
                     frTimeInfoText.setLayoutParams(frTimeParams);
                 } else {
-                    frTimeInfoButton.setColorFilter(Session.getInstance().lightColorTheme);
+                    frTimeInfoButton.setColorFilter(Session.getInstance().getLightColorTheme());
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     frTimeInfoText.setLayoutParams(layoutParams);
                 }
@@ -156,7 +156,7 @@ public class SettingsFragment extends Fragment {
                     stopwatchInfoButton.setColorFilter(null);
                     stopwatchInfoText.setLayoutParams(stopwatchParams);
                 } else {
-                    stopwatchInfoButton.setColorFilter(Session.getInstance().lightColorTheme);
+                    stopwatchInfoButton.setColorFilter(Session.getInstance().getLightColorTheme());
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     stopwatchInfoText.setLayoutParams(layoutParams);
                 }

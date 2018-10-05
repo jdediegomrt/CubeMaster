@@ -64,82 +64,82 @@ public class ThemeConfig {
         switch (PrefsConfig.getInstance().prefs.getInt("colorAccent", 0)) {
             case 0:
                 activity.setTheme(R.style.AppTheme_CustomBarRed);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_red_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_red_200, null));
                 break;
             case 1:
                 activity.setTheme(R.style.AppTheme_CustomBarPink);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_pink_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_pink_200, null));
                 break;
             case 2:
                 activity.setTheme(R.style.AppTheme_CustomBarPurple);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_purple_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_purple_200, null));
                 break;
             case 3:
                 activity.setTheme(R.style.AppTheme_CustomBarDeepPurple);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_deep_purple_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_deep_purple_200, null));
                 break;
             case 4:
                 activity.setTheme(R.style.AppTheme_CustomBarIndigo);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_indigo_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_indigo_200, null));
                 break;
             case 5:
                 activity.setTheme(R.style.AppTheme_CustomBarBlue);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_blue_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_blue_200, null));
                 break;
             case 6:
                 activity.setTheme(R.style.AppTheme_CustomBarLightBlue);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_light_blue_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_light_blue_200, null));
                 break;
             case 7:
                 activity.setTheme(R.style.AppTheme_CustomBarCyan);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_cyan_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_cyan_200, null));
                 break;
             case 8:
                 activity.setTheme(R.style.AppTheme_CustomBarGreen);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_green_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_green_200, null));
                 break;
             case 9:
                 activity.setTheme(R.style.AppTheme_CustomBarTeal);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_teal_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_teal_200, null));
                 break;
             case 10:
                 activity.setTheme(R.style.AppTheme_CustomBarLightGreen);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_light_green_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_light_green_200, null));
                 break;
             case 11:
                 activity.setTheme(R.style.AppTheme_CustomBarLime);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_lime_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_lime_200, null));
                 break;
             case 12:
                 activity.setTheme(R.style.AppTheme_CustomBarYellow);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_yellow_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_yellow_200, null));
                 break;
             case 14:
                 activity.setTheme(R.style.AppTheme_CustomBarDeepOrange);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_deep_orange_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_deep_orange_200, null));
                 break;
             case 15:
                 activity.setTheme(R.style.AppTheme_CustomBarBrown);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_brown_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_brown_200, null));
                 break;
             case 16:
                 activity.setTheme(R.style.AppTheme_CustomBarGrey);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_grey_500, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_grey_500, null));
                 break;
             case 17:
                 activity.setTheme(R.style.AppTheme_CustomBarBlueGrey);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_blue_grey_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_blue_grey_200, null));
                 break;
             default:
                 activity.setTheme(R.style.AppTheme_CustomBarOrange);
-                session.lighterColorTheme = ResourcesCompat.getColor(activity.getResources(), R.color.md_orange_200, null);
+                session.setLighterColorTheme(ResourcesCompat.getColor(activity.getResources(), R.color.md_orange_200, null));
                 break;
         }
 
         TypedValue typedValue = new TypedValue();
         TypedArray a = activity.obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorAccent, R.attr.colorPrimary});
-        session.lightColorTheme = a.getColor(0, 0);
-        session.darkColorTheme = a.getColor(1, 0);
+        session.setLightColorTheme(a.getColor(0, 0));
+        session.setDarkColorTheme(a.getColor(1, 0));
         a.recycle();
     }
 
@@ -166,8 +166,8 @@ public class ThemeConfig {
 
     public StateListDrawable getMenuAnimation() {
         StateListDrawable menuAnimation = new StateListDrawable();
-        menuAnimation.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(session.lightColorTheme));
-        menuAnimation.addState(new int[]{}, new ColorDrawable(session.darkColorTheme));
+        menuAnimation.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(session.getLightColorTheme()));
+        menuAnimation.addState(new int[]{}, new ColorDrawable(session.getDarkColorTheme()));
         return menuAnimation;
     }
 }

@@ -80,23 +80,23 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
 
         holder.name.setText(getItem(position));
         if (getItem(position).equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            holder.elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
+            holder.elementCard.setBackgroundColor(Session.getInstance().getLighterColorTheme());
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setImageResource(R.drawable.baseline_check_circle_outline_white_24);
 
             holder.more.getBackground().setTint(Color.WHITE);
-            holder.more.setColorFilter(Session.getInstance().lightColorTheme);
+            holder.more.setColorFilter(Session.getInstance().getLightColorTheme());
         } else {
             holder.elementCard.setBackground(originalBackground);
             holder.element.setVisibility(View.VISIBLE);
             holder.use.setImageResource(R.drawable.baseline_radio_button_unchecked_white_24);
 
-            holder.more.getBackground().setTint(Session.getInstance().lighterColorTheme);
+            holder.more.getBackground().setTint(Session.getInstance().getLighterColorTheme());
             holder.more.setColorFilter(Color.WHITE);
         }
 
         if (getItem(position).equals(context.getResources().getString(R.string.add_new))) {
-            holder.name.setTextColor(Session.getInstance().lightColorTheme);
+            holder.name.setTextColor(Session.getInstance().getLightColorTheme());
             holder.element.setVisibility(View.VISIBLE);
             holder.optionsLayout.setVisibility(View.GONE);
         } else {
@@ -137,7 +137,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
             more = view.findViewById(R.id.more_icon);
             use = view.findViewById(R.id.use_icon);
 
-            use.setColorFilter(Session.getInstance().lightColorTheme);
+            use.setColorFilter(Session.getInstance().getLightColorTheme());
             originalBackground = name.getBackground();
 
             more.setOnClickListener(new View.OnClickListener() {
@@ -146,9 +146,9 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                     PopupMenu popup = new PopupMenu(context, more);
                     popup.inflate(R.menu.menu_puzzle_options);
 
-                    popup.getMenu().findItem(R.id.detail).getIcon().setTint(Session.getInstance().lightColorTheme);
-                    popup.getMenu().findItem(R.id.reset).getIcon().setTint(Session.getInstance().lightColorTheme);
-                    popup.getMenu().findItem(R.id.delete).getIcon().setTint(Session.getInstance().lightColorTheme);
+                    popup.getMenu().findItem(R.id.detail).getIcon().setTint(Session.getInstance().getLightColorTheme());
+                    popup.getMenu().findItem(R.id.reset).getIcon().setTint(Session.getInstance().getLightColorTheme());
+                    popup.getMenu().findItem(R.id.delete).getIcon().setTint(Session.getInstance().getLightColorTheme());
 
                     try {
                         Field[] fields = popup.getClass().getDeclaredFields();
@@ -227,12 +227,12 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                             }
                         });
                     } else {
-                        elementCard.setBackgroundColor(Session.getInstance().lighterColorTheme);
+                        elementCard.setBackgroundColor(Session.getInstance().getLighterColorTheme());
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
-                        Session.getInstance().CURRENT_SCRAMBLE = "";
-                        Session.getInstance().CURRENT_SCRAMBLE_SVG = null;
-                        Session.getInstance().NEXT_SCRAMBLE = "";
-                        Session.getInstance().NEXT_SCRAMBLE_SVG = null;
+                        Session.getInstance().setCurrentScramble("");
+                        Session.getInstance().setCurrentScrambleSvg(null);
+                        Session.getInstance().setNextScramble("");
+                        Session.getInstance().setNextScrambleSvg(null);
                         ScrambleConfig.getInstance().doScramble();
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
                             if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {

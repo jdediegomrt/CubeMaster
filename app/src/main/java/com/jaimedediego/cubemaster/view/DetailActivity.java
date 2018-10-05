@@ -64,9 +64,9 @@ public class DetailActivity extends AppCompatActivity {
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
         RelativeLayout puzzleNameContainer = findViewById(R.id.puzzle_name_container);
-        puzzleNameContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
+        puzzleNameContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
         RelativeLayout detailContainer = findViewById(R.id.times_detail);
-        detailContainer.setBackgroundColor(Session.getInstance().lightColorTheme);
+        detailContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
         timesLayout = findViewById(R.id.times);
         bestTime = findViewById(R.id.best_time);
         worstTime = findViewById(R.id.worst_time);
@@ -135,8 +135,8 @@ public class DetailActivity extends AppCompatActivity {
                     scramble.setText(detail.getScramble());
                 }
 
-                button.setColorFilter(Session.getInstance().lighterColorTheme);
-                time.setBackgroundColor(Session.getInstance().darkColorTheme);
+                button.setColorFilter(Session.getInstance().getLighterColorTheme());
+                time.setBackgroundColor(Session.getInstance().getDarkColorTheme());
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override

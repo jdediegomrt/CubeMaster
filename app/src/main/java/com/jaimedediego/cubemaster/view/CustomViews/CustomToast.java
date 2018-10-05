@@ -18,14 +18,14 @@ public class CustomToast extends Toast {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.toast_custom, null);
-        view.setBackgroundColor(Session.getInstance().lightColorTheme);
+        view.setBackgroundColor(Session.getInstance().getLightColorTheme());
         ((TextView)view.findViewById(R.id.toast_text)).setText(stringResId);
         this.setView(view);
     }
 
     public void setTextSize(float size){
         View view = this.getView();
-        view.setBackgroundColor(Session.getInstance().lightColorTheme);
+        view.setBackgroundColor(Session.getInstance().getLightColorTheme());
         ((TextView)view.findViewById(R.id.toast_text)).setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 

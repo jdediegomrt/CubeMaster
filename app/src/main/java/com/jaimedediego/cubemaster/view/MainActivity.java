@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 //        PrefsMethods.getInstance().setOnboardingShown(false);
-        if (!PrefsMethods.getInstance().isOnboardingShown()) {
+        if (PrefsMethods.getInstance().isOnboardingNotShown()) {
             startActivity(new Intent(this, OnboardingActivity.class));
         }
 
