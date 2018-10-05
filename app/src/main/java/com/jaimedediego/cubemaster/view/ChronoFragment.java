@@ -3,18 +3,15 @@ package com.jaimedediego.cubemaster.view;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PictureDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,15 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
-import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
@@ -43,11 +37,6 @@ import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.Handler.ChronoThread;
-
-import net.gnehzr.tnoodle.scrambles.Puzzle;
-import net.gnehzr.tnoodle.svglite.Svg;
-import net.gnehzr.tnoodle.utils.LazyInstantiator;
-import net.gnehzr.tnoodle.utils.LazyInstantiatorException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,8 +60,6 @@ public class ChronoFragment extends Fragment {
     private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
     private int helpCounter = 0;
-
-    private static final String TAG = ChronoFragment.class.getName();
 
     ChronoThread thread = null;
 
@@ -114,7 +101,7 @@ public class ChronoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_chrono, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.timer);
@@ -148,11 +135,17 @@ public class ChronoFragment extends Fragment {
         scrambleText = v.findViewById(R.id.scramble_text);
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
+        ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton);
 
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-
             if ((Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) && (Session.getInstance().NEXT_SCRAMBLE.isEmpty() || Session.getInstance().NEXT_SCRAMBLE == null)) {
-                ScrambleConfig.getInstance().doScramble(scrambleText, scrambleImage, scrambleButton);
+                if (!ScrambleConfig.getInstance().isScrambling()) {
+                    ScrambleConfig.getInstance().doScramble();
+                } else {
+                    scrambleText.setText(R.string.scrambling);
+                    scrambleImage.setVisibility(View.INVISIBLE);
+                    scrambleButton.setVisibility(View.GONE);
+                }
             } else {
                 scrambleText.setText(Session.getInstance().CURRENT_SCRAMBLE);
                 scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
@@ -177,7 +170,7 @@ public class ChronoFragment extends Fragment {
                     scrambleImage.setVisibility(View.VISIBLE);
                     scrambleImage.setSVG(Session.getInstance().CURRENT_SCRAMBLE_SVG);
                     Session.getInstance().NEXT_SCRAMBLE = "";
-                    ScrambleConfig.getInstance().doScramble(scrambleText, scrambleImage, scrambleButton);
+                    ScrambleConfig.getInstance().doScramble();
                 }
             }
         });

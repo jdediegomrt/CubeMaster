@@ -33,7 +33,6 @@ import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
-import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
 
 public class MainActivity extends AppCompatActivity

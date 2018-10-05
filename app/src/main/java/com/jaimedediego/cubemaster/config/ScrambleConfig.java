@@ -34,8 +34,17 @@ public class ScrambleConfig {
 
     private ScrambleTask scrambleTask;
     private Puzzle puzzle;
+    private TextView scrambleText;
+    private SVGImageView scrambleImage;
+    private ImageButton scrambleButton;
 
-    public void doScramble(TextView textView, SVGImageView imageView, ImageButton imageButton) {
+    public void setScrambleViewItems(TextView textView, SVGImageView imageView, ImageButton imageButton) {
+        scrambleText = textView;
+        scrambleImage = imageView;
+        scrambleButton = imageButton;
+    }
+
+    public void doScramble() {
         String shortName = Constants.getInstance().WCA_PUZZLES_SHORT_NAMES.get(Constants.getInstance().WCA_PUZZLES_LONG_NAMES.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
         LazyInstantiator<Puzzle> lazyPuzzle = Constants.getInstance().WCA_PUZZLES.get(shortName);
         try {
@@ -45,8 +54,12 @@ public class ScrambleConfig {
         }
 
         cancelScrambleIfScrambling();
-        scrambleTask = new ScrambleTask(textView, imageView, imageButton);
+        scrambleTask = new ScrambleTask();
         scrambleTask.execute(puzzle);
+    }
+
+    public boolean isScrambling() {
+        return scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING;
     }
 
     private void cancelScrambleIfScrambling() {
@@ -69,18 +82,7 @@ public class ScrambleConfig {
 
         private Exception exception;
 
-        private TextView scrambleText;
-        private SVGImageView scrambleImage;
-        private ImageButton scrambleButton;
-
         public ScrambleTask() {
-        }
-
-
-        public ScrambleTask(TextView textView, SVGImageView imageView, ImageButton imageButton) {
-            scrambleText = textView;
-            scrambleImage = imageView;
-            scrambleButton = imageButton;
         }
 
         protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
@@ -120,17 +122,17 @@ public class ScrambleConfig {
 
                 if (Session.getInstance().CURRENT_SCRAMBLE.isEmpty() || Session.getInstance().CURRENT_SCRAMBLE == null) {
                     scrambleImage.setSVG(svg);
-                    if(scrambleImage.getVisibility()== View.INVISIBLE){
+                    if (scrambleImage.getVisibility() == View.INVISIBLE) {
                         scrambleImage.setVisibility(View.VISIBLE);
                     }
-                    if(scrambleButton.getVisibility()==View.GONE){
+                    if (scrambleButton.getVisibility() == View.GONE) {
                         scrambleButton.setVisibility(View.VISIBLE);
                     }
                     Session.getInstance().CURRENT_SCRAMBLE_SVG = svg;
                     scrambleText.setText(scramble);
                     Session.getInstance().CURRENT_SCRAMBLE = scramble;
                     if (Session.getInstance().NEXT_SCRAMBLE.isEmpty()) {
-                        doScramble(scrambleText, scrambleImage, scrambleButton);
+                        doScramble();
                     }
                 } else {
                     Session.getInstance().NEXT_SCRAMBLE_SVG = svg;
