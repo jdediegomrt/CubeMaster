@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
@@ -232,6 +233,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                         Session.getInstance().CURRENT_SCRAMBLE_SVG = null;
                         Session.getInstance().NEXT_SCRAMBLE = "";
                         Session.getInstance().NEXT_SCRAMBLE_SVG = null;
+                        ScrambleConfig.getInstance().doScramble();
                         for (int i = 0; i < filteredPuzzles.size(); i++) {
                             if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
                                 notifyItemChanged(i);
