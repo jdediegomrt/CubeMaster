@@ -19,33 +19,33 @@ public class ChronoThread extends Thread {
 
     public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
                         LinearLayout hoursLayout, MediaPlayer mp) {
-        finish=false;
-        pause=false;
-        pauseFlag=false;
-        this.secs=0;
-        this.mins=0;
-        this.hours=0;
+        finish = false;
+        pause = false;
+        pauseFlag = false;
+        this.secs = 0;
+        this.mins = 0;
+        this.hours = 0;
         handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
         handler.setTextSecs("0");
         handler.setTextMins("0");
         handler.setTextHours("0");
-        this.mp=mp;
+        this.mp = mp;
     }
 
-    public void run(){
+    public void run() {
         long start = System.currentTimeMillis();
         long millis = 0;
-        do{
+        do {
             try {
                 Thread.sleep(1);
-            }catch (InterruptedException ex) {
+            } catch (InterruptedException ex) {
                 Log.e("Thread", "InterruptedException", ex);
             }
-            if(pause) {
-                pauseFlag=true;
+            if (pause) {
+                pauseFlag = true;
             } else {
-                if(pauseFlag){
-                    pauseFlag=false;
+                if (pauseFlag) {
+                    pauseFlag = false;
                     start = System.currentTimeMillis() - millis;
                 }
                 millis = System.currentTimeMillis() - start;
@@ -85,7 +85,7 @@ public class ChronoThread extends Thread {
                 }
             }
             handler.act();
-        }while(!finish);
+        } while (!finish);
     }
 
     public void finalize(boolean finish) {

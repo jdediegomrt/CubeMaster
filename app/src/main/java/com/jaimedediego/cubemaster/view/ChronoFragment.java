@@ -33,8 +33,10 @@ import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.Handler.ChronoThread;
@@ -143,38 +145,30 @@ public class ChronoFragment extends Fragment {
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
             if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) && (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null)) {
                 if (!ScrambleConfig.getInstance().isScrambling()) {
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                     ScrambleConfig.getInstance().doScramble();
                 } else {
-                    loadingScramble.setVisibility(View.VISIBLE);
-                    scrambleText.setVisibility(View.GONE);
-                    scrambleImage.setVisibility(View.GONE);
-                    scrambleButton.setVisibility(View.GONE);
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                 }
             } else {
                 scrambleText.setText(Session.getInstance().getCurrentScramble());
                 scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-                scrambleButton.setVisibility(View.VISIBLE);
-                loadingScramble.setVisibility(View.GONE);
             }
         } else {
-            scrambleLayout.setVisibility(View.GONE);
+            AndroidUtils.SwitchVisibility(scrambleLayout);
         }
 
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null) {
-                    loadingScramble.setVisibility(View.VISIBLE);
-                    scrambleText.setVisibility(View.GONE);
-                    scrambleImage.setVisibility(View.GONE);
-                    scrambleButton.setVisibility(View.GONE);
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                     Session.getInstance().setCurrentScramble("");
                 } else {
                     Session.getInstance().setCurrentScramble(Session.getInstance().getNextScramble());
                     Session.getInstance().setCurrentScrambleSvg(Session.getInstance().getNextScrambleSvg());
                     scrambleText.setText(Session.getInstance().getCurrentScramble());
                     scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-                    scrambleImage.setVisibility(View.VISIBLE);
                     Session.getInstance().setNextScramble("");
                     ScrambleConfig.getInstance().doScramble();
                 }
@@ -239,47 +233,52 @@ public class ChronoFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    animatedLine.setBackgroundResource(R.drawable.background_timer_freeze);
-                    if (thread != null && thread.isAlive()) {
+                    if (loadingScramble.getVisibility() == View.VISIBLE) {
                         animatedLine.setBackgroundResource(R.drawable.background_timer_off);
-                        thread.finalize(true);
-                        final Handler handleChrono = new Handler();
-                        handleChrono.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                String time;
-                                if (mins.getText().equals("0")) {
-                                    time = secs.getText().toString() + '.' + millis.getText().toString();
-                                } else {
-                                    if (hours.getText().equals("0")) {
-                                        time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                        new CustomToast(getContext(), R.string.scrambling).showAndHide(Constants.getInstance().TOAST_SHORT_DURATION);
+                    } else {
+                        animatedLine.setBackgroundResource(R.drawable.background_timer_freeze);
+                        if (thread != null && thread.isAlive()) {
+                            animatedLine.setBackgroundResource(R.drawable.background_timer_off);
+                            thread.finalize(true);
+                            final Handler handleChrono = new Handler();
+                            handleChrono.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String time;
+                                    if (mins.getText().equals("0")) {
+                                        time = secs.getText().toString() + '.' + millis.getText().toString();
                                     } else {
-                                        time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                                        if (hours.getText().equals("0")) {
+                                            time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                                        } else {
+                                            time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                                        }
+                                    }
+                                    for (int i = 0; i < activityMenu.getChildCount(); i++) {
+                                        activityMenu.getChildAt(i).setEnabled(true);
+                                    }
+                                    if (PrefsMethods.getInstance().isPauseActivated()) {
+                                        pauseButton.setVisibility(View.GONE);
+                                    }
+                                    infoButton.setEnabled(true);
+                                    scrambleButton.setVisibility(View.VISIBLE);
+                                    DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString());
+                                    if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
+                                        final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
+                                        dialog.show();
                                     }
                                 }
-                                for (int i = 0; i < activityMenu.getChildCount(); i++) {
-                                    activityMenu.getChildAt(i).setEnabled(true);
+                            }, 10);
+                        } else {
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holded = true;
+                                    animatedLine.setBackgroundResource(R.drawable.background_timer_on);
                                 }
-                                if (PrefsMethods.getInstance().isPauseActivated()) {
-                                    pauseButton.setVisibility(View.GONE);
-                                }
-                                infoButton.setEnabled(true);
-                                scrambleButton.setVisibility(View.VISIBLE);
-                                DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString());
-                                if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
-                                    final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
-                                    dialog.show();
-                                }
-                            }
-                        }, 10);
-                    } else {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                holded = true;
-                                animatedLine.setBackgroundResource(R.drawable.background_timer_on);
-                            }
-                        }, PrefsMethods.getInstance().getFreezingTime());
+                            }, PrefsMethods.getInstance().getFreezingTime());
+                        }
                     }
                     return true;
                 }

@@ -2,7 +2,6 @@ package com.jaimedediego.cubemaster.config;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -11,6 +10,7 @@ import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 
@@ -125,18 +125,7 @@ public class ScrambleConfig {
                 if (Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) {
                     scrambleImage.setSVG(svg);
                     scrambleText.setText(scramble);
-                    if (scrambleImage.getVisibility() == View.GONE) {
-                        scrambleImage.setVisibility(View.VISIBLE);
-                    }
-                    if (scrambleButton.getVisibility() == View.GONE) {
-                        scrambleButton.setVisibility(View.VISIBLE);
-                    }
-                    if (loadingScramble.getVisibility() == View.VISIBLE) {
-                        loadingScramble.setVisibility(View.GONE);
-                    }
-                    if (scrambleText.getVisibility() == View.GONE) {
-                        scrambleText.setVisibility(View.VISIBLE);
-                    }
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                     Session.getInstance().setCurrentScrambleSvg(svg);
                     Session.getInstance().setCurrentScramble(scramble);
                     if (Session.getInstance().getNextScramble().isEmpty()) {
