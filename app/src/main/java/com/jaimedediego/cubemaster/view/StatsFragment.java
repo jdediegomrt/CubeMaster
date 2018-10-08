@@ -21,14 +21,11 @@ import com.github.mikephil.charting.data.LineData;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
-import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
-
-import net.gnehzr.tnoodle.scrambles.PuzzlePlugins;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +90,7 @@ public class StatsFragment extends Fragment {
         chartName.setBackgroundColor(Session.getInstance().getDarkColorTheme());
         chartName.setText(R.string.times_chart_name);
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
-        if (timesDetail.size()!=0) {
+        if (timesDetail.size() != 0) {
             List<Entry> entries = new ArrayList<>();
             float i = 0;
             for (Detail data : timesDetail) {

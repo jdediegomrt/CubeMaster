@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
@@ -37,11 +38,13 @@ public class ScrambleConfig {
     private TextView scrambleText;
     private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
+    private ProgressBar loadingScramble;
 
-    public void setScrambleViewItems(TextView textView, SVGImageView imageView, ImageButton imageButton) {
+    public void setScrambleViewItems(TextView textView, SVGImageView imageView, ImageButton imageButton, ProgressBar loadingImage) {
         scrambleText = textView;
         scrambleImage = imageView;
         scrambleButton = imageButton;
+        loadingScramble = loadingImage;
     }
 
     public void doScramble() {
@@ -119,17 +122,22 @@ public class ScrambleConfig {
 
             try {
                 SVG svg = SVG.getFromString(svgLite.toString());
-
                 if (Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) {
                     scrambleImage.setSVG(svg);
-                    if (scrambleImage.getVisibility() == View.INVISIBLE) {
+                    scrambleText.setText(scramble);
+                    if (scrambleImage.getVisibility() == View.GONE) {
                         scrambleImage.setVisibility(View.VISIBLE);
                     }
                     if (scrambleButton.getVisibility() == View.GONE) {
                         scrambleButton.setVisibility(View.VISIBLE);
                     }
+                    if (loadingScramble.getVisibility() == View.VISIBLE) {
+                        loadingScramble.setVisibility(View.GONE);
+                    }
+                    if (scrambleText.getVisibility() == View.GONE) {
+                        scrambleText.setVisibility(View.VISIBLE);
+                    }
                     Session.getInstance().setCurrentScrambleSvg(svg);
-                    scrambleText.setText(scramble);
                     Session.getInstance().setCurrentScramble(scramble);
                     if (Session.getInstance().getNextScramble().isEmpty()) {
                         doScramble();

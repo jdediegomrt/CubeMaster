@@ -101,7 +101,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
             holder.optionsLayout.setVisibility(View.GONE);
         } else {
             if (holder.name.getText().toString().isEmpty()) {
-                holder.element.setVisibility(View.INVISIBLE);
+                holder.element.setVisibility(View.GONE);
             } else {
                 holder.name.setTextColor(context.getColor(R.color.md_black_1000));
                 holder.optionsLayout.setVisibility(View.VISIBLE);

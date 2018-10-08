@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class ChronoFragment extends Fragment {
     private TextView scrambleText;
     private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
+    private ProgressBar loadingScramble;
     private int helpCounter = 0;
 
     ChronoThread thread = null;
@@ -135,21 +137,24 @@ public class ChronoFragment extends Fragment {
         scrambleText = v.findViewById(R.id.scramble_text);
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
-        ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton);
+        loadingScramble = v.findViewById(R.id.loading_scramble);
+        ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton, loadingScramble);
 
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
             if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) && (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null)) {
                 if (!ScrambleConfig.getInstance().isScrambling()) {
                     ScrambleConfig.getInstance().doScramble();
                 } else {
-                    scrambleText.setText(R.string.scrambling);
-                    scrambleImage.setVisibility(View.INVISIBLE);
+                    loadingScramble.setVisibility(View.VISIBLE);
+                    scrambleText.setVisibility(View.GONE);
+                    scrambleImage.setVisibility(View.GONE);
                     scrambleButton.setVisibility(View.GONE);
                 }
             } else {
                 scrambleText.setText(Session.getInstance().getCurrentScramble());
                 scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
                 scrambleButton.setVisibility(View.VISIBLE);
+                loadingScramble.setVisibility(View.GONE);
             }
         } else {
             scrambleLayout.setVisibility(View.GONE);
@@ -159,16 +164,17 @@ public class ChronoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null) {
-                    scrambleText.setText(R.string.scrambling);
-                    scrambleImage.setVisibility(View.INVISIBLE);
+                    loadingScramble.setVisibility(View.VISIBLE);
+                    scrambleText.setVisibility(View.GONE);
+                    scrambleImage.setVisibility(View.GONE);
                     scrambleButton.setVisibility(View.GONE);
                     Session.getInstance().setCurrentScramble("");
                 } else {
                     Session.getInstance().setCurrentScramble(Session.getInstance().getNextScramble());
                     Session.getInstance().setCurrentScrambleSvg(Session.getInstance().getNextScrambleSvg());
                     scrambleText.setText(Session.getInstance().getCurrentScramble());
-                    scrambleImage.setVisibility(View.VISIBLE);
                     scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                    scrambleImage.setVisibility(View.VISIBLE);
                     Session.getInstance().setNextScramble("");
                     ScrambleConfig.getInstance().doScramble();
                 }
