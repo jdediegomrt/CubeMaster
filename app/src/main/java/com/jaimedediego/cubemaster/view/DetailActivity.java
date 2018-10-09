@@ -4,6 +4,7 @@ import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -126,6 +128,7 @@ public class DetailActivity extends AppCompatActivity {
                 final TextView date = v.findViewById(R.id.date);
                 final TextView time = v.findViewById(R.id.time);
                 final TextView scramble = v.findViewById(R.id.scramble);
+                final ImageView image = v.findViewById(R.id.image);
                 final ImageButton button = v.findViewById(R.id.delete_puzzle);
 
                 date.setText(detail.getDate());
@@ -133,6 +136,8 @@ public class DetailActivity extends AppCompatActivity {
                 if (detail.getScramble() != null && !detail.getScramble().isEmpty()) {
                     scramble.setVisibility(View.VISIBLE);
                     scramble.setText(detail.getScramble());
+                    image.setVisibility(View.VISIBLE);
+                    image.setImageDrawable(new PictureDrawable(detail.getImage()));
                 }
 
                 button.setColorFilter(Session.getInstance().getLighterColorTheme());

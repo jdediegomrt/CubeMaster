@@ -3,6 +3,14 @@ package com.jaimedediego.cubemaster.methods;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Picture;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.DatabaseConfig;
@@ -10,6 +18,8 @@ import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +39,7 @@ public class DatabaseMethods {
 
     private SQLiteDatabase db;
     private DatabaseConfig timesdb;
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public void setDatabase(Context context) {
         timesdb = new DatabaseConfig(context, "DBSolves", null, DATABASE_VERSION);
@@ -112,11 +122,29 @@ public class DatabaseMethods {
         return num;
     }
 
-    public void saveData(String time, String date, String scramble) {
+    public void saveData(String time, String date, String scramble, byte[] scrambleImage) {
         Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
         if (c.moveToFirst()) {
             do {
-                makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date, scramble) VALUES (" + Session.getInstance().getCurrentUserId() + ", " + Session.getInstance().getCurrentPuzzleId() + ", " + (c.getInt(0) + 1) + ", '" + time + "', '" + date + "', '" + scramble.replace("'", "*") + "')");
+                openDatabase();
+                db.beginTransaction();
+                SQLiteStatement p = db.compileStatement("insert into times (user_id, puzzle_id, num_solve, time, date, scramble, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                p.bindLong(1, Session.getInstance().getCurrentUserId());
+                p.bindLong(2, Session.getInstance().getCurrentPuzzleId());
+                p.bindLong(3, c.getInt(0) + 1);
+                p.bindString(4, time);
+                p.bindString(5, date);
+                p.bindString(6, scramble.replace("'", "*"));
+                if(scrambleImage != null) {
+                    p.bindBlob(7, scrambleImage);
+                } else {
+                    p.bindNull(7);
+                }
+                p.executeInsert();
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                closeDatabase();
+                //makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date, scramble, image) VALUES (" + Session.getInstance().getCurrentUserId() + ", " + Session.getInstance().getCurrentPuzzleId() + ", " + (c.getInt(0) + 1) + ", '" + time + "', '" + date + "', '" + scramble.replace("'", "*") + "', '" + scrambleImage + "')");
             } while (c.moveToNext());
         }
         c.close();
@@ -267,16 +295,16 @@ public class DatabaseMethods {
         Cursor c;
         switch (mode) {
             case 1:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve asc");
+                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve asc");
                 break;
             case 2:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
+                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
                 break;
             case 3:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
+                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
                 break;
             default:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve desc");
+                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve desc");
                 break;
         }
         if (c.moveToFirst()) {
@@ -285,7 +313,18 @@ public class DatabaseMethods {
                 if (scramble != null) {
                     scramble = scramble.replace("*", "'");
                 }
-                times.add(new Detail(c.getString(0), c.getString(1), scramble, c.getInt(3)));
+                byte[] blob = c.getBlob(3);
+                Picture picture = null;
+                if (blob != null && blob.length != 0) {
+                    ByteArrayInputStream input = new ByteArrayInputStream(blob);
+                    Bitmap bitmap = BitmapFactory.decodeStream(input);
+                    picture = new Picture();
+                    Canvas canvas = picture.beginRecording(bitmap.getWidth(), bitmap.getHeight());
+                    canvas.drawBitmap(bitmap, null, new RectF(0f, 0f, (float) bitmap.getWidth(), (float) bitmap.getHeight()), null);
+                    picture.endRecording();
+
+                }
+                times.add(new Detail(c.getString(0), c.getString(1), scramble, picture, c.getInt(4)));
             } while (c.moveToNext());
         }
         c.close();

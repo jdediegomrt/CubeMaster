@@ -27,6 +27,7 @@ public class DatabaseConfig extends SQLiteOpenHelper {
                     "puzzle_id INTEGER, " +
                     "num_solve INTEGER, " +
                     "scramble TEXT, " +
+                    "image BLOB, " +
                     "time TEXT, " +
                     "date TEXT, " +
                     "primary key (user_id, puzzle_id, num_solve), " +
@@ -49,6 +50,9 @@ public class DatabaseConfig extends SQLiteOpenHelper {
 
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE times ADD COLUMN scramble TEXT");
+        }
+        if (oldVersion < 3) {
+            db.execSQL("ALTER TABLE times ADD COLUMN image BLOB");
         }
     }
 }

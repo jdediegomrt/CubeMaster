@@ -3,6 +3,12 @@ package com.jaimedediego.cubemaster.view;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -41,6 +47,8 @@ import com.jaimedediego.cubemaster.view.Dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.Dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.Handler.ChronoThread;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -263,7 +271,19 @@ public class ChronoFragment extends Fragment {
                                     }
                                     infoButton.setEnabled(true);
                                     scrambleButton.setVisibility(View.VISIBLE);
-                                    DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString());
+
+                                    byte[] scrambleImageByteArray = null;
+                                    if(scrambleLayout.getVisibility() == View.VISIBLE) {
+                                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                        PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
+                                        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                                        Canvas canvas = new Canvas(bitmap);
+                                        canvas.drawPicture(drawable.getPicture());
+                                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                        scrambleImageByteArray = stream.toByteArray();
+                                    }
+
+                                    DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
                                     if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
                                         final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
                                         dialog.show();

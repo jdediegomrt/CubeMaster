@@ -1,5 +1,9 @@
 package com.jaimedediego.cubemaster.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
+
 import com.jaimedediego.cubemaster.methods.StatsMethods;
 
 import java.util.Arrays;
@@ -9,12 +13,14 @@ public class Detail {
     private String time;
     private String date;
     private String scramble;
+    private Picture image;
     private int numSolve;
 
-    public Detail(String time, String date, String scramble, int numSolve) {
+    public Detail(String time, String date, String scramble, Picture image, int numSolve) {
         this.time = time;
         this.date = date;
         this.scramble = scramble;
+        this.image = image;
         this.numSolve = numSolve;
     }
 
@@ -48,6 +54,14 @@ public class Detail {
 
     public void setNumSolve(int numSolve) {
         this.numSolve = numSolve;
+    }
+
+    public Picture getImage() {
+        return image;
+    }
+
+    public void setImage(Picture image) {
+        this.image = image;
     }
 
     public static Comparator<Detail> TimeComparatorAsc = new Comparator<Detail>() {
