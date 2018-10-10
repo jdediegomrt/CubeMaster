@@ -88,7 +88,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/frtime_text"
                 android:layout_toRightOf="@id/frtime_text"
-                android:background="@drawable/background_info_button"
+                android:background="@drawable/circle"
                 android:contentDescription="@string/selected"
                 android:gravity="center"
                 android:src="@drawable/ic_info_white_18dp" />
@@ -163,7 +163,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/stopwatch_text"
                 android:layout_toRightOf="@id/stopwatch_text"
-                android:background="@drawable/background_info_button"
+                android:background="@drawable/circle"
                 android:contentDescription="@string/selected"
                 android:gravity="center"
                 android:src="@drawable/ic_info_white_18dp" />

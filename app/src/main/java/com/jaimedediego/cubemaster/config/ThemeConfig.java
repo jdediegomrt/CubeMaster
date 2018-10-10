@@ -170,4 +170,8 @@ public class ThemeConfig {
         menuAnimation.addState(new int[]{}, new ColorDrawable(session.getDarkColorTheme()));
         return menuAnimation;
     }
+
+    public int getColorFromResource(int res){
+        return ResourcesCompat.getColor(activity.getResources(), res, null);
+    }
 }

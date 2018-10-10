@@ -11,15 +11,16 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/animated_line"
+            android:id="@+id/timer_layout"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/background_timer_off">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
+                android:id="@+id/time_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -115,13 +116,43 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/timer_indicator_1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:layout_toEndOf="@+id/time_layout"
+                android:layout_toRightOf="@+id/time_layout"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/circle"
+                android:tint="@color/md_grey_600" />
+
+            <ImageView
+                android:id="@+id/timer_indicator_2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:layout_toLeftOf="@+id/time_layout"
+                android:layout_toStartOf="@+id/time_layout"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/circle"
+                android:tint="@color/md_grey_600" />
+
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/timer_layout"
+            android:background="@drawable/background_timer_off"/>
 
         <RelativeLayout
             android:id="@+id/scramble_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/animated_line"
+            android:layout_below="@+id/timer_layout"
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
@@ -192,7 +223,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:background="@drawable/background_info_button"
+        android:background="@drawable/circle"
         android:contentDescription="@string/selected"
         android:src="@drawable/ic_info_white_24dp" />
 
