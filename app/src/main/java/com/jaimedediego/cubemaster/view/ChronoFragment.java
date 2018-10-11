@@ -12,8 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,7 +55,7 @@ public class ChronoFragment extends Fragment {
 
     private MediaPlayer mp;
     private ImageButton infoButton;
-    private ImageButton pauseButton;
+    private FloatingActionButton saveButton;
     private RelativeLayout infoLayout;
     private LinearLayout hoursLayout;
     private LinearLayout minsLayout;
@@ -72,6 +72,7 @@ public class ChronoFragment extends Fragment {
     private ImageView dotIndicator2;
     private RadioGroup activityMenu;
     private int helpCounter = 0;
+    private boolean resumeOnUp;
 
     ChronoThread thread = null;
 
@@ -103,7 +104,8 @@ public class ChronoFragment extends Fragment {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
-                        scrambleText.setText(Session.getInstance().getCurrentPuzzleScramble());
+                        /*TODO: revisar, está fallando plantearse quitar este boton funcionalidad duplicada*/
+                        scramble();
                     }
                 }
             });
@@ -124,7 +126,6 @@ public class ChronoFragment extends Fragment {
         infoButton = v.findViewById(R.id.info_button);
         RelativeLayout infoContainer = v.findViewById(R.id.info_container);
         infoLayout = v.findViewById(R.id.info_layout);
-        pauseButton = v.findViewById(R.id.pause_button);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -143,6 +144,7 @@ public class ChronoFragment extends Fragment {
         dotIndicator1 = v.findViewById(R.id.timer_indicator_1);
         dotIndicator2 = v.findViewById(R.id.timer_indicator_2);
         activityMenu = getActivity().findViewById(R.id.menu_layout);
+        saveButton = v.findViewById(R.id.save_button);
 
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
@@ -151,21 +153,7 @@ public class ChronoFragment extends Fragment {
         loadingScramble = v.findViewById(R.id.loading_scramble);
         ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton, loadingScramble);
 
-        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) && (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null)) {
-                if (!ScrambleConfig.getInstance().isScrambling()) {
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                    ScrambleConfig.getInstance().doScramble();
-                } else {
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                }
-            } else {
-                scrambleText.setText(Session.getInstance().getCurrentScramble());
-                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-            }
-        } else {
-            AndroidUtils.SwitchVisibility(scrambleLayout);
-        }
+        scramble();
 
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,29 +200,20 @@ public class ChronoFragment extends Fragment {
             }
         });
 
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                thread.finalize(true);
+                saveTime();
+                saveButton.setVisibility(View.GONE);
+            }
+        });
+
         if (PrefsMethods.getInstance().isOnboardingNotShown()) {
             infoButton.performClick();
         }
-
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (helpCounter > 0) {
-                    helpCounter = 0;
-                }
-                if (thread != null && thread.isAlive()) {
-                    if (!thread.getPause()) {
-                        thread.setPause(true);
-                        chronoScreen.setEnabled(false);
-                        pauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_play_arrow_white_24, null));
-                    } else {
-                        thread.setPause(false);
-                        chronoScreen.setEnabled(true);
-                        pauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_pause_white_24, null));
-                    }
-                }
-            }
-        });
 
         chronoScreen.setOnTouchListener(new View.OnTouchListener() {
             final Handler handler = new Handler();
@@ -247,20 +226,28 @@ public class ChronoFragment extends Fragment {
                         dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
                         new CustomToast(getContext(), R.string.scrambling).showAndHide(Constants.getInstance().TOAST_SHORT_DURATION);
                     } else {
-                        dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_red_500));
-                        dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_red_500));
                         if (thread != null && thread.isAlive()) {
-                            dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
-                            dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
-                            thread.finalize(true);
-                            final Handler handleChrono = new Handler();
-                            handleChrono.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    saveTime();
+                            if (PrefsMethods.getInstance().isPauseActivated()) {
+                                if (!thread.isPaused()) {
+                                    thread.setPause(true);
+                                    saveButton.setVisibility(View.VISIBLE);
+                                    resumeOnUp = false;
                                 }
-                            }, 10);
+                            } else {
+                                dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                                dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                                thread.finalize(true);
+                                final Handler handleChrono = new Handler();
+                                handleChrono.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        saveTime();
+                                    }
+                                }, 10);
+                            }
                         } else {
+                            dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_red_500));
+                            dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_red_500));
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -274,25 +261,31 @@ public class ChronoFragment extends Fragment {
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    handler.removeCallbacksAndMessages(null);
-                    if (holded) {
-                        for (int i = 0; i < activityMenu.getChildCount(); i++) {
-                            activityMenu.getChildAt(i).setEnabled(false);
-                        }
-                        infoButton.setEnabled(false);
-                        scrambleButton.setVisibility(View.GONE);
-                        helpCounter = 0;
-                        thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
-                        thread.start();
-                        if (PrefsMethods.getInstance().isPauseActivated()) {
-                            pauseButton.setVisibility(View.VISIBLE);
+                    if (thread != null && thread.isAlive()) {
+                        if (thread.isPaused() && resumeOnUp) {
+                            thread.setPause(false);
+                            saveButton.setVisibility(View.GONE);
+                        } else {
+                            resumeOnUp = true;
                         }
                     } else {
-                        dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
-                        dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
-                        helpCounter++;
-                        if (helpCounter == 10) {
-                            infoButton.performClick();
+                        handler.removeCallbacksAndMessages(null);
+                        if (holded) {
+                            for (int i = 0; i < activityMenu.getChildCount(); i++) {
+                                activityMenu.getChildAt(i).setEnabled(false);
+                            }
+                            infoButton.setEnabled(false);
+                            scrambleButton.setVisibility(View.GONE);
+                            helpCounter = 0;
+                            thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
+                            thread.start();
+                        } else {
+                            dotIndicator1.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                            dotIndicator2.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+                            helpCounter++;
+                            if (helpCounter == 10) {
+                                infoButton.performClick();
+                            }
                         }
                     }
                     holded = false;
@@ -332,7 +325,7 @@ public class ChronoFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void saveTime() {
+    private void saveTime() {
         String time;
         if (mins.getText().equals("0")) {
             time = secs.getText().toString() + '.' + millis.getText().toString();
@@ -345,9 +338,6 @@ public class ChronoFragment extends Fragment {
         }
         for (int i = 0; i < activityMenu.getChildCount(); i++) {
             activityMenu.getChildAt(i).setEnabled(true);
-        }
-        if (PrefsMethods.getInstance().isPauseActivated()) {
-            pauseButton.setVisibility(View.GONE);
         }
         infoButton.setEnabled(true);
         scrambleButton.setVisibility(View.VISIBLE);
@@ -367,6 +357,24 @@ public class ChronoFragment extends Fragment {
         if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
             final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
             dialog.show();
+        }
+    }
+
+    private void scramble() {
+        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+            if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) && (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null)) {
+                if (!ScrambleConfig.getInstance().isScrambling()) {
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                    ScrambleConfig.getInstance().doScramble();
+                } else {
+                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                }
+            } else {
+                scrambleText.setText(Session.getInstance().getCurrentScramble());
+                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+            }
+        } else {
+            AndroidUtils.SwitchVisibility(scrambleLayout);
         }
     }
 }

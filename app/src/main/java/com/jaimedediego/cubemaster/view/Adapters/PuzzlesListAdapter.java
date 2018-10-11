@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.CustomViews.CustomToast;
@@ -227,14 +228,18 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                     } else {
                         elementCard.setBackgroundColor(Session.getInstance().getLighterColorTheme());
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
-                        Session.getInstance().setCurrentScramble("");
-                        Session.getInstance().setCurrentScrambleSvg(null);
-                        Session.getInstance().setNextScramble("");
-                        Session.getInstance().setNextScrambleSvg(null);
-                        ScrambleConfig.getInstance().doScramble();
-                        for (int i = 0; i < filteredPuzzles.size(); i++) {
-                            if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
-                                notifyItemChanged(i);
+                        if (!DatabaseMethods.getInstance().getCurrentPuzzleName().equals(previousPuzzle)) {
+                            Session.getInstance().setCurrentScramble("");
+                            Session.getInstance().setCurrentScrambleSvg(null);
+                            Session.getInstance().setNextScramble("");
+                            Session.getInstance().setNextScrambleSvg(null);
+                            if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+                                ScrambleConfig.getInstance().doScramble();
+                            }
+                            for (int i = 0; i < filteredPuzzles.size(); i++) {
+                                if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
+                                    notifyItemChanged(i);
+                                }
                             }
                         }
                     }

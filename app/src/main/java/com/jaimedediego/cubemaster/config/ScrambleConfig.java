@@ -66,7 +66,7 @@ public class ScrambleConfig {
     }
 
     private void cancelScrambleIfScrambling() {
-        if (scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING) {
+        if (isScrambling()) {
             scrambleTask.cancel(true);
         }
     }

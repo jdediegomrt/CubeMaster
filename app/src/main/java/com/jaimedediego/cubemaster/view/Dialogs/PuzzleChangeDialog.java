@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -12,13 +11,17 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
+    /*TODO: revisar, está fallando plantearse quitar este boton funcionalidad duplicada*/
 
     private Context context;
     private Spinner spinner;
@@ -39,9 +42,9 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
 
         List<String> puzzles = new ArrayList<>();
         DatabaseMethods.getInstance().fillPuzzlesList(puzzles, context);
+        puzzles.remove(DatabaseMethods.getInstance().getCurrentPuzzleName());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.element_puzzlechange_spinner, puzzles);
         spinner.setAdapter(adapter);
-        spinner.setSelection(puzzles.indexOf(DatabaseMethods.getInstance().getCurrentPuzzleName()));
 
         ok.setOnClickListener(this);
         addNew.setOnClickListener(this);
@@ -53,11 +56,10 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.accept:
                 DatabaseMethods.getInstance().usePuzzle(spinner.getSelectedItem().toString());
-//                if (ScrambleConfig.getInstance().puzzlesWithScramble.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-//                    ScrambleMethods.getInstance().getCurrentNxNxNPuzzleNotation();
-//                    Session.getInstance().currentPuzzleScramble = ScrambleMethods.getInstance().scramble();
-//                    Log.e("Notation", "Scramble --- " + Session.getInstance().currentPuzzleScramble);
-//                }
+                Session.getInstance().setCurrentScramble("");
+                Session.getInstance().setCurrentScrambleSvg(null);
+                Session.getInstance().setNextScramble("");
+                Session.getInstance().setNextScrambleSvg(null);
                 didSomething = true;
                 dismiss();
                 break;
@@ -70,6 +72,9 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
                         dismiss();
                     }
                 });
+                if (dialog.didSomething()) {
+                    didSomething = true;
+                }
                 break;
             case R.id.cancel:
                 dismiss();

@@ -96,7 +96,7 @@ public class ChronoThread extends Thread {
         this.pause = pause;
     }
 
-    public boolean getPause() {
+    public boolean isPaused() {
         return pause;
     }
 }
