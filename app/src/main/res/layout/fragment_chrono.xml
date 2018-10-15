@@ -143,6 +143,7 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/cool_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/timer_layout"
@@ -158,15 +159,6 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="25dp">
-
-            <ImageButton
-                android:id="@+id/scramble_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/selected"
-                android:padding="10dp"
-                android:src="@drawable/baseline_refresh_white_36" />
 
             <TextView
                 android:id="@+id/scramble_text"
@@ -196,17 +188,24 @@
 
         </RelativeLayout>
 
+        <ImageButton
+            android:id="@+id/scramble_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cool_line"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/selected"
+            android:padding="10dp"
+            android:src="@drawable/baseline_refresh_white_36" />
+
         <RelativeLayout
             android:id="@+id/info_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/timer_layout"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/cool_line"
+            android:layout_margin="30dp"
             android:animateLayoutChanges="true"
             android:background="@drawable/background_display_window">
 
@@ -220,17 +219,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/timer_layout"
+            android:layout_below="@+id/cool_line"
             android:layout_margin="10dp"
             android:background="@drawable/circle"
             android:contentDescription="@string/selected"
-            android:src="@drawable/ic_info_white_24dp" />
+            android:src="@drawable/baseline_info_white_36" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/cool_line"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_margin="20dp"

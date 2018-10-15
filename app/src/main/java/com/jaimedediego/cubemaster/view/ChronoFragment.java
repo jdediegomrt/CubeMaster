@@ -105,7 +105,7 @@ public class ChronoFragment extends Fragment {
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
                         /*TODO: revisar, está fallando plantearse quitar este boton funcionalidad duplicada*/
-                        scramble();
+//                        scramble();
                     }
                 }
             });
@@ -375,6 +375,7 @@ public class ChronoFragment extends Fragment {
             }
         } else {
             AndroidUtils.SwitchVisibility(scrambleLayout);
+            AndroidUtils.SwitchVisibility(scrambleButton);
         }
     }
 }
