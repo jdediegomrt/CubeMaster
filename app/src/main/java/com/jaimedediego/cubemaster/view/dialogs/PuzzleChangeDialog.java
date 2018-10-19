@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.jaimedediego.cubemaster.R;
-import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.PrefsMethods;
-import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.ArrayList;
@@ -58,8 +55,8 @@ public class PuzzleChangeDialog extends Dialog implements View.OnClickListener {
                 DatabaseMethods.getInstance().usePuzzle(spinner.getSelectedItem().toString());
                 Session.getInstance().setCurrentScramble("");
                 Session.getInstance().setCurrentScrambleSvg(null);
-                Session.getInstance().setNextScramble("");
-                Session.getInstance().setNextScrambleSvg(null);
+//                Session.getInstance().setNextScramble("");
+//                Session.getInstance().setNextScrambleSvg(null);
                 didSomething = true;
                 dismiss();
                 break;

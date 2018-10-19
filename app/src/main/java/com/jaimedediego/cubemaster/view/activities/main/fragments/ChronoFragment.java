@@ -31,7 +31,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
