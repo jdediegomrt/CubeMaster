@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_grey"
-    tools:context="com.jaimedediego.cubemaster.view.PuzzlesFragment">
+    tools:context=".view.activities.main.fragments.PuzzlesFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/puzzles_list"

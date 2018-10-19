@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jaimedediego.cubemaster.view.DetailActivity">
+    tools:context=".view.activities.detail.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abbBarLay"
@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:collapseIcon="@drawable/ic_arrow_back_white_24dp"
+            app:collapseIcon="@drawable/baseline_arrow_back_white_24"
             app:titleTextColor="@color/md_white_1000" />
 
     </android.support.design.widget.AppBarLayout>
