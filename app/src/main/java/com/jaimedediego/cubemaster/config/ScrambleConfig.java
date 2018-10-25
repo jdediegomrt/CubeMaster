@@ -14,6 +14,7 @@ import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.handler.ScrambleThread;
 
 import net.gnehzr.tnoodle.scrambles.Puzzle;
 import net.gnehzr.tnoodle.svglite.Svg;
@@ -35,7 +36,8 @@ public class ScrambleConfig {
         return instance;
     }
 
-    private ScrambleTask scrambleTask;
+//    private ScrambleTask scrambleTask;
+    private ScrambleThread scrambleThread;
     private Puzzle puzzle;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -63,72 +65,76 @@ public class ScrambleConfig {
         }
 
         cancelScrambleIfScrambling();
-        scrambleTask = new ScrambleTask();
-        scrambleTask.execute(puzzle);
+//        scrambleTask = new ScrambleTask();
+//        scrambleTask.execute(puzzle);
+        scrambleThread = new ScrambleThread(puzzle, listener, scrambleText, scrambleImage, scrambleButton, loadingScramble);
+        scrambleThread.start();
     }
 
     public boolean isScrambling() {
-        return scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING;
+//        return scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING;
+        return scrambleThread!=null && scrambleThread.getState() == Thread.State.RUNNABLE;
     }
 
     public void cancelScrambleIfScrambling() {
         if (isScrambling()) {
-            scrambleTask.cancel(true);
+//            scrambleTask.cancel(true);
+            scrambleThread.interrupt();
         }
     }
 
-    private class ScrambleAndSvg {
-        String scramble;
-        Svg svg;
-
-        ScrambleAndSvg(String scramble, Svg svg) {
-            this.scramble = scramble;
-            this.svg = svg;
-        }
-    }
-
-    private class ScrambleTask extends AsyncTask<Puzzle, Void, ScrambleAndSvg> {
-        private Exception exception;
-
-        public ScrambleTask() {
-        }
-
-        protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
-            try {
-                String scramble = puzzle.generateScramble();
-                Svg svg = puzzle.drawScramble(scramble, null);
-                return new ScrambleAndSvg(scramble, svg);
-            } catch (Exception e) {
-                this.exception = e;
-                return null;
-            }
-        }
-
-        private void handleException() {
-            Log.w("ScrambleTask", exception);
-        }
-
-        protected void onCancelled(ScrambleAndSvg scrambleAndSvg) {
-            if (exception != null) {
-                handleException();
-                return;
-            }
-        }
-
-        protected void onPostExecute(ScrambleAndSvg scrambleAndSvg) {
-            if (exception != null) {
-                handleException();
-                return;
-            }
-            String scramble = scrambleAndSvg.scramble;
-            Svg svgLite = scrambleAndSvg.svg;
-
-            try {
-                SVG svg = SVG.getFromString(svgLite.toString());
+//    private class ScrambleAndSvg {
+//        String scramble;
+//        Svg svg;
+//
+//        ScrambleAndSvg(String scramble, Svg svg) {
+//            this.scramble = scramble;
+//            this.svg = svg;
+//        }
+//    }
+//
+//    private class ScrambleTask extends AsyncTask<Puzzle, Void, ScrambleAndSvg> {
+//        private Exception exception;
+//
+//        public ScrambleTask() {
+//        }
+//
+//        protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
+//            try {
+//                String scramble = puzzle.generateScramble();
+//                Svg svg = puzzle.drawScramble(scramble, null);
+//                return new ScrambleAndSvg(scramble, svg);
+//            } catch (Exception e) {
+//                this.exception = e;
+//                return null;
+//            }
+//        }
+//
+//        private void handleException() {
+//            Log.w("ScrambleTask", exception);
+//        }
+//
+//        protected void onCancelled(ScrambleAndSvg scrambleAndSvg) {
+//            if (exception != null) {
+//                handleException();
+//                return;
+//            }
+//        }
+//
+//        protected void onPostExecute(ScrambleAndSvg scrambleAndSvg) {
+//            if (exception != null) {
+//                handleException();
+//                return;
+//            }
+//            String scramble = scrambleAndSvg.scramble;
+//            Svg svgLite = scrambleAndSvg.svg;
+//
+//            try {
+//                SVG svg = SVG.getFromString(svgLite.toString());
 //                if (Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) {
-                    Session.getInstance().setCurrentScrambleSvg(svg);
-                    Session.getInstance().setCurrentScramble(scramble);
-                    listener.onScrambleCompleted();
+//                    Session.getInstance().setCurrentScrambleSvg(svg);
+//                    Session.getInstance().setCurrentScramble(scramble);
+//                    listener.onScrambleCompleted();
 //                    if (Session.getInstance().getNextScramble().isEmpty()) {
 //                        doScramble();
 //                    }
@@ -136,10 +142,10 @@ public class ScrambleConfig {
 //                    Session.getInstance().setNextScrambleSvg(svg);
 //                    Session.getInstance().setNextScramble(scramble);
 //                }
-
-            } catch (SVGParseException e) {
-                Log.wtf("ScrambleTask", e);
-            }
-        }
-    }
+//
+//            } catch (SVGParseException e) {
+//                Log.wtf("ScrambleTask", e);
+//            }
+//        }
+//    }
 }
