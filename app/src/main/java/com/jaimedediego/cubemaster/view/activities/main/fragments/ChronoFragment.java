@@ -64,6 +64,7 @@ public class ChronoFragment extends Fragment {
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private TextView lastSolve;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -96,7 +97,7 @@ public class ChronoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().getCurrentPuzzleId());
+            DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             return true;
         } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
@@ -146,6 +147,13 @@ public class ChronoFragment extends Fragment {
         dotIndicator2 = v.findViewById(R.id.timer_indicator_2);
         activityMenu = getActivity().findViewById(R.id.menu_layout);
         saveButton = v.findViewById(R.id.save_button);
+        lastSolve = v.findViewById(R.id.last_solve);
+
+        if (DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().isEmpty() || DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().equals("")) {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), getResources().getString(R.string.threedots)));
+        } else {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+        }
 
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
@@ -363,6 +371,8 @@ public class ChronoFragment extends Fragment {
         }
 
         DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+        lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+
         if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
             final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
             dialog.show();
