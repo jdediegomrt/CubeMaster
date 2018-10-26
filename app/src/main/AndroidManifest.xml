@@ -16,7 +16,7 @@
         android:windowSoftInputMode="adjustNothing|stateVisible">
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activities.main.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,11 +30,11 @@
         </activity>
 
         <activity
-            android:name=".view.DetailActivity"
+            android:name=".view.activities.detail.DetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.OnboardingActivity"
+            android:name=".view.activities.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.MessagingService">

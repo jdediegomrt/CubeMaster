@@ -2,16 +2,12 @@ package com.jaimedediego.cubemaster.config;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
+import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import net.gnehzr.tnoodle.scrambles.Puzzle;
@@ -22,6 +18,7 @@ import net.gnehzr.tnoodle.utils.LazyInstantiatorException;
 public class ScrambleConfig {
 
     private static ScrambleConfig instance;
+    private OnScrambleCompleted listener;
 
     private ScrambleConfig() {
     }
@@ -35,16 +32,13 @@ public class ScrambleConfig {
 
     private ScrambleTask scrambleTask;
     private Puzzle puzzle;
-    private TextView scrambleText;
-    private SVGImageView scrambleImage;
-    private ImageButton scrambleButton;
-    private ProgressBar loadingScramble;
 
-    public void setScrambleViewItems(TextView textView, SVGImageView imageView, ImageButton imageButton, ProgressBar loadingImage) {
-        scrambleText = textView;
-        scrambleImage = imageView;
-        scrambleButton = imageButton;
-        loadingScramble = loadingImage;
+    public void setListener(OnScrambleCompleted listener) {
+        this.listener = listener;
+    }
+
+    public Puzzle getPuzzle() {
+        return puzzle;
     }
 
     public void doScramble() {
@@ -56,19 +50,11 @@ public class ScrambleConfig {
             Log.wtf("ScrambleConfig", e);
         }
 
-        cancelScrambleIfScrambling();
-        scrambleTask = new ScrambleTask();
-        scrambleTask.execute(puzzle);
-    }
-
-    public boolean isScrambling() {
-        return scrambleTask != null && scrambleTask.getStatus() == AsyncTask.Status.RUNNING;
-    }
-
-    private void cancelScrambleIfScrambling() {
-        if (isScrambling()) {
+        if (scrambleTask != null) {
             scrambleTask.cancel(true);
         }
+        scrambleTask = new ScrambleTask(puzzle);
+        scrambleTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private class ScrambleAndSvg {
@@ -81,17 +67,16 @@ public class ScrambleConfig {
         }
     }
 
-    private class ScrambleTask extends AsyncTask<Puzzle, Void, ScrambleAndSvg> {
-
+    private class ScrambleTask extends AsyncTask<Void, Void, ScrambleAndSvg> {
         private Exception exception;
+        private Puzzle puzzle;
 
-        public ScrambleTask() {
+        public ScrambleTask(Puzzle puzzle) {
+            this.puzzle = puzzle;
         }
 
-        protected ScrambleAndSvg doInBackground(Puzzle... puzzles) {
+        protected ScrambleAndSvg doInBackground(Void... voids) {
             try {
-                assert puzzles.length == 1;
-                Puzzle puzzle = puzzles[0];
                 String scramble = puzzle.generateScramble();
                 Svg svg = puzzle.drawScramble(scramble, null);
                 return new ScrambleAndSvg(scramble, svg);
@@ -122,20 +107,9 @@ public class ScrambleConfig {
 
             try {
                 SVG svg = SVG.getFromString(svgLite.toString());
-                if (Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null) {
-                    scrambleImage.setSVG(svg);
-                    scrambleText.setText(scramble);
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                    Session.getInstance().setCurrentScrambleSvg(svg);
-                    Session.getInstance().setCurrentScramble(scramble);
-                    if (Session.getInstance().getNextScramble().isEmpty()) {
-                        doScramble();
-                    }
-                } else {
-                    Session.getInstance().setNextScrambleSvg(svg);
-                    Session.getInstance().setNextScramble(scramble);
-                }
-
+                Session.getInstance().setCurrentScrambleSvg(svg);
+                Session.getInstance().setCurrentScramble(scramble);
+                listener.onScrambleCompleted();
             } catch (SVGParseException e) {
                 Log.wtf("ScrambleTask", e);
             }

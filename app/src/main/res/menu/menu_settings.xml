@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/rate_us"
-        android:icon="@drawable/ic_star_white_24dp"
+        android:icon="@drawable/baseline_star_white_24"
         android:title="@string/rate_us"
         app:showAsAction="ifRoom" />
 </menu>

@@ -45,6 +45,7 @@
     <string name="stopwatch_info">This mode allows you to pause and resume your chronometer. Recommended for long time puzzles.</string>
     <string name="dot">.</string>
     <string name="twodots">:</string>
+    <string name="threedots">…</string>
     <string name="zero">0</string>
     <string name="zero_millis">000</string>
     <string name="rate_us">Wow! You\'ve reached %1$d times you\'ve solved puzzles with this app!\n\nDo you have a minute to rate it? Please tell me how is your experience, your opinion is the only thing I have to improve and continue growing.</string>
@@ -83,5 +84,6 @@
     <string name="scramble_settings">Scramble</string>
     <string name="scramble_length">Length(60 Max)</string>
     <string name="times_chart_name">Times Chart</string>
-    <string name="scrambling">Scrambling...</string>
+    <string name="scrambling">Scrambling…</string>
+    <string name="last_solve">Last solve: %1$s</string>
 </resources>
