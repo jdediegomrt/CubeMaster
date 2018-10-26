@@ -160,7 +160,6 @@ public class ChronoFragment extends Fragment {
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
         loadingScramble = v.findViewById(R.id.loading_scramble);
-//        ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton, loadingScramble);
         ScrambleConfig.getInstance().setListener(new OnScrambleCompleted() {
             @Override
             public void onScrambleCompleted() {
@@ -174,18 +173,10 @@ public class ChronoFragment extends Fragment {
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null) {
                 AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                 Session.getInstance().setCurrentScramble("");
                 Session.getInstance().setCurrentScrambleSvg(null);
-//                } else {
-//                    Session.getInstance().setCurrentScramble(Session.getInstance().getNextScramble());
-//                    Session.getInstance().setCurrentScrambleSvg(Session.getInstance().getNextScrambleSvg());
-//                    scrambleText.setText(Session.getInstance().getCurrentScramble());
-//                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-//                    Session.getInstance().setNextScramble("");
                 ScrambleConfig.getInstance().doScramble();
-//                }
             }
         });
 
@@ -383,7 +374,6 @@ public class ChronoFragment extends Fragment {
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
             if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
                 if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-//                if (!ScrambleConfig.getInstance().isScrambling()) {
                     AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                     ScrambleConfig.getInstance().doScramble();
                 } else {

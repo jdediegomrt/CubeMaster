@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ChronoHandler extends Handler{
+public class ChronoHandler extends Handler {
     private Boolean minsVisible;
     private Boolean hoursVisible;
     private String millis;
@@ -31,18 +31,17 @@ public class ChronoHandler extends Handler{
         hoursVisible = false;
     }
 
-    public void handleMessage(Message msg)
-    {
+    public void handleMessage(Message msg) {
         millisText.setText(millis);
         secsText.setText(secs);
         minsText.setText(mins);
         hoursText.setText(hours);
-        if(minsVisible){
+        if (minsVisible) {
             minsLayout.setVisibility(View.VISIBLE);
         } else {
             minsLayout.setVisibility(View.GONE);
         }
-        if(hoursVisible){
+        if (hoursVisible) {
             hoursLayout.setVisibility(View.VISIBLE);
         } else {
             hoursLayout.setVisibility(View.GONE);
@@ -65,12 +64,12 @@ public class ChronoHandler extends Handler{
         hours = hoursStr;
     }
 
-    void minsVisible(Boolean minsVisible){
-        this.minsVisible=minsVisible;
+    void minsVisible(Boolean minsVisible) {
+        this.minsVisible = minsVisible;
     }
 
-    void hoursVisible(Boolean hoursVisible){
-        this.hoursVisible=hoursVisible;
+    void hoursVisible(Boolean hoursVisible) {
+        this.hoursVisible = hoursVisible;
     }
 
     void act() {

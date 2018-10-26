@@ -34,11 +34,11 @@ import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.ChronoFragment;
-import com.jaimedediego.cubemaster.view.customViews.CustomToast;
-import com.jaimedediego.cubemaster.view.activities.onboarding.OnboardingActivity;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.PuzzlesFragment;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.SettingsFragment;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.StatsFragment;
+import com.jaimedediego.cubemaster.view.activities.onboarding.OnboardingActivity;
+import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 
 public class MainActivity extends AppCompatActivity
         implements ChronoFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, PuzzlesFragment.OnFragmentInteractionListener {
