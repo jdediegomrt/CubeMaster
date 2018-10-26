@@ -190,8 +190,8 @@ public class DatabaseMethods {
         makeUpdate("delete from times where puzzle_id=" + deleteId + " and user_id=" + Session.getInstance().getCurrentUserId());
     }
 
-    public void deleteLastSolve(int id) {
-        Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + id);
+    public void deleteCurrentPuzzleLastSolve() {
+        Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
         if (c.moveToFirst()) {
             do {
                 makeUpdate("delete from times where num_solve=" + c.getInt(0));
@@ -199,6 +199,19 @@ public class DatabaseMethods {
         }
         c.close();
         closeDatabase();
+    }
+
+    public String getCurrentPuzzleLastSolve() {
+        String time = "";
+        Cursor c = makeQuery("SELECT time FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId() + " order by num_solve desc limit 1");
+        if (c.moveToFirst()) {
+            do {
+                time = c.getString(0);
+            } while (c.moveToNext());
+        }
+        c.close();
+        closeDatabase();
+        return time;
     }
 
     public void fillPuzzlesList(List<String> puzzles, Context context) {

@@ -23,10 +23,11 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
-import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
+import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.AreYouSureDialog;
 import com.jaimedediego.cubemaster.view.dialogs.NewPuzzleDialog;
 
@@ -228,14 +229,12 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                         elementCard.setBackgroundColor(Session.getInstance().getLighterColorTheme());
                         DatabaseMethods.getInstance().usePuzzle(getItem(position));
                         if (!DatabaseMethods.getInstance().getCurrentPuzzleName().equals(previousPuzzle)) {
-                            ScrambleConfig.getInstance().cancelScrambleIfScrambling();
                             Session.getInstance().setCurrentScramble("");
                             Session.getInstance().setCurrentScrambleSvg(null);
-//                            Session.getInstance().setNextScramble("");
-//                            Session.getInstance().setNextScrambleSvg(null);
-//                            if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-//                                ScrambleConfig.getInstance().doScramble();
-//                            }
+                            /*TODO: this is not efficient at all, little leak when change puzzles a lot of times*/
+                            if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+                                ScrambleConfig.getInstance().doScramble();
+                            }
                             for (int i = 0; i < filteredPuzzles.size(); i++) {
                                 if (getItem(i).equals(getItem(position)) || getItem(i).equals(previousPuzzle)) {
                                     notifyItemChanged(i);

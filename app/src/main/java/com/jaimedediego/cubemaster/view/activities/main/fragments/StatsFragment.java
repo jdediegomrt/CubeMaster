@@ -50,7 +50,7 @@ public class StatsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().getCurrentPuzzleId());
+            DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             ((MainActivity) getActivity()).refreshView();
             return true;
         } else if (id == R.id.change_database) {
@@ -71,7 +71,7 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stats, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.stats);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(DatabaseMethods.getInstance().getCurrentPuzzleName());
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 

@@ -31,7 +31,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
@@ -65,6 +64,7 @@ public class ChronoFragment extends Fragment {
     private TextView mins;
     private TextView secs;
     private TextView millis;
+    private TextView lastSolve;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -97,7 +97,7 @@ public class ChronoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
-            DatabaseMethods.getInstance().deleteLastSolve(Session.getInstance().getCurrentPuzzleId());
+            DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             return true;
         } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
@@ -120,7 +120,7 @@ public class ChronoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_chrono, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.timer);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(DatabaseMethods.getInstance().getCurrentPuzzleName());
 
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
@@ -147,13 +147,19 @@ public class ChronoFragment extends Fragment {
         dotIndicator2 = v.findViewById(R.id.timer_indicator_2);
         activityMenu = getActivity().findViewById(R.id.menu_layout);
         saveButton = v.findViewById(R.id.save_button);
+        lastSolve = v.findViewById(R.id.last_solve);
+
+        if (DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().isEmpty() || DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().equals("")) {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), getResources().getString(R.string.threedots)));
+        } else {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+        }
 
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
         loadingScramble = v.findViewById(R.id.loading_scramble);
-        ScrambleConfig.getInstance().setScrambleViewItems(scrambleText, scrambleImage, scrambleButton, loadingScramble);
         ScrambleConfig.getInstance().setListener(new OnScrambleCompleted() {
             @Override
             public void onScrambleCompleted() {
@@ -167,18 +173,10 @@ public class ChronoFragment extends Fragment {
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (Session.getInstance().getNextScramble().isEmpty() || Session.getInstance().getNextScramble() == null) {
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                    Session.getInstance().setCurrentScramble("");
-                    Session.getInstance().setCurrentScrambleSvg(null);
-//                } else {
-//                    Session.getInstance().setCurrentScramble(Session.getInstance().getNextScramble());
-//                    Session.getInstance().setCurrentScrambleSvg(Session.getInstance().getNextScrambleSvg());
-//                    scrambleText.setText(Session.getInstance().getCurrentScramble());
-//                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-//                    Session.getInstance().setNextScramble("");
-                    ScrambleConfig.getInstance().doScramble();
-//                }
+                AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                Session.getInstance().setCurrentScramble("");
+                Session.getInstance().setCurrentScrambleSvg(null);
+                ScrambleConfig.getInstance().doScramble();
             }
         });
 
@@ -364,6 +362,8 @@ public class ChronoFragment extends Fragment {
         }
 
         DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+        lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+
         if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
             final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
             dialog.show();
@@ -373,7 +373,7 @@ public class ChronoFragment extends Fragment {
     private void scramble() {
         if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
             if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
-                if (!ScrambleConfig.getInstance().isScrambling()) {
+                if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
                     AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                     ScrambleConfig.getInstance().doScramble();
                 } else {

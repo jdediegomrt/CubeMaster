@@ -38,7 +38,7 @@
                         android:id="@+id/hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero"
                         android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
@@ -48,7 +48,7 @@
                         android:id="@+id/hours_dots"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/twodots"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -75,7 +75,7 @@
                         android:id="@+id/mins_dots"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/twodots"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -90,7 +90,7 @@
                         android:id="@+id/secs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero"
                         android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
@@ -99,7 +99,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/dot"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -108,10 +108,11 @@
                         android:id="@+id/millis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero_millis"
+                        android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
+                        android:textSize="42sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -149,6 +150,15 @@
             android:layout_below="@+id/timer_layout"
             android:contentDescription="@string/selected"
             android:src="@drawable/cool_line" />
+
+        <TextView
+            android:id="@+id/last_solve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/cool_line"
+            android:gravity="center"
+            android:textColor="@color/md_grey_600"
+            android:textSize="14sp" />
 
         <RelativeLayout
             android:id="@+id/scramble_layout"
