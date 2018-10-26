@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_grey"
-    tools:context="com.jaimedediego.cubemaster.view.StatsFragment">
+    tools:context=".view.activities.main.fragments.StatsFragment">
 
     <RelativeLayout
         android:id="@+id/puzzle_name_container"
@@ -219,7 +219,7 @@
                     android:textColor="@color/md_white_1000"
                     android:textSize="12sp" />
 
-                <com.jaimedediego.cubemaster.view.CustomViews.CustomLineChart
+                <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"

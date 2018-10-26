@@ -31,7 +31,7 @@ public class StatsMethods {
         if (!times.isEmpty()) {
             return formatMillis(Float.valueOf(Collections.min(timesListToMillis(times))));
         } else {
-            return "...";
+            return "…";
         }
     }
 
@@ -45,7 +45,7 @@ public class StatsMethods {
         if (!times.isEmpty()) {
             return formatMillis(Float.valueOf(Collections.max(timesListToMillis(times))));
         } else {
-            return "...";
+            return "…";
         }
     }
 
@@ -65,10 +65,32 @@ public class StatsMethods {
             times = DatabaseMethods.getInstance().getTimesByName(puzzleName);
         }
         if (!times.isEmpty()) {
-            int sum = 0;
-            if (num != 0) {
-                if (num <= times.size()) {
-                    for (int i = 0; i < num; i++) {
+            if (times.size()<num){
+                return "…";
+            } else {
+                int sum = 0;
+                if (num != 0) {
+                    if (num <= times.size()) {
+                        for (int i = 0; i < num; i++) {
+                            StringTokenizer tokenizer = new StringTokenizer(times.get(i), ":.");
+                            switch (tokenizer.countTokens()) {
+                                case 2:
+                                    sum += Integer.parseInt(tokenizer.nextToken() + tokenizer.nextToken());
+                                    break;
+                                case 3:
+                                    sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken()) * 60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                                    break;
+                                case 4:
+                                    sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken()) * 3600 + Integer.parseInt(tokenizer.nextToken()) * 60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    return formatMillis((float) sum / num);
+                } else {
+                    for (int i = 0; i < times.size(); i++) {
                         StringTokenizer tokenizer = new StringTokenizer(times.get(i), ":.");
                         switch (tokenizer.countTokens()) {
                             case 2:
@@ -84,29 +106,11 @@ public class StatsMethods {
                                 break;
                         }
                     }
+                    return formatMillis((float) sum / times.size());
                 }
-                return formatMillis((float) sum / num);
-            } else {
-                for (int i = 0; i < times.size(); i++) {
-                    StringTokenizer tokenizer = new StringTokenizer(times.get(i), ":.");
-                    switch (tokenizer.countTokens()) {
-                        case 2:
-                            sum += Integer.parseInt(tokenizer.nextToken() + tokenizer.nextToken());
-                            break;
-                        case 3:
-                            sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken()) * 60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
-                            break;
-                        case 4:
-                            sum += Integer.parseInt(String.valueOf(Integer.parseInt(tokenizer.nextToken()) * 3600 + Integer.parseInt(tokenizer.nextToken()) * 60 + Integer.parseInt(tokenizer.nextToken())) + tokenizer.nextToken());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                return formatMillis((float) sum / times.size());
             }
         } else {
-            return "...";
+            return "…";
         }
     }
 
@@ -124,9 +128,6 @@ public class StatsMethods {
         int hours = ((Float) (millis / 60 / 1000 / 60)).intValue();
         if (hours == 0) {
             if (mins == 0) {
-                if (secs == 0 && millis == 0) {
-                    formattedTime = "...";
-                }
                 formattedTime = String.valueOf(secs) + '.' + String.format("%03d", milli);
             } else {
                 formattedTime = String.valueOf(mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);

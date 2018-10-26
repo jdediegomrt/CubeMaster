@@ -21,8 +21,8 @@ public class Session {
 
     private String currentScramble = "";
     private SVG currentScrambleSvg;
-    private String nextScramble = "";
-    private SVG nextScrambleSvg;
+//    private String nextScramble = "";
+//    private SVG nextScrambleSvg;
 
     private Session() {
     }
@@ -46,22 +46,6 @@ public class Session {
 
     public void setCurrentPuzzleId(int currentPuzzleId) {
         this.currentPuzzleId = currentPuzzleId;
-    }
-
-    public List<String> getCurrentPuzzleNotation() {
-        return currentPuzzleNotation;
-    }
-
-    public void setCurrentPuzzleNotation(List<String> currentPuzzleNotation) {
-        this.currentPuzzleNotation = currentPuzzleNotation;
-    }
-
-    public String getCurrentPuzzleScramble() {
-        return currentPuzzleScramble;
-    }
-
-    public void setCurrentPuzzleScramble(String currentPuzzleScramble) {
-        this.currentPuzzleScramble = currentPuzzleScramble;
     }
 
     public int getDarkColorTheme() {
@@ -104,19 +88,19 @@ public class Session {
         this.currentScrambleSvg = currentScrambleSvg;
     }
 
-    public String getNextScramble() {
-        return nextScramble;
-    }
-
-    public void setNextScramble(String nextScramble) {
-        this.nextScramble = nextScramble;
-    }
-
-    public SVG getNextScrambleSvg() {
-        return nextScrambleSvg;
-    }
-
-    public void setNextScrambleSvg(SVG nextScrambleSvg) {
-        this.nextScrambleSvg = nextScrambleSvg;
-    }
+//    public String getNextScramble() {
+//        return nextScramble;
+//    }
+//
+//    public void setNextScramble(String nextScramble) {
+//        this.nextScramble = nextScramble;
+//    }
+//
+//    public SVG getNextScrambleSvg() {
+//        return nextScrambleSvg;
+//    }
+//
+//    public void setNextScrambleSvg(SVG nextScrambleSvg) {
+//        this.nextScrambleSvg = nextScrambleSvg;
+//    }
 }

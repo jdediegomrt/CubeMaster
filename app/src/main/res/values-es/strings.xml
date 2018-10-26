@@ -45,6 +45,7 @@
     <string name="stopwatch_info">Este modo te permite pausar y reanudar el cronómetro. Recomendado para puzzles de alta duración.</string>
     <string name="dot">.</string>
     <string name="twodots">:</string>
+    <string name="threedots">…</string>
     <string name="zero">0</string>
     <string name="zero_millis">000</string>
     <string name="rate_us">¡Increíble, has resuelto puzzles %1$d veces con esta aplicación!\n\n¿Tienes un minuto para valorarla? Cuéntame cómo ha sido tu experiencia, tu opinión es lo único que tengo para mejorar y seguir creciendo.</string>
@@ -84,4 +85,5 @@
     <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
     <string name="scrambling">Generando scramble…</string>
+    <string name="last_solve">Último tiempo: %1$s</string>
 </resources>

@@ -151,10 +151,10 @@ public class ThemeConfig {
         searchAutoComplete.setTextColor(Color.WHITE);
 
         ImageView searchIcon = searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        searchIcon.setImageResource(R.drawable.ic_search_white_24dp);
+        searchIcon.setImageResource(R.drawable.baseline_search_white_24);
 
         ImageView voiceIcon = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
-        voiceIcon.setImageResource(R.drawable.ic_close_white_24dp);
+        voiceIcon.setImageResource(R.drawable.baseline_close_white_24);
 
         View searchPlate = searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
         searchPlate.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
@@ -169,5 +169,9 @@ public class ThemeConfig {
         menuAnimation.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(session.getLightColorTheme()));
         menuAnimation.addState(new int[]{}, new ColorDrawable(session.getDarkColorTheme()));
         return menuAnimation;
+    }
+
+    public int getColorFromResource(int res){
+        return ResourcesCompat.getColor(activity.getResources(), res, null);
     }
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_black_1000"
-    tools:context="com.jaimedediego.cubemaster.view.ChronoFragment">
+    tools:context=".view.activities.main.fragments.ChronoFragment">
 
     <RelativeLayout
         android:id="@+id/chrono_layout"
@@ -11,15 +11,16 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/animated_line"
+            android:id="@+id/timer_layout"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_timer_off">
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
+                android:id="@+id/time_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -37,7 +38,7 @@
                         android:id="@+id/hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero"
                         android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
@@ -47,7 +48,7 @@
                         android:id="@+id/hours_dots"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/twodots"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -74,7 +75,7 @@
                         android:id="@+id/mins_dots"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/twodots"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -89,7 +90,7 @@
                         android:id="@+id/secs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero"
                         android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
@@ -98,7 +99,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/dot"
                         android:textColor="@color/md_white_1000"
                         android:textSize="50sp" />
@@ -107,36 +108,67 @@
                         android:id="@+id/millis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:text="@string/zero_millis"
+                        android:textAlignment="center"
                         android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
+                        android:textSize="42sp" />
                 </LinearLayout>
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/timer_indicator_1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:layout_toEndOf="@+id/time_layout"
+                android:layout_toRightOf="@+id/time_layout"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/circle"
+                android:tint="@color/md_grey_600" />
+
+            <ImageView
+                android:id="@+id/timer_indicator_2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:layout_toLeftOf="@+id/time_layout"
+                android:layout_toStartOf="@+id/time_layout"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/circle"
+                android:tint="@color/md_grey_600" />
+
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/cool_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/timer_layout"
+            android:contentDescription="@string/selected"
+            android:src="@drawable/cool_line" />
+
+        <TextView
+            android:id="@+id/last_solve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/cool_line"
+            android:gravity="center"
+            android:textColor="@color/md_grey_600"
+            android:textSize="14sp" />
 
         <RelativeLayout
             android:id="@+id/scramble_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/animated_line"
+            android:layout_below="@+id/timer_layout"
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="25dp">
-
-            <ImageButton
-                android:id="@+id/scramble_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/selected"
-                android:padding="10dp"
-                android:src="@drawable/baseline_refresh_white_36" />
 
             <TextView
                 android:id="@+id/scramble_text"
@@ -166,46 +198,55 @@
 
         </RelativeLayout>
 
+        <ImageButton
+            android:id="@+id/scramble_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cool_line"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/selected"
+            android:padding="10dp"
+            android:src="@drawable/baseline_refresh_white_36" />
+
+        <RelativeLayout
+            android:id="@+id/info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/cool_line"
+            android:layout_margin="30dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_display_window">
+
+            <include layout="@layout/layout_info" />
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/info_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/cool_line"
+            android:layout_margin="10dp"
+            android:background="@drawable/circle"
+            android:contentDescription="@string/selected"
+            android:src="@drawable/baseline_info_white_36" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/cool_line"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:contentDescription="@string/selected"
+            android:src="@drawable/baseline_save_white_48"
+            android:visibility="gone" />
+
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/info_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/background_display_window">
-
-        <include layout="@layout/layout_info" />
-
-    </RelativeLayout>
-
-    <ImageButton
-        android:id="@+id/info_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/background_info_button"
-        android:contentDescription="@string/selected"
-        android:src="@drawable/ic_info_white_24dp" />
-
-    <ImageButton
-        android:id="@+id/pause_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="80dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/selected"
-        android:src="@drawable/ic_pause_circle_filled_white_48dp"
-        android:visibility="gone" />
 
 </RelativeLayout>

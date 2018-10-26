@@ -3,14 +3,11 @@ package com.jaimedediego.cubemaster.methods;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.DatabaseConfig;
@@ -19,7 +16,6 @@ import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,10 +55,14 @@ public class DatabaseMethods {
         return db.rawQuery(query, null);
     }
 
-    private void makeUpdate(String update) {
+    private void makeUpdate(String update, Object... params) {
         openDatabase();
         db.beginTransaction();
-        db.execSQL(update);
+        if (params == null || params.length == 0) {
+            db.execSQL(update);
+        } else {
+            db.execSQL(update, params);
+        }
         db.setTransactionSuccessful();
         db.endTransaction();
         closeDatabase();
@@ -126,25 +126,7 @@ public class DatabaseMethods {
         Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
         if (c.moveToFirst()) {
             do {
-                openDatabase();
-                db.beginTransaction();
-                SQLiteStatement p = db.compileStatement("insert into times (user_id, puzzle_id, num_solve, time, date, scramble, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                p.bindLong(1, Session.getInstance().getCurrentUserId());
-                p.bindLong(2, Session.getInstance().getCurrentPuzzleId());
-                p.bindLong(3, c.getInt(0) + 1);
-                p.bindString(4, time);
-                p.bindString(5, date);
-                p.bindString(6, scramble.replace("'", "*"));
-                if(scrambleImage != null) {
-                    p.bindBlob(7, scrambleImage);
-                } else {
-                    p.bindNull(7);
-                }
-                p.executeInsert();
-                db.setTransactionSuccessful();
-                db.endTransaction();
-                closeDatabase();
-                //makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date, scramble, image) VALUES (" + Session.getInstance().getCurrentUserId() + ", " + Session.getInstance().getCurrentPuzzleId() + ", " + (c.getInt(0) + 1) + ", '" + time + "', '" + date + "', '" + scramble.replace("'", "*") + "', '" + scrambleImage + "')");
+                makeUpdate("INSERT INTO times (user_id, puzzle_id, num_solve, time, date, scramble, image) VALUES (" + Session.getInstance().getCurrentUserId() + ", " + Session.getInstance().getCurrentPuzzleId() + ", " + (c.getInt(0) + 1) + ", '" + time + "', '" + date + "', '" + scramble.replace("'", "*") + "', ?)", (Object) scrambleImage);
             } while (c.moveToNext());
         }
         c.close();
@@ -208,8 +190,8 @@ public class DatabaseMethods {
         makeUpdate("delete from times where puzzle_id=" + deleteId + " and user_id=" + Session.getInstance().getCurrentUserId());
     }
 
-    public void deleteLastSolve(int id) {
-        Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + id);
+    public void deleteCurrentPuzzleLastSolve() {
+        Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
         if (c.moveToFirst()) {
             do {
                 makeUpdate("delete from times where num_solve=" + c.getInt(0));
@@ -219,8 +201,17 @@ public class DatabaseMethods {
         closeDatabase();
     }
 
-    public void resetCurrentPuzzle() {
-        makeUpdate("delete from times where puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
+    public String getCurrentPuzzleLastSolve() {
+        String time = "";
+        Cursor c = makeQuery("SELECT time FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId() + " order by num_solve desc limit 1");
+        if (c.moveToFirst()) {
+            do {
+                time = c.getString(0);
+            } while (c.moveToNext());
+        }
+        c.close();
+        closeDatabase();
+        return time;
     }
 
     public void fillPuzzlesList(List<String> puzzles, Context context) {

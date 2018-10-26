@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/default_background_grey"
-    tools:context="com.jaimedediego.cubemaster.view.SettingsFragment">
+    tools:context=".view.activities.main.fragments.SettingsFragment">
 
     <LinearLayout
         android:id="@+id/settings_layout"
@@ -88,10 +88,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/frtime_text"
                 android:layout_toRightOf="@id/frtime_text"
-                android:background="@drawable/background_info_button"
+                android:background="@drawable/circle"
                 android:contentDescription="@string/selected"
                 android:gravity="center"
-                android:src="@drawable/ic_info_white_18dp" />
+                android:src="@drawable/baseline_info_white_18" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,10 +163,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/stopwatch_text"
                 android:layout_toRightOf="@id/stopwatch_text"
-                android:background="@drawable/background_info_button"
+                android:background="@drawable/circle"
                 android:contentDescription="@string/selected"
                 android:gravity="center"
-                android:src="@drawable/ic_info_white_18dp" />
+                android:src="@drawable/baseline_info_white_18" />
 
             <Switch
                 android:id="@+id/stopwatch_switch"
