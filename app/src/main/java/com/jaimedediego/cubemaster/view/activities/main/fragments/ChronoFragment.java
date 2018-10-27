@@ -98,6 +98,7 @@ public class ChronoFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
             return true;
         } else if (id == R.id.change_database) {
             final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
@@ -126,17 +127,19 @@ public class ChronoFragment extends Fragment {
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
         infoButton = v.findViewById(R.id.info_button);
-        RelativeLayout infoContainer = v.findViewById(R.id.info_container);
         infoLayout = v.findViewById(R.id.info_layout);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
+        final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition layoutTransition = infoContainer.getLayoutTransition();
-            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-        }
+        scrambleLayout = v.findViewById(R.id.scramble_layout);
+        scrambleText = v.findViewById(R.id.scramble_text);
+        scrambleImage = v.findViewById(R.id.scramble_image);
+        scrambleButton = v.findViewById(R.id.scramble_button);
+        loadingScramble = v.findViewById(R.id.loading_scramble);
+
+        AndroidUtils.initLayoutTransitions(v.findViewById(R.id.info_container));
 
         mp = MediaPlayer.create(getActivity(), R.raw.beep);
-        final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
         hours = v.findViewById(R.id.hours);
         mins = v.findViewById(R.id.mins);
         secs = v.findViewById(R.id.secs);
@@ -155,11 +158,6 @@ public class ChronoFragment extends Fragment {
             lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
         }
 
-        scrambleLayout = v.findViewById(R.id.scramble_layout);
-        scrambleText = v.findViewById(R.id.scramble_text);
-        scrambleImage = v.findViewById(R.id.scramble_image);
-        scrambleButton = v.findViewById(R.id.scramble_button);
-        loadingScramble = v.findViewById(R.id.loading_scramble);
         ScrambleConfig.getInstance().setListener(new OnScrambleCompleted() {
             @Override
             public void onScrambleCompleted() {
@@ -348,10 +346,10 @@ public class ChronoFragment extends Fragment {
             activityMenu.getChildAt(i).setEnabled(true);
         }
         infoButton.setEnabled(true);
-        scrambleButton.setVisibility(View.VISIBLE);
 
         byte[] scrambleImageByteArray = null;
         if (scrambleLayout.getVisibility() == View.VISIBLE) {
+            scrambleButton.setVisibility(View.VISIBLE);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
             Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);

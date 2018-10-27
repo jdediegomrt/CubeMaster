@@ -32,6 +32,7 @@ import com.jaimedediego.cubemaster.config.PrefsConfig;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.ChronoFragment;
 import com.jaimedediego.cubemaster.view.activities.main.fragments.PuzzlesFragment;
@@ -95,12 +96,7 @@ public class MainActivity extends AppCompatActivity
         RadioButton settings = findViewById(R.id.settings);
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            LayoutTransition menuLayoutTransition = ((RelativeLayout) findViewById(R.id.content_main)).getLayoutTransition();
-            menuLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-            LayoutTransition bannerLayoutTransition = ((RelativeLayout) findViewById(R.id.banner_container)).getLayoutTransition();
-            bannerLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-        }
+        AndroidUtils.initLayoutTransitions(findViewById(R.id.content_main), findViewById(R.id.banner_container));
 
 //        banner.loadAd(new AdRequest.Builder().build());
         banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
