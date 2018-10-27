@@ -14,10 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -28,7 +30,10 @@ import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.ColorsAdapter;
+import com.jaimedediego.cubemaster.view.activities.main.adapters.IndicatorsSpinnerAdapter;
+import com.jaimedediego.cubemaster.view.activities.main.adapters.SortBySpinnerAdapter;
 import com.jaimedediego.cubemaster.view.dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 
@@ -80,6 +85,7 @@ public class SettingsFragment extends Fragment {
         final TextView stopwatchInfoText = v.findViewById(R.id.stopwatch_info_text);
         final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
         final ViewGroup.LayoutParams stopwatchParams = stopwatchInfoText.getLayoutParams();
+        final Spinner indicators = v.findViewById(R.id.indicators);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = settingsLayout.getLayoutTransition();
@@ -112,6 +118,20 @@ public class SettingsFragment extends Fragment {
                 scramble.setChecked(true);
             }
         }
+
+        IndicatorsSpinnerAdapter adapter = new IndicatorsSpinnerAdapter(getContext());
+        indicators.setAdapter(adapter);
+        indicators.setSelection(PrefsMethods.getInstance().getIndicator());
+
+        indicators.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                PrefsMethods.getInstance().setIndicator(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {/*Do nothing*/}
+        });
 
         frTimeInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -86,4 +86,7 @@
     <string name="times_chart_name">Times Chart</string>
     <string name="scrambling">Scrambling…</string>
     <string name="last_solve">Last solve: %1$s</string>
+    <string name="indicator">Indicator</string>
+    <string name="dots">Dots</string>
+    <string name="line">Line</string>
 </resources>

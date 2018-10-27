@@ -66,5 +66,10 @@ public class PrefsConfig {
             editor.putInt("scrambleLength", 0);
             editor.apply();
         }
+
+        if (!prefs.contains("indicators")) {
+            editor.putInt("indicators", 0);
+            editor.apply();
+        }
     }
 }

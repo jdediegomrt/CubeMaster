@@ -80,4 +80,13 @@ public class PrefsMethods {
         prefsConfig.editor.putBoolean("scramble", wholeCubeRotations);
         prefsConfig.editor.apply();
     }
+
+    public int getIndicator() {
+        return prefsConfig.prefs.getInt("indicator", 0);
+    }
+
+    public void setIndicator(int indicator) {
+        prefsConfig.editor.putInt("indicator", indicator);
+        prefsConfig.editor.apply();
+    }
 }

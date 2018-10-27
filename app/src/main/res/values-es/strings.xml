@@ -86,4 +86,7 @@
     <string name="times_chart_name">Tabla de tiempos</string>
     <string name="scrambling">Generando scramble…</string>
     <string name="last_solve">Último tiempo: %1$s</string>
+    <string name="indicator">Indicador</string>
+    <string name="dots">Puntos</string>
+    <string name="line">Línea</string>
 </resources>
