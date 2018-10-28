@@ -63,6 +63,7 @@ public class ChronoFragment extends Fragment {
     private TextView secs;
     private TextView millis;
     private TextView lastSolve;
+    private TextView infoLayoutGuide;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -72,7 +73,6 @@ public class ChronoFragment extends Fragment {
     private ImageView dotIndicator1;
     private ImageView dotIndicator2;
     private RadioGroup activityMenu;
-    private ViewGroup.LayoutParams paramsSaveButton;
     private int helpCounter = 0;
     private boolean resumeOnUp;
 
@@ -128,6 +128,7 @@ public class ChronoFragment extends Fragment {
 
         infoButton = v.findViewById(R.id.info_button);
         infoLayout = v.findViewById(R.id.info_layout);
+        infoLayoutGuide = v.findViewById(R.id.sub_text);
         final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
         final ViewGroup.LayoutParams params = infoLayout.getLayoutParams();
 
@@ -153,7 +154,6 @@ public class ChronoFragment extends Fragment {
         saveButton = v.findViewById(R.id.save_button);
         lastSolve = v.findViewById(R.id.last_solve);
 
-        paramsSaveButton = saveButton.getLayoutParams();
         initIndicators();
 
         if (DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().isEmpty() || DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().equals("")) {
@@ -188,12 +188,12 @@ public class ChronoFragment extends Fragment {
                 if (infoLayout.getHeight() != 0) {
                     infoButton.setColorFilter(null);
                     infoLayout.setLayoutParams(params);
-                    chronoScreen.setEnabled(true);
+//                    chronoScreen.setEnabled(true);
                 } else {
                     infoButton.setColorFilter(Session.getInstance().getLightColorTheme());
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     infoLayout.setLayoutParams(layoutParams);
-                    chronoScreen.setEnabled(false);
+//                    chronoScreen.setEnabled(false);
                 }
 
                 Button gotitButton = v.findViewById(R.id.gotit_button);
@@ -204,7 +204,7 @@ public class ChronoFragment extends Fragment {
                         helpCounter = 0;
                         infoButton.setColorFilter(null);
                         infoLayout.setLayoutParams(params);
-                        chronoScreen.setEnabled(true);
+//                        chronoScreen.setEnabled(true);
                     }
                 });
             }
@@ -243,6 +243,9 @@ public class ChronoFragment extends Fragment {
                                 }
                             } else {
                                 colorIndicators(R.color.md_grey_600);
+                                if (infoLayout.getHeight() != 0) {
+                                    infoLayoutGuide.setText("Well done! you finished the tutorial");
+                                }
                                 thread.finalize(true);
                                 final Handler handleChrono = new Handler();
                                 handleChrono.postDelayed(new Runnable() {
@@ -253,12 +256,18 @@ public class ChronoFragment extends Fragment {
                                 }, 10);
                             }
                         } else {
+                            if (infoLayout.getHeight() != 0) {
+                                infoLayoutGuide.setText("Wait until indicator turns green");
+                            }
                             colorIndicators(R.color.md_red_500);
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     holded = true;
                                     colorIndicators(R.color.md_green_500);
+                                    if (infoLayout.getHeight() != 0) {
+                                        infoLayoutGuide.setText("Stop holding");
+                                    }
                                 }
                             }, PrefsMethods.getInstance().getFreezingTime());
                         }
@@ -284,8 +293,14 @@ public class ChronoFragment extends Fragment {
                             helpCounter = 0;
                             thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
                             thread.start();
+                            if (infoLayout.getHeight() != 0) {
+                                infoLayoutGuide.setText("Make your puzzle");
+                            }
                         } else {
                             colorIndicators(R.color.md_grey_600);
+                            if (infoLayout.getHeight() != 0) {
+                                infoLayoutGuide.setText("Press the time");
+                            }
                             helpCounter++;
                             if (helpCounter == 10) {
                                 infoButton.performClick();

@@ -4,40 +4,33 @@
     android:layout_width="0dp"
     android:layout_height="0dp">
 
-    <RelativeLayout
-        android:id="@+id/text"
+    <TextView
+        android:layout_margin="12dp"
+        android:id="@+id/main_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/info_main_text"
+        android:textColor="@color/md_black_1000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/main_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/info_main_text"
-            android:textColor="@color/md_black_1000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/sub_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_text"
-            android:layout_centerHorizontal="true"
-            android:text="@string/info_sub_text"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/sub_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Press the time"
+        android:textColor="@color/md_black_1000"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/gotit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
         android:layout_centerHorizontal="true"
-        android:text="@string/got_it" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/scape_tutorial" />
 
 </RelativeLayout>
