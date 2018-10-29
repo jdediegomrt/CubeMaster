@@ -8,7 +8,22 @@
     <RelativeLayout
         android:id="@+id/chrono_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <TextView
+            android:id="@+id/tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/md_white_1000"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/timer_layout"
@@ -248,24 +263,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/info_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/buttons"
-            android:layout_marginBottom="28dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/background_display_window">
-
-            <include layout="@layout/layout_info" />
 
         </RelativeLayout>
 
