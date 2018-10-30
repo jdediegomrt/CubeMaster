@@ -26,7 +26,8 @@
     <string name="worst_time">Peor tiempo</string>
     <string name="average">Media</string>
     <string name="current_average_of_5">Media de 5</string>
-    <string name="current_average_of_10">Media de 10</string>
+    <string name="current_average_of_12">Media de 12</string>
+    <string name="current_average_of_n">Media de</string>
     <string name="change_theme">Tema</string>
     <string name="coloured_timer">Colores en cronómetro</string>
     <string name="minutes_beep">Sonido cada minuto</string>

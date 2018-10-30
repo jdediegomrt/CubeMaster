@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView worstTime;
     TextView average;
     TextView average5;
-    TextView average10;
+    TextView average12;
     TextView timesCount;
     TextView currentPuzzle;
     Spinner sortMode;
@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
         worstTime = findViewById(R.id.worst_time);
         average = findViewById(R.id.average);
         average5 = findViewById(R.id.averageof5);
-        average10 = findViewById(R.id.averageof10);
+        average12 = findViewById(R.id.averageof12);
         timesCount = findViewById(R.id.times_count);
         currentPuzzle = findViewById(R.id.puzzle_name);
         sortMode = findViewById(R.id.sort_mode);
@@ -175,6 +175,6 @@ public class DetailActivity extends AppCompatActivity {
         worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));
         average.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 0));
         average5.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 5));
-        average10.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 10));
+        average12.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 12));
     }
 }

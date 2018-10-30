@@ -7,7 +7,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -15,6 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/number_of_solves"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -34,7 +35,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -42,6 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/best_time"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -52,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -61,7 +63,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -69,6 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/worst_time"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -79,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -88,7 +91,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -96,6 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/average"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -106,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -115,7 +119,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -123,6 +126,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/current_average_of_5"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -133,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
@@ -142,7 +147,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:minHeight="50sp"
         android:paddingEnd="10sp"
         android:paddingStart="10sp">
@@ -150,16 +154,57 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/current_average_of_10"
+            android:layout_centerVertical="true"
+            android:text="@string/current_average_of_12"
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/averageof10"
+            android:id="@+id/averageof12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/md_black_1000"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50sp"
+        android:paddingEnd="10sp"
+        android:paddingStart="10sp">
+
+        <TextView
+            android:id="@+id/current_average_of_n"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/current_average_of_n"
+            android:textColor="@color/md_black_1000"
+            android:textSize="15sp" />
+
+        <com.jaimedediego.cubemaster.view.customViews.FilteredEditText
+            android:id="@+id/averageofn_edittext"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/current_average_of_n"
+            android:layout_toRightOf="@+id/current_average_of_n" />
+
+        <TextView
+            android:id="@+id/averageofn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/md_black_1000"
             android:textSize="15sp" />

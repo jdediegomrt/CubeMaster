@@ -5,8 +5,4 @@
         android:id="@+id/delete_last_solve"
         android:title="@string/delete_last_solve"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/change_database"
-        android:title="@string/change_puzzle"
-        app:showAsAction="never" />
 </menu>

@@ -14,9 +14,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -83,6 +88,34 @@ public class MainActivity extends AppCompatActivity
 
 //        banner.loadAd(new AdRequest.Builder().build());
         banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
+
+        banner.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if(banner.getVisibility() == View.GONE){
+                    AndroidUtils.SwitchVisibility(banner);
+                    FrameLayout container = findViewById(R.id.container);
+                    ViewGroup.LayoutParams containerParams = container.getLayoutParams();
+                    RelativeLayout.LayoutParams newContainerParams = new RelativeLayout.LayoutParams(containerParams);
+                    newContainerParams.addRule(RelativeLayout.ABOVE, R.id.banner);
+                    container.setLayoutParams(newContainerParams);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                if(banner.getVisibility() == View.VISIBLE){
+                    AndroidUtils.SwitchVisibility(banner);
+                    FrameLayout container = findViewById(R.id.container);
+                    ViewGroup.LayoutParams containerParams = container.getLayoutParams();
+                    RelativeLayout.LayoutParams newContainerParams = new RelativeLayout.LayoutParams(containerParams);
+                    newContainerParams.addRule(RelativeLayout.ABOVE, R.id.menu_layout);
+                    container.setLayoutParams(newContainerParams);
+                }
+            }
+        });
 
         broadcastFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
         broadcastReceiver = new BroadcastReceiver() {

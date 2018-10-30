@@ -1,7 +1,6 @@
 package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -25,7 +23,6 @@ import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineDataSet;
-import com.jaimedediego.cubemaster.view.dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 
 import java.util.ArrayList;
@@ -53,16 +50,6 @@ public class StatsFragment extends Fragment {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             ((MainActivity) getActivity()).refreshView();
             return true;
-        } else if (id == R.id.change_database) {
-            final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
-            dialog.show();
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    ((MainActivity) getActivity()).refreshView();
-                }
-            });
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,7 +66,7 @@ public class StatsFragment extends Fragment {
         TextView worstTime = v.findViewById(R.id.worst_time);
         TextView average = v.findViewById(R.id.average);
         TextView average5 = v.findViewById(R.id.averageof5);
-        TextView average10 = v.findViewById(R.id.averageof10);
+        TextView average12 = v.findViewById(R.id.averageof12);
         TextView timesCount = v.findViewById(R.id.times_count);
 
         CardView chartCard = v.findViewById(R.id.chart_card);
@@ -111,7 +98,7 @@ public class StatsFragment extends Fragment {
         worstTime.setText(StatsMethods.getInstance().getWorstTime(null));
         average.setText(StatsMethods.getInstance().getAverage(null, 0));
         average5.setText(StatsMethods.getInstance().getAverage(null, 5));
-        average10.setText(StatsMethods.getInstance().getAverage(null, 10));
+        average12.setText(StatsMethods.getInstance().getAverage(null, 12));
 
         return v;
     }

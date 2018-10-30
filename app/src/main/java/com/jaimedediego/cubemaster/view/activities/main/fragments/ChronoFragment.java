@@ -71,7 +71,6 @@ public class ChronoFragment extends Fragment {
     private ImageView dotIndicator2;
     private RadioGroup activityMenu;
 
-
     private int helpCounter = 0;
     private boolean resumeOnUp;
     ChronoThread thread = null;
@@ -96,19 +95,6 @@ public class ChronoFragment extends Fragment {
         if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
-            return true;
-        } else if (id == R.id.change_database) {
-            final PuzzleChangeDialog dialog = new PuzzleChangeDialog(getActivity());
-            dialog.show();
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    if (dialog.didSomething()) {
-                        /*TODO: revisar, está fallando plantearse quitar este boton funcionalidad duplicada*/
-//                        scramble();
-                    }
-                }
-            });
             return true;
         }
         return super.onOptionsItemSelected(item);
