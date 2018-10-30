@@ -81,7 +81,7 @@
     <string name="send">enviar</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Cronómetro</string>
-    <string name="scramble_settings">Mezcla de la WCA</string>
+    <string name="scramble_settings">Mezcla WCA</string>
     <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
     <string name="scrambling">Generando mezcla…</string>
