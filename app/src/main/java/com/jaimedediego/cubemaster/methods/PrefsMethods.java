@@ -89,4 +89,13 @@ public class PrefsMethods {
         prefsConfig.editor.putInt("indicator", indicator);
         prefsConfig.editor.apply();
     }
+
+    public int getAverageOfN() {
+        return prefsConfig.prefs.getInt("averageOfN", 0);
+    }
+
+    public void setAverageOfN(int averageOfN) {
+        prefsConfig.editor.putInt("averageOfN", averageOfN);
+        prefsConfig.editor.apply();
+    }
 }

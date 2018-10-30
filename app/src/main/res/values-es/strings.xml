@@ -97,4 +97,5 @@
     <string name="well_done_you_finished_the_tutorial">¡Bien hecho! Has terminado el tutorial</string>
     <string name="press_the_screen">Presiona la pantalla</string>
     <string name="press_the_screen_again_to_resume">Pulsa el botón de guardado o la pantalla para reanudar</string>
+    <string name="max_1000_solves">Máx. 1000</string>
 </resources>

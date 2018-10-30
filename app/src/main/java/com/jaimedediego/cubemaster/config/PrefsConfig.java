@@ -73,5 +73,10 @@ public class PrefsConfig {
             editor.putInt("indicators", 0);
             editor.apply();
         }
+
+        if (!prefs.contains("averageOfN")) {
+            editor.putInt("averageOfN", 0);
+            editor.apply();
+        }
     }
 }

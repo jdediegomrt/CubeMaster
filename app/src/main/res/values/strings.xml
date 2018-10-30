@@ -97,4 +97,5 @@
     <string name="press_the_screen">Press the screen</string>
     <string name="press_the_screen_again_to_resume">Press the save button or the screen again to resume</string>
     <string name="current_average_of_n">Current average of</string>
+    <string name="max_1000_solves">max. 1000</string>
 </resources>

@@ -190,13 +190,19 @@
 
         <com.jaimedediego.cubemaster.view.customViews.FilteredEditText
             android:id="@+id/averageofn_edittext"
-            android:layout_marginLeft="7dp"
-            android:layout_marginStart="7dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
             android:layout_toEndOf="@+id/current_average_of_n"
-            android:layout_toRightOf="@+id/current_average_of_n" />
+            android:layout_toRightOf="@+id/current_average_of_n"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:minWidth="50dp"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/averageofn"

@@ -6,18 +6,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
@@ -67,6 +71,8 @@ public class StatsFragment extends Fragment {
         TextView average = v.findViewById(R.id.average);
         TextView average5 = v.findViewById(R.id.averageof5);
         TextView average12 = v.findViewById(R.id.averageof12);
+        EditText averageNumber = v.findViewById(R.id.averageofn_edittext);
+        TextView averageN = v.findViewById(R.id.averageofn);
         TextView timesCount = v.findViewById(R.id.times_count);
 
         CardView chartCard = v.findViewById(R.id.chart_card);
@@ -99,6 +105,29 @@ public class StatsFragment extends Fragment {
         average.setText(StatsMethods.getInstance().getAverage(null, 0));
         average5.setText(StatsMethods.getInstance().getAverage(null, 5));
         average12.setText(StatsMethods.getInstance().getAverage(null, 12));
+
+        if (PrefsMethods.getInstance().getAverageOfN() != 0) {
+            averageN.setText(StatsMethods.getInstance().getAverage(null, PrefsMethods.getInstance().getAverageOfN()));
+            averageNumber.setText(String.valueOf(PrefsMethods.getInstance().getAverageOfN()));
+        } else {
+            averageN.setText(R.string.threedots);
+            averageNumber.setHint(R.string.max_1000_solves);
+        }
+
+        averageNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent event) {
+                if (!textView.getText().toString().equals("")) {
+                    if (i == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                        PrefsMethods.getInstance().setAverageOfN(Integer.parseInt(textView.getText().toString()));
+                        averageN.setText(StatsMethods.getInstance().getAverage(null, Integer.parseInt(textView.getText().toString())));
+                    }
+                } else {
+                    averageN.setText(R.string.threedots);
+                }
+                return false;
+            }
+        });
 
         return v;
     }
