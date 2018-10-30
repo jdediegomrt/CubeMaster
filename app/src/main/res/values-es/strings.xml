@@ -64,12 +64,12 @@
 
     <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
     <string name="onboarding_sub_text_1">Veamos qué funciones te ofrece</string>
-    <string name="onboarding_main_text_2">Un cronómetro</string>
-    <string name="onboarding_sub_text_2">Esto es a por lo que hemos venido, ¿no?</string>
+    <string name="onboarding_main_text_2">Mezcla oficial de la WCA</string>
+    <string name="onboarding_sub_text_2">Impulsado por TNoodle, ¡Increíble!</string>
     <string name="onboarding_main_text_3">Estadísticas</string>
     <string name="onboarding_sub_text_3">Lleva un registro sobre tus avances y mejoras, ¡olvida el lápiz!</string>
     <string name="onboarding_main_text_4">Clasificación</string>
-    <string name="onboarding_sub_text_4">Selecciona qué quieres cronometrar, ¡no siempre va a ser lo mismo!</string>
+    <string name="onboarding_sub_text_4">Selecciona qué quieres cronometrar. Si no existe… ¡créalo!</string>
     <string name="onboarding_main_text_5">Personalización</string>
     <string name="onboarding_sub_text_5">A tu gusto, es mejor y más fácil</string>
     <string name="onboarding_main_text_6">¡Diviértete!</string>
@@ -81,10 +81,10 @@
     <string name="send">enviar</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Cronómetro</string>
-    <string name="scramble_settings">Scramble</string>
+    <string name="scramble_settings">Mezcla de la WCA</string>
     <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
-    <string name="scrambling">Generando scramble…</string>
+    <string name="scrambling">Generando mezcla…</string>
     <string name="last_solve">Último tiempo: %1$s</string>
     <string name="indicator">Indicador</string>
     <string name="dots">Puntos</string>

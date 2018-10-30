@@ -64,12 +64,12 @@
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
-    <string name="onboarding_main_text_2">A chronometer</string>
-    <string name="onboarding_sub_text_2">This is what we are looking for, no?</string>
+    <string name="onboarding_main_text_2">Official WCA scrambling</string>
+    <string name="onboarding_sub_text_2">Powered by TNoodle, amazing!</string>
     <string name="onboarding_main_text_3">Statistics</string>
     <string name="onboarding_sub_text_3">Keep track of your progress and improvements, forgot the pencil!</string>
     <string name="onboarding_main_text_4">Classification</string>
-    <string name="onboarding_sub_text_4">Choose whatever you want to time, It won\'t always be the same!</string>
+    <string name="onboarding_sub_text_4">Choose whatever you want to time. If it doesn\'t exist, create it!</string>
     <string name="onboarding_main_text_5">Customization</string>
     <string name="onboarding_sub_text_5">If you like it, It\'s better and easier</string>
     <string name="onboarding_main_text_6">Enjoy!</string>
@@ -81,7 +81,7 @@
     <string name="send">send</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Timer</string>
-    <string name="scramble_settings">Scramble</string>
+    <string name="scramble_settings">WCA Scramble</string>
     <string name="scramble_length">Length(60 Max)</string>
     <string name="times_chart_name">Times Chart</string>
     <string name="scrambling">Scrambling…</string>

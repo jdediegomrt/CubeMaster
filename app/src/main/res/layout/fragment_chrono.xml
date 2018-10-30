@@ -244,7 +244,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:minHeight="50dp"
                 android:textAlignment="center"
                 android:textColor="@color/md_white_1000"
                 android:textSize="13sp" />
