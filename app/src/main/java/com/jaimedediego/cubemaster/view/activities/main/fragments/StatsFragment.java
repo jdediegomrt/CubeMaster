@@ -1,8 +1,10 @@
 package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -25,6 +27,7 @@ import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
@@ -111,7 +114,7 @@ public class StatsFragment extends Fragment {
             averageNumber.setText(String.valueOf(PrefsMethods.getInstance().getAverageOfN()));
         } else {
             averageN.setText(R.string.threedots);
-            averageNumber.setHint(R.string.max_1000_solves);
+            averageNumber.setHint(R.string.avg_n_example);
         }
 
         averageNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {

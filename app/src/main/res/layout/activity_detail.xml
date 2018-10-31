@@ -25,38 +25,15 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/abbBarLay">
 
-        <RelativeLayout
-            android:id="@+id/puzzle_name_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_blue_grey_100"
-            android:gravity="center_vertical"
-            android:minHeight="30sp"
-            android:paddingEnd="10sp"
-            android:paddingStart="10sp">
-
-            <TextView
-                android:id="@+id/puzzle_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/puzzle_name_container">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/stats_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <include layout="@layout/layout_common_stats"/>
 
                 <RelativeLayout
                     android:id="@+id/times_detail"
