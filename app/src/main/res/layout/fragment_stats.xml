@@ -15,8 +15,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_stats"/>
-
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/chart_card"
                 android:layout_width="match_parent"
@@ -27,22 +25,32 @@
                 android:layout_marginTop="10dp"
                 card_view:cardCornerRadius="4dp">
 
-                <TextView
-                    android:id="@+id/chart_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="12sp" />
+                    android:layout_height="match_parent">
 
-                <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/chart_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="12sp" />
+
+                    <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@id/chart_name" />
+
+                </RelativeLayout>
 
             </android.support.v7.widget.CardView>
+
+            <include layout="@layout/element_timesdetail_list" />
+
+            <include layout="@layout/layout_stats" />
 
         </LinearLayout>
 

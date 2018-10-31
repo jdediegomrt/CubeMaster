@@ -2,7 +2,9 @@ package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,10 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
@@ -32,6 +38,7 @@ import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
+import com.jaimedediego.cubemaster.view.dialogs.DeletePuzzleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +96,8 @@ public class StatsFragment extends Fragment {
         chartName.setBackgroundColor(Session.getInstance().getDarkColorTheme());
         chartName.setText(R.string.times_chart_name);
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
+        List<Entry> entries = new ArrayList<>();
         if (timesDetail.size() != 0) {
-            List<Entry> entries = new ArrayList<>();
             float i = 0;
             for (Detail data : timesDetail) {
                 i++;
@@ -103,6 +110,58 @@ public class StatsFragment extends Fragment {
             chartCard.setVisibility(View.GONE);
         }
         chart.invalidate();
+
+        final TextView date = v.findViewById(R.id.date);
+        final TextView time = v.findViewById(R.id.time);
+        final TextView scramble = v.findViewById(R.id.scramble);
+        final ImageView image = v.findViewById(R.id.image);
+        final ImageButton button = v.findViewById(R.id.delete_puzzle);
+
+        time.setBackgroundColor(Session.getInstance().getDarkColorTheme());
+        time.setText(R.string.threedots);
+        date.setText(R.string.select_a_time_in_chart);
+        scramble.setVisibility(View.GONE);
+        image.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+
+        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Detail detail = timesDetail.get(entries.indexOf(e));
+                date.setText(detail.getDate());
+                time.setText(detail.getTime());
+                if (detail.getScramble() != null && !detail.getScramble().isEmpty()) {
+                    scramble.setVisibility(View.VISIBLE);
+                    scramble.setText(detail.getScramble());
+                    image.setVisibility(View.VISIBLE);
+                    image.setImageDrawable(new PictureDrawable(detail.getImage()));
+                }
+
+                button.setVisibility(View.VISIBLE);
+                button.setColorFilter(Session.getInstance().getLighterColorTheme());
+                time.setBackgroundColor(Session.getInstance().getDarkColorTheme());
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(getContext(), detail.getNumSolve(), null, null);
+                        dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if(dialog.didSomething()) {
+                                    ((MainActivity) getActivity()).refreshView();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
 
         timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(null)));
         bestTime.setText(StatsMethods.getInstance().getBestTime(null));

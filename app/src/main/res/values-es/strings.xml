@@ -100,4 +100,5 @@
     <string name="press_the_screen_again_to_resume">Pulsa el botón de guardado o la pantalla para reanudar</string>
     <string name="avg_n_example">P.Ej. 100</string>
     <string name="go_to_details">Detalles</string>
+    <string name="select_a_time_in_chart">Selecciona un tiempo en la tabla</string>
 </resources>

@@ -100,4 +100,5 @@
     <string name="current_average_of_n">Current average of</string>
     <string name="avg_n_example">e.g. 100</string>
     <string name="go_to_details">Times detail</string>
+    <string name="select_a_time_in_chart">Select a time in chart!</string>
 </resources>

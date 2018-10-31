@@ -128,7 +128,7 @@ public class DetailActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, timesLayout, v, detail.getNumSolve());
+                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, detail.getNumSolve(), timesLayout, v);
                         dialog.show();
                     }
                 });
