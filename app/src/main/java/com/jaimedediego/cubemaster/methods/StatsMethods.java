@@ -65,7 +65,7 @@ public class StatsMethods {
             times = DatabaseMethods.getInstance().getTimesByName(puzzleName);
         }
         if (!times.isEmpty()) {
-            if (times.size()<num){
+            if (times.size() < num) {
                 return "…";
             } else {
                 int sum = 0;
@@ -133,17 +133,21 @@ public class StatsMethods {
                 formattedTime = String.valueOf(mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
             }
         } else {
-            formattedTime =  String.valueOf(hours) + ':' + String.format("%02d", mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
+            formattedTime = String.valueOf(hours) + ':' + String.format("%02d", mins) + ':' + String.format("%02d", secs) + '.' + String.format("%03d", milli);
         }
 
         switch (mode) {
             case 0:
                 return formattedTime;
             case 1:
-                if(mins!=0){
-                    return formattedTime.substring(0, formattedTime.length()-4);
+                if (hours != 0) {
+                    return formattedTime.substring(0, formattedTime.length() - 4);
+                } else if (mins != 0) {
+                    return mins + ':' + String.format("%02d", secs);
+                } else if (secs != 0) {
+                    return "0:" + String.format("%02d", secs);
                 } else {
-                    return String.valueOf(mins) + ':' + formattedTime.substring(0, formattedTime.length()-4);
+                    return "0:00";
                 }
             default:
                 return null;

@@ -99,9 +99,6 @@ public class StatsFragment extends Fragment {
             CustomLineDataSet dataSet = new CustomLineDataSet(entries, "Times chart"); // add entries to dataset
             LineData lineData = new LineData(dataSet);
             chart.setData(lineData);
-            if (entries.size() > 25) {
-                dataSet.setDrawValues(false);
-            }
         } else {
             chartCard.setVisibility(View.GONE);
         }

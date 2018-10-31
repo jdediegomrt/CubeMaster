@@ -250,6 +250,33 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/indicator"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/indicators"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="10dp"
             android:paddingStart="10dp">
@@ -279,33 +306,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 app:columnCount="6" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="@string/indicator"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
-
-            <Spinner
-                android:id="@+id/indicators"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 

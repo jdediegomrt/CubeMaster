@@ -200,8 +200,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        freezingTime.setOnValueChangedListener(new NumberPicker.
-                OnValueChangeListener() {
+        freezingTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 PrefsMethods.getInstance().setFreezingTime(newVal * 100);
