@@ -17,18 +17,5 @@ public class CustomLineDataSet extends LineDataSet {
         setCircleColor(Session.getInstance().getDarkColorTheme());
         setCircleRadius(2f);
         setDrawValues(false);
-
-        setValueFormatter(new MillisecondsFormatter());
-    }
-}
-
-class MillisecondsFormatter implements IValueFormatter {
-
-    MillisecondsFormatter() {
-    }
-
-    @Override
-    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-        return StatsMethods.getInstance().formatMillis(value);
     }
 }

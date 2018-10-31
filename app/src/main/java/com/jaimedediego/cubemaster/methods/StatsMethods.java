@@ -143,7 +143,7 @@ public class StatsMethods {
                 if (hours != 0) {
                     return formattedTime.substring(0, formattedTime.length() - 4);
                 } else if (mins != 0) {
-                    return mins + ':' + String.format("%02d", secs);
+                    return String.valueOf(mins) + ':' + String.format("%02d", secs);
                 } else if (secs != 0) {
                     return "0:" + String.format("%02d", secs);
                 } else {

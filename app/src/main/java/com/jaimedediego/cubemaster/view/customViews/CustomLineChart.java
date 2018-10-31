@@ -19,6 +19,8 @@ public class CustomLineChart extends LineChart {
 
         getAxisLeft().setDrawLabels(false);
         getAxisLeft().setDrawGridLines(false);
+        getAxisLeft().setAxisMinimum(0);
+        getAxisRight().setAxisMinimum(0);
 
         getXAxis().setDrawLabels(false);
         getXAxis().setDrawGridLines(false);
