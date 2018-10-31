@@ -73,6 +73,12 @@ public class SettingsFragment extends Fragment {
 
         PrefsConfig.getInstance().setContext(v.getContext());
 
+        RelativeLayout timerSettings = v.findViewById(R.id.timer_settings);
+        timerSettings.setBackgroundColor(Session.getInstance().getLightColorTheme());
+
+        RelativeLayout customizationSettings = v.findViewById(R.id.customization_settings);
+        customizationSettings.setBackgroundColor(Session.getInstance().getLightColorTheme());
+
         final Switch beep = v.findViewById(R.id.beep_switch);
         final Switch pause = v.findViewById(R.id.stopwatch_switch);
         final Switch scramble = v.findViewById(R.id.scramble_switch);

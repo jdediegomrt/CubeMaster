@@ -82,6 +82,7 @@
     <string name="send">enviar</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Cronómetro</string>
+    <string name="customization_settings">Personalización</string>
     <string name="scramble_settings">Mezcla WCA</string>
     <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
@@ -98,4 +99,5 @@
     <string name="press_the_screen">Presiona la pantalla</string>
     <string name="press_the_screen_again_to_resume">Pulsa el botón de guardado o la pantalla para reanudar</string>
     <string name="avg_n_example">P.Ej. 100</string>
+    <string name="go_to_details">Detalles</string>
 </resources>

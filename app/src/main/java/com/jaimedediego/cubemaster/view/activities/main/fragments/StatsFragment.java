@@ -1,5 +1,6 @@
 package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -38,6 +39,7 @@ import java.util.List;
 public class StatsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private final int REQUEST_CODE_FOR_REFRESH_STATS = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,9 @@ public class StatsFragment extends Fragment {
         if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             ((MainActivity) getActivity()).refreshView();
+            return true;
+        } else if (id == R.id.go_to_details) {
+            goToDetail();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,5 +163,19 @@ public class StatsFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void goToDetail() {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("puzzleName", DatabaseMethods.getInstance().getCurrentPuzzleName());
+        startActivityForResult(intent, REQUEST_CODE_FOR_REFRESH_STATS);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FOR_REFRESH_STATS && resultCode == Activity.RESULT_OK) {
+            ((MainActivity) getActivity()).refreshView();
+        }
     }
 }

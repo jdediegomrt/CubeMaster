@@ -5,4 +5,8 @@
         android:id="@+id/delete_last_solve"
         android:title="@string/delete_last_solve"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/go_to_details"
+        android:title="@string/go_to_details"
+        app:showAsAction="never" />
 </menu>

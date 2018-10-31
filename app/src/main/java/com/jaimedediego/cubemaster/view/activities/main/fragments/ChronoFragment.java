@@ -1,7 +1,9 @@
 package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.PictureDrawable;
@@ -38,6 +40,8 @@ import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
+import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
@@ -76,6 +80,8 @@ public class ChronoFragment extends Fragment {
     ChronoThread thread = null;
     private boolean holded = false;
 
+    private final int REQUEST_CODE_FOR_REFRESH_CHRONO = 1;
+
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -95,6 +101,9 @@ public class ChronoFragment extends Fragment {
         if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
             lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+            return true;
+        } else if (id == R.id.go_to_details) {
+            goToDetail();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -312,6 +321,20 @@ public class ChronoFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void goToDetail() {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("puzzleName", DatabaseMethods.getInstance().getCurrentPuzzleName());
+        startActivityForResult(intent, REQUEST_CODE_FOR_REFRESH_CHRONO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FOR_REFRESH_CHRONO && resultCode == Activity.RESULT_OK) {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+        }
     }
 
     private void saveTime() {
