@@ -6,7 +6,7 @@
         android:title="@string/delete_last_solve"
         app:showAsAction="never" />
     <item
-        android:id="@+id/change_database"
-        android:title="@string/change_puzzle"
+        android:id="@+id/go_to_details"
+        android:title="@string/go_to_details"
         app:showAsAction="never" />
 </menu>

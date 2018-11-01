@@ -26,7 +26,8 @@
     <string name="worst_time">Peor tiempo</string>
     <string name="average">Media</string>
     <string name="current_average_of_5">Media de 5</string>
-    <string name="current_average_of_10">Media de 10</string>
+    <string name="current_average_of_12">Media de 12</string>
+    <string name="current_average_of_n">Media de</string>
     <string name="change_theme">Tema</string>
     <string name="coloured_timer">Colores en cronómetro</string>
     <string name="minutes_beep">Sonido cada minuto</string>
@@ -54,7 +55,7 @@
     <string name="rate_now">Valorar</string>
     <string name="no_thanks">Nunca</string>
     <string name="got_it">Entendido</string>
-    <string name="info_main_text">¿Quieres saber cómo funciona tu cronómetro?\n</string>
+    <string name="info_main_text">¿Quieres saber cómo funciona tu cronómetro?\n¡Empecemos!</string>
     <string name="info_sub_text">1. Mantén pulsada la pantalla hasta que se ponga \'Verde\'\n\n2. Suelta para comenzar\n\n3. Presiona de nuevo para parar\n\n4. ¡Disfruta!</string>
     <string name="contact_main_text">¿Hay algo que quieras comentarnos?</string>
     <string name="contact_sub_text">¿Nos lo podrías explicar un poco más?</string>
@@ -64,12 +65,12 @@
 
     <string name="onboarding_main_text_1">¡Bienvenido a CubeMaster!</string>
     <string name="onboarding_sub_text_1">Veamos qué funciones te ofrece</string>
-    <string name="onboarding_main_text_2">Un cronómetro</string>
-    <string name="onboarding_sub_text_2">Esto es a por lo que hemos venido, ¿no?</string>
+    <string name="onboarding_main_text_2">Mezcla oficial de la WCA</string>
+    <string name="onboarding_sub_text_2">Impulsado por TNoodle, ¡Increíble!</string>
     <string name="onboarding_main_text_3">Estadísticas</string>
     <string name="onboarding_sub_text_3">Lleva un registro sobre tus avances y mejoras, ¡olvida el lápiz!</string>
     <string name="onboarding_main_text_4">Clasificación</string>
-    <string name="onboarding_sub_text_4">Selecciona qué quieres cronometrar, ¡no siempre va a ser lo mismo!</string>
+    <string name="onboarding_sub_text_4">Selecciona qué quieres cronometrar. Si no existe… ¡créalo!</string>
     <string name="onboarding_main_text_5">Personalización</string>
     <string name="onboarding_sub_text_5">A tu gusto, es mejor y más fácil</string>
     <string name="onboarding_main_text_6">¡Diviértete!</string>
@@ -81,9 +82,24 @@
     <string name="send">enviar</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Cronómetro</string>
-    <string name="scramble_settings">Scramble</string>
+    <string name="customization_settings">Personalización</string>
+    <string name="scramble_settings">Mezcla WCA</string>
     <string name="scramble_length">Tamaño (60 Máx.)</string>
     <string name="times_chart_name">Tabla de tiempos</string>
-    <string name="scrambling">Generando scramble…</string>
+    <string name="scrambling">Generando mezcla…</string>
     <string name="last_solve">Último tiempo: %1$s</string>
+    <string name="indicator">Indicador</string>
+    <string name="dots">Puntos</string>
+    <string name="line">Línea</string>
+    <string name="scape_tutorial">Dejar el tutorial</string>
+    <string name="wait_until_indicator_turns_green">Espera hasta que el indicador se ponga verde</string>
+    <string name="stop_holding">Deja de mantener pulsado</string>
+    <string name="press_to_stop_the_timer">Presiona para parar el cronómetro</string>
+    <string name="well_done_you_finished_the_tutorial">¡Bien hecho! Has terminado el tutorial</string>
+    <string name="press_the_screen">Presiona la pantalla</string>
+    <string name="press_the_screen_again_to_resume">Pulsa el botón de guardado o la pantalla para reanudar</string>
+    <string name="avg_n_example">P.Ej. 100</string>
+    <string name="go_to_details">Detalles</string>
+    <string name="select_a_time_in_chart">Selecciona un tiempo en la tabla</string>
+    <string name="solve_this_puzzle_to_start_seeing_statistics">¡Resuelve el puzzle para empezar a ver estadísticas!</string>
 </resources>

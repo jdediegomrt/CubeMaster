@@ -249,7 +249,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
         public void addNewPuzzle(String newPuzzleName, int position, String previousPuzzle) {
             filteredPuzzles.add(position, newPuzzleName);
             if (filteredPuzzles.size() != puzzles.size()) {
-                puzzles.add(puzzles.size() - 2, newPuzzleName);
+                puzzles.add(puzzles.size() - 1, newPuzzleName);
             }
             if (filterSequence != null && !filterSequence.toString().isEmpty()) {
                 if (newPuzzleName.toLowerCase().contains(filterSequence.toString().toLowerCase())) {
@@ -265,7 +265,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
             } else {
                 notifyItemInserted(position);
                 for (int i = 0; i < filteredPuzzles.size(); i++) {
-                    if (getItem(i).equals(previousPuzzle)) {
+                    if (getItem(i).equals(previousPuzzle) || getItem(i).equals(context.getString(R.string.add_new))) {
                         notifyItemChanged(i);
                     }
                 }

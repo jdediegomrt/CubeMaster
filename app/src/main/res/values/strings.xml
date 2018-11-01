@@ -26,7 +26,7 @@
     <string name="worst_time">Worst time</string>
     <string name="average">Average</string>
     <string name="current_average_of_5">Current average of 5</string>
-    <string name="current_average_of_10">Current average of 10</string>
+    <string name="current_average_of_12">Current average of 12</string>
     <string name="change_theme">Theme</string>
     <string name="coloured_timer">Coloured Timer</string>
     <string name="minutes_beep">Minutes BEEP</string>
@@ -54,7 +54,7 @@
     <string name="rate_now">Rate now</string>
     <string name="no_thanks">Never</string>
     <string name="got_it">Got it!</string>
-    <string name="info_main_text">Want to know how your timer works? Let\'s go!\n</string>
+    <string name="info_main_text">Want to know how your timer works?\nLet\'s go!</string>
     <string name="info_sub_text">1. Hold pressed the screen until the timer turns \'Green\'\n\n2. Release to start it\n\n3. Press again to shut it down\n\n4. Enjoy!</string>
     <string name="contact_main_text">Is there something you want to tell us?</string>
     <string name="contact_sub_text">Could you explain a little more?</string>
@@ -64,12 +64,12 @@
 
     <string name="onboarding_main_text_1">Welcome to CubeMaster!</string>
     <string name="onboarding_sub_text_1">Let\'s take a look at what features it offers to you</string>
-    <string name="onboarding_main_text_2">A chronometer</string>
-    <string name="onboarding_sub_text_2">This is what we are looking for, no?</string>
+    <string name="onboarding_main_text_2">Official WCA scrambling</string>
+    <string name="onboarding_sub_text_2">Powered by TNoodle, amazing!</string>
     <string name="onboarding_main_text_3">Statistics</string>
     <string name="onboarding_sub_text_3">Keep track of your progress and improvements, forgot the pencil!</string>
     <string name="onboarding_main_text_4">Classification</string>
-    <string name="onboarding_sub_text_4">Choose whatever you want to time, It won\'t always be the same!</string>
+    <string name="onboarding_sub_text_4">Choose whatever you want to time. If it doesn\'t exist, create it!</string>
     <string name="onboarding_main_text_5">Customization</string>
     <string name="onboarding_sub_text_5">If you like it, It\'s better and easier</string>
     <string name="onboarding_main_text_6">Enjoy!</string>
@@ -81,9 +81,25 @@
     <string name="send">send</string>
     <string name="default_notification_channel_id">defaultChannelId</string>
     <string name="timer_settings">Timer</string>
-    <string name="scramble_settings">Scramble</string>
+    <string name="customization_settings">Customization</string>
+    <string name="scramble_settings">WCA Scramble</string>
     <string name="scramble_length">Length(60 Max)</string>
     <string name="times_chart_name">Times Chart</string>
     <string name="scrambling">Scrambling…</string>
     <string name="last_solve">Last solve: %1$s</string>
+    <string name="indicator">Indicator</string>
+    <string name="dots">Dots</string>
+    <string name="line">Line</string>
+    <string name="scape_tutorial">Scape tutorial</string>
+    <string name="wait_until_indicator_turns_green">Wait until indicator turns green</string>
+    <string name="stop_holding">Stop holding</string>
+    <string name="press_to_stop_the_timer">Press to stop the timer</string>
+    <string name="well_done_you_finished_the_tutorial">Well done! you finished the tutorial</string>
+    <string name="press_the_screen">Press the screen</string>
+    <string name="press_the_screen_again_to_resume">Press the save button or the screen again to resume</string>
+    <string name="current_average_of_n">Current average of</string>
+    <string name="avg_n_example">e.g. 100</string>
+    <string name="go_to_details">Times detail</string>
+    <string name="select_a_time_in_chart">Select a time in chart!</string>
+    <string name="solve_this_puzzle_to_start_seeing_statistics">Solve this puzzle to start seeing statistics!</string>
 </resources>

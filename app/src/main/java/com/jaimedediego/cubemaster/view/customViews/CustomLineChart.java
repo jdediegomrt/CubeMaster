@@ -15,12 +15,16 @@ public class CustomLineChart extends LineChart {
         super(context, attrs);
         setDoubleTapToZoomEnabled(false);
         setScaleYEnabled(false);
-
         getLegend().setEnabled(false);
+
         getAxisLeft().setDrawLabels(false);
         getAxisLeft().setDrawGridLines(false);
+        getAxisLeft().setAxisMinimum(0);
+        getAxisRight().setAxisMinimum(0);
+
         getXAxis().setDrawLabels(false);
         getXAxis().setDrawGridLines(false);
+        getXAxis().setDrawAxisLine(false);
 
         getAxisRight().setValueFormatter(new IAxisValueFormatter() {
             @Override

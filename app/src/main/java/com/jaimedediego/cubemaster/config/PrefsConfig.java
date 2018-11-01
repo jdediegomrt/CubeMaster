@@ -32,38 +32,50 @@ public class PrefsConfig {
             editor.putBoolean("onboarding", false);
             editor.apply();
         }
+
         if (!prefs.contains("beep")) {
             editor.putBoolean("beep", false);
             editor.apply();
         }
+
         if (!prefs.contains("stopwatch")) {
             editor.putBoolean("stopwatch", false);
             editor.apply();
         }
+
         if (!prefs.contains("freezingTime")) {
             editor.putInt("freezingTime", 500);
             editor.apply();
         }
+
         if (!prefs.contains("user")) {
             DatabaseMethods.getInstance().addUserAndDefaultPuzzles();
             editor.putBoolean("user", true);
             editor.apply();
         }
+
         if (!prefs.contains("colorAccent")) {
             editor.putInt("colorAccent", 0);
             editor.apply();
         }
+
         if (!prefs.contains("ratedOrNever")) {
             editor.putBoolean("ratedOrNever", false);
             editor.apply();
         }
+
         if (!prefs.contains("scramble")) {
-            editor.putBoolean("scramble", false);
+            editor.putBoolean("scramble", true);
             editor.apply();
         }
 
-        if (!prefs.contains("scrambleLength")) {
-            editor.putInt("scrambleLength", 0);
+        if (!prefs.contains("indicators")) {
+            editor.putInt("indicators", 0);
+            editor.apply();
+        }
+
+        if (!prefs.contains("averageOfN")) {
+            editor.putInt("averageOfN", 0);
             editor.apply();
         }
     }

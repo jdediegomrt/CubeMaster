@@ -1,204 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stats_container"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_grey"
     tools:context=".view.activities.main.fragments.StatsFragment">
 
-    <RelativeLayout
-        android:id="@+id/puzzle_name_container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/solve_puzzle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/md_blue_grey_100"
-        android:gravity="center_vertical"
-        android:minHeight="30sp"
-        android:paddingEnd="10sp"
-        android:paddingStart="10sp">
-
-        <TextView
-            android:id="@+id/puzzle_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+        android:layout_centerInParent="true"
+        android:layout_margin="50dp"
+        android:text="@string/solve_this_puzzle_to_start_seeing_statistics"
+        android:textAlignment="center"
+        android:textColor="@color/md_black_1000"
+        android:textSize="17sp" />
 
     <ScrollView
+        android:id="@+id/stats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/puzzle_name_container">
+        android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/stats_layout"
+            android:id="@+id/details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
+            <include layout="@layout/layout_stats" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/number_of_solves"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/times_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
+    </ScrollView>
 
-            </RelativeLayout>
+    <ScrollView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/best_time"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/best_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/worst_time"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/worst_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/average"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_average_of_5"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/averageof5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="50sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_average_of_10"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/averageof10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/chart_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/chart_card"
@@ -210,25 +57,44 @@
                 android:layout_marginTop="10dp"
                 card_view:cardCornerRadius="4dp">
 
-                <TextView
-                    android:id="@+id/chart_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="12sp" />
+                    android:layout_height="match_parent">
 
-                <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/chart_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="12sp" />
+
+                    <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
+                        android:id="@+id/line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@id/chart_name" />
+
+                </RelativeLayout>
 
             </android.support.v7.widget.CardView>
+
+            <include layout="@layout/element_timesdetail_list" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/switch_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/baseline_timeline_white_24"
+        android:visibility="gone" />
 
 </RelativeLayout>

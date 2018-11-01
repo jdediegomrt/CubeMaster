@@ -13,6 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/selected"/>
+
     <RelativeLayout
         android:id="@+id/text"
         android:layout_width="match_parent"
@@ -43,15 +50,6 @@
             android:textSize="15sp" />
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/selected"
-        android:src="@mipmap/alarm"
-        android:tint="@color/md_white_1000" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

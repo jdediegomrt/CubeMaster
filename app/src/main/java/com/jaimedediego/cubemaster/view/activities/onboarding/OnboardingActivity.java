@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.PrefsConfig;
+import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.view.customViews.CustomViewPager;
 
@@ -213,26 +214,31 @@ public class OnboardingActivity extends AppCompatActivity {
             case 1:
                 mainText.setText(R.string.onboarding_main_text_2);
                 subText.setText(R.string.onboarding_sub_text_2);
-                image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.alarm, null));
+                image.setColorFilter(null);
+                image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.tnoodle, null));
                 break;
             case 2:
                 mainText.setText(R.string.onboarding_main_text_3);
                 subText.setText(R.string.onboarding_sub_text_3);
+                image.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_white_1000));
                 image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.assessment, null));
                 break;
             case 3:
                 mainText.setText(R.string.onboarding_main_text_4);
                 subText.setText(R.string.onboarding_sub_text_4);
+                image.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_white_1000));
                 image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.extension, null));
                 break;
             case 4:
                 mainText.setText(R.string.onboarding_main_text_5);
                 subText.setText(R.string.onboarding_sub_text_5);
+                image.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_white_1000));
                 image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.settings, null));
                 break;
             case 5:
                 mainText.setText(R.string.onboarding_main_text_6);
                 subText.setText(R.string.onboarding_sub_text_6);
+                image.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_white_1000));
                 image.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.mipmap.tick, null));
                 break;
             default:

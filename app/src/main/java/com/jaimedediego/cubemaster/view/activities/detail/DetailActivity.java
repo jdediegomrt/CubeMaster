@@ -2,7 +2,6 @@ package com.jaimedediego.cubemaster.view.activities.detail;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.SortBySpinnerAdapter;
@@ -34,13 +32,6 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity {
 
     private LinearLayout timesLayout;
-    TextView bestTime;
-    TextView worstTime;
-    TextView average;
-    TextView average5;
-    TextView average10;
-    TextView timesCount;
-    TextView currentPuzzle;
     Spinner sortMode;
 
     @Override
@@ -58,31 +49,19 @@ public class DetailActivity extends AppCompatActivity {
         final Drawable upArrow = getResources().getDrawable(R.drawable.baseline_arrow_back_white_24);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.detail);
+        getSupportActionBar().setTitle(getCurrentPuzzle());
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
-        RelativeLayout puzzleNameContainer = findViewById(R.id.puzzle_name_container);
-        puzzleNameContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
         RelativeLayout detailContainer = findViewById(R.id.times_detail);
         detailContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
-        timesLayout = findViewById(R.id.times);
-        bestTime = findViewById(R.id.best_time);
-        worstTime = findViewById(R.id.worst_time);
-        average = findViewById(R.id.average);
-        average5 = findViewById(R.id.averageof5);
-        average10 = findViewById(R.id.averageof10);
-        timesCount = findViewById(R.id.times_count);
-        currentPuzzle = findViewById(R.id.puzzle_name);
-        sortMode = findViewById(R.id.sort_mode);
+        timesLayout = findViewById(R.id.details_container);
+        sortMode = findViewById(R.id.details_sort_mode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = timesLayout.getLayoutTransition();
             layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
-
-        currentPuzzle.setText(getCurrentPuzzle());
-        refreshView();
 
         SortBySpinnerAdapter adapter = new SortBySpinnerAdapter(getBaseContext());
         sortMode.setAdapter(adapter);
@@ -143,16 +122,8 @@ public class DetailActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, timesLayout, v, detail.getNumSolve());
+                        final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, detail.getNumSolve(), timesLayout, v);
                         dialog.show();
-                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                if (dialog.didSomething()) {
-                                    refreshView();
-                                }
-                            }
-                        });
                     }
                 });
 
@@ -164,17 +135,15 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_OK);
             finish();
         }
         return true;
     }
 
-    private void refreshView() {
-        timesCount.setText(String.valueOf(StatsMethods.getInstance().countTimes(getCurrentPuzzle())));
-        bestTime.setText(StatsMethods.getInstance().getBestTime(getCurrentPuzzle()));
-        worstTime.setText(StatsMethods.getInstance().getWorstTime(getCurrentPuzzle()));
-        average.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 0));
-        average5.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 5));
-        average10.setText(StatsMethods.getInstance().getAverage(getCurrentPuzzle(), 10));
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

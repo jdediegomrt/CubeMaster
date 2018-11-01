@@ -17,19 +17,21 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/timer_settings"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp">
+            android:layout_height="wrap_content"
+            android:background="@color/md_blue_grey_100"
+            android:gravity="center_vertical"
+            android:minHeight="30sp"
+            android:paddingEnd="10sp"
+            android:paddingStart="10sp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:text="@string/timer_settings"
                 android:textColor="@color/md_black_1000"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -201,7 +203,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:minHeight="50dp"
             android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingStart="10dp">
 
             <TextView
@@ -211,8 +216,7 @@
                 android:gravity="center"
                 android:text="@string/scramble_settings"
                 android:textColor="@color/md_black_1000"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
 
             <Switch
                 android:id="@+id/scramble_switch"
@@ -225,9 +229,31 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/customization_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_blue_grey_100"
+            android:gravity="center_vertical"
+            android:minHeight="30sp"
+            android:paddingEnd="10sp"
+            android:paddingStart="10sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customization_settings"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingStart="10dp">
 
             <TextView
@@ -235,28 +261,50 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/change_theme"
+                android:text="@string/indicator"
                 android:textColor="@color/md_black_1000"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/indicators"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/theme_text"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/change_theme"
+                android:textColor="@color/md_black_1000"
+                android:textSize="15sp" />
 
             <android.support.v7.widget.GridLayout
                 android:id="@+id/color_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:gravity="center"
+                android:layout_toEndOf="@+id/theme_text"
+                android:layout_toRightOf="@+id/theme_text"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 app:columnCount="6" />
 
         </RelativeLayout>
