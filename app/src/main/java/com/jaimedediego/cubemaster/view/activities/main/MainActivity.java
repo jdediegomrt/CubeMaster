@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity
         RadioButton settings = findViewById(R.id.settings);
         RadioButton myPuzzles = findViewById(R.id.mypuzzles);
 
-        AndroidUtils.initLayoutTransitions(findViewById(R.id.content_main));
-
 //        banner.loadAd(new AdRequest.Builder().build());
         banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
 

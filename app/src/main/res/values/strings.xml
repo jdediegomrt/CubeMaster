@@ -101,4 +101,5 @@
     <string name="avg_n_example">e.g. 100</string>
     <string name="go_to_details">Times detail</string>
     <string name="select_a_time_in_chart">Select a time in chart!</string>
+    <string name="solve_this_puzzle_to_start_seeing_statistics">Solve this puzzle to start seeing statistics!</string>
 </resources>

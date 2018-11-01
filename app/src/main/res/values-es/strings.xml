@@ -101,4 +101,5 @@
     <string name="avg_n_example">P.Ej. 100</string>
     <string name="go_to_details">Detalles</string>
     <string name="select_a_time_in_chart">Selecciona un tiempo en la tabla</string>
+    <string name="solve_this_puzzle_to_start_seeing_statistics">¡Resuelve el puzzle para empezar a ver estadísticas!</string>
 </resources>

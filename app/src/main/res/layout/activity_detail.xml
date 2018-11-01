@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".view.activities.detail.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/abbBarLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,59 +21,53 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/abbBarLay">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/details_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/stats_layout"
+            <RelativeLayout
+                android:id="@+id/times_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@color/md_blue_grey_100"
+                android:gravity="center_vertical"
+                android:minHeight="30sp"
+                android:paddingEnd="10sp"
+                android:paddingStart="10sp">
 
-                <RelativeLayout
-                    android:id="@+id/times_detail"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/md_blue_grey_100"
-                    android:gravity="center_vertical"
-                    android:minHeight="30sp"
-                    android:paddingEnd="10sp"
-                    android:paddingStart="10sp">
+                    android:text="@string/times_detail"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/times_detail"
-                        android:textColor="@color/md_black_1000"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <Spinner
-                        android:id="@+id/sort_mode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/times"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/details_sort_mode"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:orientation="vertical" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-        </ScrollView>
+            <LinearLayout
+                android:id="@+id/details_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical" />
 
-    </RelativeLayout>
+        </LinearLayout>
 
-</RelativeLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

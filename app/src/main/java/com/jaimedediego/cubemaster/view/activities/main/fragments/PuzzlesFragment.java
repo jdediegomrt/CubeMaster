@@ -106,7 +106,7 @@ public class PuzzlesFragment extends Fragment {
                                 adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount(), previousPuzzle);
                             }
                         } else {
-                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-2, previousPuzzle);
+                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1, previousPuzzle);
                         }
                     }
                 }

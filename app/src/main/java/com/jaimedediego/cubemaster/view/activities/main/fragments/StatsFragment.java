@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -22,6 +22,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -32,6 +33,7 @@ import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.methods.StatsMethods;
+import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
@@ -81,6 +83,8 @@ public class StatsFragment extends Fragment {
 
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
+        FloatingActionButton switchStats = v.findViewById(R.id.switch_stats);
+
         TextView bestTime = v.findViewById(R.id.best_time);
         TextView worstTime = v.findViewById(R.id.worst_time);
         TextView average = v.findViewById(R.id.average);
@@ -91,8 +95,32 @@ public class StatsFragment extends Fragment {
         TextView timesCount = v.findViewById(R.id.times_count);
 
         CardView chartCard = v.findViewById(R.id.chart_card);
-        CustomLineChart chart = v.findViewById(R.id.chart);
+        CustomLineChart chart = v.findViewById(R.id.line_chart);
         TextView chartName = v.findViewById(R.id.chart_name);
+
+        final TextView date = v.findViewById(R.id.date);
+        final TextView time = v.findViewById(R.id.time);
+        final TextView scramble = v.findViewById(R.id.scramble);
+        final ImageView image = v.findViewById(R.id.image);
+        final ImageButton button = v.findViewById(R.id.delete_puzzle);
+
+        int numSolves = StatsMethods.getInstance().countTimes(null);
+        if (numSolves != 0) {
+            AndroidUtils.SwitchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats) );
+        }
+
+        switchStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AndroidUtils.SwitchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
+                if (v.findViewById(R.id.stats).getVisibility() == View.VISIBLE) {
+                    switchStats.setImageResource(R.drawable.baseline_timeline_white_24);
+                } else {
+                    switchStats.setImageResource(R.drawable.baseline_toc_white_24);
+                }
+            }
+        });
+
         chartName.setBackgroundColor(Session.getInstance().getDarkColorTheme());
         chartName.setText(R.string.times_chart_name);
         final List<Detail> timesDetail = DatabaseMethods.getInstance().getTimesDetail(DatabaseMethods.getInstance().getCurrentPuzzleName(), 1);
@@ -108,14 +136,9 @@ public class StatsFragment extends Fragment {
             chart.setData(lineData);
         } else {
             chartCard.setVisibility(View.GONE);
+            v.findViewById(R.id.detail_element).setVisibility(View.GONE);
         }
         chart.invalidate();
-
-        final TextView date = v.findViewById(R.id.date);
-        final TextView time = v.findViewById(R.id.time);
-        final TextView scramble = v.findViewById(R.id.scramble);
-        final ImageView image = v.findViewById(R.id.image);
-        final ImageButton button = v.findViewById(R.id.delete_puzzle);
 
         time.setBackgroundColor(Session.getInstance().getDarkColorTheme());
         time.setText(R.string.threedots);
@@ -149,7 +172,7 @@ public class StatsFragment extends Fragment {
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
-                                if(dialog.didSomething()) {
+                                if (dialog.didSomething()) {
                                     ((MainActivity) getActivity()).refreshView();
                                 }
                             }
@@ -182,7 +205,7 @@ public class StatsFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent event) {
                 if (!textView.getText().toString().equals("")) {
-                    if (i == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                    if (i == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                         PrefsMethods.getInstance().setAverageOfN(Integer.parseInt(textView.getText().toString()));
                         averageN.setText(StatsMethods.getInstance().getAverage(null, Integer.parseInt(textView.getText().toString())));
                     }
@@ -192,6 +215,7 @@ public class StatsFragment extends Fragment {
                 return false;
             }
         });
+
 
         return v;
     }

@@ -2,13 +2,10 @@ package com.jaimedediego.cubemaster.view.activities.detail;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -24,12 +21,9 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.methods.StatsMethods;
-import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.SortBySpinnerAdapter;
-import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.DeletePuzzleDialog;
 
 import java.util.Collections;
@@ -61,8 +55,8 @@ public class DetailActivity extends AppCompatActivity {
 
         RelativeLayout detailContainer = findViewById(R.id.times_detail);
         detailContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
-        timesLayout = findViewById(R.id.times);
-        sortMode = findViewById(R.id.sort_mode);
+        timesLayout = findViewById(R.id.details_container);
+        sortMode = findViewById(R.id.details_sort_mode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = timesLayout.getLayoutTransition();

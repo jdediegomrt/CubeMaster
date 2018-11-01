@@ -1,16 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stats_container"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_grey"
     tools:context=".view.activities.main.fragments.StatsFragment">
 
+    <TextView
+        android:id="@+id/solve_puzzle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="50dp"
+        android:text="@string/solve_this_puzzle_to_start_seeing_statistics"
+        android:textAlignment="center"
+        android:textColor="@color/md_black_1000"
+        android:textSize="17sp" />
+
     <ScrollView
+        android:id="@+id/stats"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/stats_layout"
+            android:id="@+id/details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_stats" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/chart_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -39,7 +71,7 @@
                         android:textSize="12sp" />
 
                     <com.jaimedediego.cubemaster.view.customViews.CustomLineChart
-                        android:id="@+id/chart"
+                        android:id="@+id/line_chart"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_below="@id/chart_name" />
@@ -50,10 +82,19 @@
 
             <include layout="@layout/element_timesdetail_list" />
 
-            <include layout="@layout/layout_stats" />
-
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/switch_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/baseline_timeline_white_24"
+        android:visibility="gone" />
 
 </RelativeLayout>
