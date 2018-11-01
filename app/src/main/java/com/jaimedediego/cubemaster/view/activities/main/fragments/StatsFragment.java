@@ -158,6 +158,11 @@ public class StatsFragment extends Fragment {
                     scramble.setText(detail.getScramble());
                     image.setVisibility(View.VISIBLE);
                     image.setImageDrawable(new PictureDrawable(detail.getImage()));
+                } else {
+                    scramble.setVisibility(View.GONE);
+                    scramble.setText("");
+                    image.setVisibility(View.GONE);
+                    image.setImageDrawable(null);
                 }
 
                 button.setVisibility(View.VISIBLE);
