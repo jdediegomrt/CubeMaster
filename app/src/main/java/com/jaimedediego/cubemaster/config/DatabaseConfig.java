@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.utils.Constants;
+
 public class DatabaseConfig extends SQLiteOpenHelper {
 
     private String sqlUsers =
@@ -49,10 +52,7 @@ public class DatabaseConfig extends SQLiteOpenHelper {
         Log.e("Database onUpgrade: ", "Updating table from " + oldVersion + " to " + newVersion);
 
         if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE times ADD COLUMN scramble TEXT");
-        }
-        if (oldVersion < 3) {
-            db.execSQL("ALTER TABLE times ADD COLUMN image BLOB");
+            DatabaseMethods.getInstance().upgradeDatabaseToV2();
         }
     }
 }

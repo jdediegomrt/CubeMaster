@@ -35,7 +35,7 @@ public class DatabaseMethods {
 
     private SQLiteDatabase db;
     private DatabaseConfig timesdb;
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 2;
 
     public void setDatabase(Context context) {
         timesdb = new DatabaseConfig(context, "DBSolves", null, DATABASE_VERSION);
@@ -77,6 +77,24 @@ public class DatabaseMethods {
                 for (int i = 0; i < Constants.getInstance().WCA_PUZZLES_LONG_NAMES.size(); i++) {
                     makeUpdate("insert into puzzles (id, user_id, name) values (" + (i + 1) + ", " + newUserId + ", '" + Constants.getInstance().WCA_PUZZLES_LONG_NAMES.get(i) + "')");
                 }
+            } while (c.moveToNext());
+        }
+        c.close();
+        closeDatabase();
+    }
+
+    public void upgradeDatabaseToV2() {
+        makeUpdate("ALTER TABLE times ADD COLUMN scramble TEXT");
+        makeUpdate("ALTER TABLE times ADD COLUMN image BLOB");
+        Cursor c = makeQuery("select max(id) from puzzles where user_id=" + Session.getInstance().getCurrentUserId());
+        if (c.moveToFirst()) {
+            do {
+                if (!existPuzzle("6x6x6"))
+                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (c.getInt(0) + 1) + ", " + Session.getInstance().getCurrentUserId() + ", '6x6x6'");
+                if (!existPuzzle("7x7x7"))
+                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (c.getInt(0) + 2) + ", " + Session.getInstance().getCurrentUserId() + ", '7x7x7')");
+                if (!existPuzzle("Clock"))
+                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (c.getInt(0) + 3) + ", " + Session.getInstance().getCurrentUserId() + ", 'Clock')");
             } while (c.moveToNext());
         }
         c.close();
