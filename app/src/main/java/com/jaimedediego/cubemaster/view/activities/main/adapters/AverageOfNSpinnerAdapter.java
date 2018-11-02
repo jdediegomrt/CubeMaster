@@ -12,28 +12,23 @@ import com.jaimedediego.cubemaster.R;
 import java.util.Arrays;
 import java.util.List;
 
-public class SortBySpinnerAdapter extends BaseAdapter {
+public class AverageOfNSpinnerAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private final List<Integer> modes = Arrays.asList(
-            R.string.recent,
-            R.string.latest,
-            R.string.best_time,
-            R.string.worst_time
-    );
+    private final List<Integer> avgs = Arrays.asList(20, 50, 100, 200, 500, 1000);
 
-    public SortBySpinnerAdapter(Context context) {
+    public AverageOfNSpinnerAdapter(Context context) {
         inflater = (LayoutInflater.from(context));
     }
 
     @Override
     public int getCount() {
-        return modes.size();
+        return avgs.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return i;
+    public Integer getItem(int i) {
+        return avgs.get(i);
     }
 
     @Override
@@ -47,7 +42,7 @@ public class SortBySpinnerAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.element_spinner, viewGroup, false);
         }
         TextView element = view.findViewById(R.id.element);
-        element.setText(modes.get(position));
+        element.setText(String.valueOf(avgs.get(position)));
         return view;
     }
 }

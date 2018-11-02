@@ -42,7 +42,7 @@ public class IndicatorsSpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = inflater.inflate(R.layout.element_sortby_spinner, viewGroup, false);
+            view = inflater.inflate(R.layout.element_spinner, viewGroup, false);
         }
         TextView element = view.findViewById(R.id.element);
         element.setText(indicators.get(position));

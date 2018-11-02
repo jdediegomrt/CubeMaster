@@ -19,9 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -37,6 +38,7 @@ import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
+import com.jaimedediego.cubemaster.view.activities.main.adapters.AverageOfNSpinnerAdapter;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineDataSet;
 import com.jaimedediego.cubemaster.view.dialogs.DeletePuzzleDialog;
@@ -89,7 +91,7 @@ public class StatsFragment extends Fragment {
         TextView average = v.findViewById(R.id.average);
         TextView average5 = v.findViewById(R.id.averageof5);
         TextView average12 = v.findViewById(R.id.averageof12);
-        EditText averageNumber = v.findViewById(R.id.averageofn_edittext);
+        Spinner averageNumber = v.findViewById(R.id.averageofn_spinner);
         TextView averageN = v.findViewById(R.id.averageofn);
         TextView timesCount = v.findViewById(R.id.times_count);
 
@@ -197,29 +199,20 @@ public class StatsFragment extends Fragment {
         average5.setText(StatsMethods.getInstance().getAverage(null, 5));
         average12.setText(StatsMethods.getInstance().getAverage(null, 12));
 
-        if (PrefsMethods.getInstance().getAverageOfN() != 0) {
-            averageN.setText(StatsMethods.getInstance().getAverage(null, PrefsMethods.getInstance().getAverageOfN()));
-            averageNumber.setText(String.valueOf(PrefsMethods.getInstance().getAverageOfN()));
-        } else {
-            averageN.setText(R.string.threedots);
-            averageNumber.setHint(R.string.avg_n_example);
-        }
+        final AverageOfNSpinnerAdapter adapter = new AverageOfNSpinnerAdapter(getContext());
+        averageNumber.setAdapter(adapter);
+        averageNumber.setSelection(PrefsMethods.getInstance().getAverageOfN());
 
-        averageNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        averageNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent event) {
-                if (!textView.getText().toString().equals("")) {
-                    if (i == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                        PrefsMethods.getInstance().setAverageOfN(Integer.parseInt(textView.getText().toString()));
-                        averageN.setText(StatsMethods.getInstance().getAverage(null, Integer.parseInt(textView.getText().toString())));
-                    }
-                } else {
-                    averageN.setText(R.string.threedots);
-                }
-                return false;
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                PrefsMethods.getInstance().setAverageOfN(position);
+                averageN.setText(StatsMethods.getInstance().getAverage(null, adapter.getItem(PrefsMethods.getInstance().getAverageOfN())));
             }
-        });
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {/*Do nothing*/}
+        });
 
         return v;
     }
