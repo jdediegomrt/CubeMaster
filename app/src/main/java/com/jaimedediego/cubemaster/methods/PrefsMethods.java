@@ -98,4 +98,13 @@ public class PrefsMethods {
         prefsConfig.editor.putInt("averageOfN", averageOfN);
         prefsConfig.editor.apply();
     }
+
+    public boolean showChart() {
+        return !prefsConfig.prefs.getBoolean("chart", false);
+    }
+
+    public void showChart(boolean show) {
+        prefsConfig.editor.putBoolean("chart", show);
+        prefsConfig.editor.apply();
+    }
 }

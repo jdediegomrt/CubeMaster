@@ -74,8 +74,8 @@ public class DatabaseMethods {
             do {
                 int newUserId = c.getInt(0) + 1;
                 makeUpdate("insert into users (id, name) values (" + newUserId + ", '" + "Default" + "')");
-                for (int i = 0; i < Constants.getInstance().WCA_PUZZLES_LONG_NAMES.size(); i++) {
-                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (i + 1) + ", " + newUserId + ", '" + Constants.getInstance().WCA_PUZZLES_LONG_NAMES.get(i) + "')");
+                for (int i = 0; i < Constants.getInstance().CUBEMASTER_DEFAULT_PUZZLES_NAMES.size(); i++) {
+                    makeUpdate("insert into puzzles (id, user_id, name) values (" + (i + 1) + ", " + newUserId + ", '" + Constants.getInstance().CUBEMASTER_DEFAULT_PUZZLES_NAMES.get(i) + "')");
                 }
             } while (c.moveToNext());
         }

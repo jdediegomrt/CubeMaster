@@ -108,15 +108,21 @@ public class StatsFragment extends Fragment {
         int numSolves = StatsMethods.getInstance().countTimes(null);
         if (numSolves != 0) {
             AndroidUtils.SwitchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats));
+            if (PrefsMethods.getInstance().showChart()) {
+                AndroidUtils.SwitchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
+                switchStats.setImageResource(R.drawable.baseline_toc_white_24);
+            }
         }
 
         switchStats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AndroidUtils.SwitchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
-                if (v.findViewById(R.id.stats).getVisibility() == View.VISIBLE) {
+                if (PrefsMethods.getInstance().showChart()) {
+                    PrefsMethods.getInstance().showChart(true);
                     switchStats.setImageResource(R.drawable.baseline_timeline_white_24);
                 } else {
+                    PrefsMethods.getInstance().showChart(false);
                     switchStats.setImageResource(R.drawable.baseline_toc_white_24);
                 }
             }

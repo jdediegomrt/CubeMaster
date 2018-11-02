@@ -33,6 +33,11 @@ public class PrefsConfig {
             editor.apply();
         }
 
+        if (!prefs.contains("chart")) {
+            editor.putBoolean("chart", false);
+            editor.apply();
+        }
+
         if (!prefs.contains("beep")) {
             editor.putBoolean("beep", false);
             editor.apply();
