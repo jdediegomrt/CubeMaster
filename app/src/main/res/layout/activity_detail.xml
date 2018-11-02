@@ -26,45 +26,63 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/solve_puzzle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="50dp"
+            android:text="@string/solve_this_puzzle_to_start_seeing_details"
+            android:textAlignment="center"
+            android:textSize="17sp" />
+
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/times_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_blue_grey_100"
-            android:gravity="center_vertical"
-            android:minHeight="30sp"
-            android:paddingEnd="10sp"
-            android:paddingStart="10sp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/times_detail"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/details_sort_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/times_detail"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:id="@+id/details_container"
+            <RelativeLayout
+                android:id="@+id/sort_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical" />
+                android:background="@color/md_blue_grey_100"
+                android:gravity="center_vertical"
+                android:minHeight="30sp"
+                android:paddingEnd="10sp"
+                android:paddingStart="10sp">
 
-        </ScrollView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/times_detail"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/details_sort_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/sort_container"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:id="@+id/details_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical" />
+
+            </ScrollView>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -2,10 +2,12 @@ package com.jaimedediego.cubemaster.view.activities.detail;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
+import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.SortBySpinnerAdapter;
@@ -53,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
 
         DatabaseMethods.getInstance().setDatabase(getBaseContext());
 
-        RelativeLayout detailContainer = findViewById(R.id.times_detail);
+        RelativeLayout detailContainer = findViewById(R.id.sort_container);
         detailContainer.setBackgroundColor(Session.getInstance().getLightColorTheme());
         timesLayout = findViewById(R.id.details_container);
         sortMode = findViewById(R.id.details_sort_mode);
@@ -65,7 +68,11 @@ public class DetailActivity extends AppCompatActivity {
 
         SortBySpinnerAdapter adapter = new SortBySpinnerAdapter(getBaseContext());
         sortMode.setAdapter(adapter);
-        sortMode.setSelection(0);
+
+        if(DatabaseMethods.getInstance().countTimesByName(getCurrentPuzzle()) != 0) {
+            AndroidUtils.SwitchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
+            sortMode.setSelection(0);
+        }
 
         sortMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -124,6 +131,16 @@ public class DetailActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         final DeletePuzzleDialog dialog = new DeletePuzzleDialog(context, detail.getNumSolve(), timesLayout, v);
                         dialog.show();
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if(dialog.didSomething()){
+                                    if(DatabaseMethods.getInstance().countTimesByName(getCurrentPuzzle()) == 0) {
+                                        AndroidUtils.SwitchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
 
