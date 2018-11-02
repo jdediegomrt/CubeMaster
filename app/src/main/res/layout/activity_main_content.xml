@@ -24,44 +24,24 @@
 
         <RadioButton
             android:id="@+id/timer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".25"
-            android:button="@android:color/transparent"
+            style="@style/MenuLayoutRadioButtonStyle"
             android:checked="true"
-            android:drawableTop="@drawable/baseline_alarm_white_24"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" />
+            android:drawableTop="@drawable/baseline_alarm_white_24" />
 
         <RadioButton
             android:id="@+id/stats"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".25"
-            android:button="@android:color/transparent"
-            android:drawableTop="@drawable/baseline_assessment_white_24"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" />
+            style="@style/MenuLayoutRadioButtonStyle"
+            android:drawableTop="@drawable/baseline_assessment_white_24" />
 
         <RadioButton
             android:id="@+id/mypuzzles"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".25"
-            android:button="@android:color/transparent"
-            android:drawableTop="@drawable/baseline_extension_white_24"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" />
+            style="@style/MenuLayoutRadioButtonStyle"
+            android:drawableTop="@drawable/baseline_extension_white_24" />
 
         <RadioButton
             android:id="@+id/settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".25"
-            android:button="@android:color/transparent"
-            android:drawableTop="@drawable/baseline_settings_white_24"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" />
+            style="@style/MenuLayoutRadioButtonStyle"
+            android:drawableTop="@drawable/baseline_settings_white_24" />
 
     </RadioGroup>
 

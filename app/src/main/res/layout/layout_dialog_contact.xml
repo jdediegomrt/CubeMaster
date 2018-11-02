@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contact_main_text"
-            android:textColor="@color/md_black_1000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -55,8 +54,7 @@
             android:hint="@string/contact_sub_text"
             android:inputType="text|textMultiLine|textCapSentences"
             android:maxHeight="67dp"
-            android:text=""
-            android:textSize="15sp" />
+            android:text="" />
 
     </LinearLayout>
 

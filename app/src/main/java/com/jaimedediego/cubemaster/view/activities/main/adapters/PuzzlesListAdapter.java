@@ -232,7 +232,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
                             Session.getInstance().setCurrentScramble("");
                             Session.getInstance().setCurrentScrambleSvg(null);
                             /*TODO: this is not efficient at all, little leak when change puzzles a lot of times*/
-                            if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
+                            if (Constants.getInstance().CUBEMASTER_DEFAULT_PUZZLES_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
                                 ScrambleConfig.getInstance().doScramble();
                             }
                             for (int i = 0; i < filteredPuzzles.size(); i++) {

@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                if(banner.getVisibility() == View.GONE){
+                if (banner.getVisibility() == View.GONE) {
                     AndroidUtils.SwitchVisibility(banner);
                     FrameLayout container = findViewById(R.id.container);
                     ViewGroup.LayoutParams containerParams = container.getLayoutParams();
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                if(banner.getVisibility() == View.VISIBLE){
+                if (banner.getVisibility() == View.VISIBLE) {
                     AndroidUtils.SwitchVisibility(banner);
                     FrameLayout container = findViewById(R.id.container);
                     ViewGroup.LayoutParams containerParams = container.getLayoutParams();

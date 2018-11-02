@@ -2,7 +2,6 @@ package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,9 +40,7 @@ import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
-import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
-import com.jaimedediego.cubemaster.view.dialogs.PuzzleChangeDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.handler.ChronoThread;
 

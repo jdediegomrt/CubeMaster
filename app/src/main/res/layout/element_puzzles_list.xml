@@ -38,7 +38,7 @@
                     android:contentDescription="@string/selected"
                     android:gravity="center"
                     android:minHeight="50sp"
-                    android:src="@drawable/baseline_check_circle_outline_white_24"/>
+                    android:src="@drawable/baseline_check_circle_outline_white_24" />
 
                 <ImageButton
                     android:id="@+id/more_icon"
@@ -51,7 +51,7 @@
                     android:minHeight="50sp"
                     android:paddingLeft="5sp"
                     android:paddingRight="5sp"
-                    android:src="@drawable/baseline_more_vert_white_18"/>
+                    android:src="@drawable/baseline_more_vert_white_18" />
 
             </LinearLayout>
 
@@ -65,9 +65,7 @@
                 android:minHeight="50sp"
                 android:paddingEnd="10sp"
                 android:paddingStart="10sp"
-                android:text="@string/add_new"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/add_new" />
 
         </RelativeLayout>
 

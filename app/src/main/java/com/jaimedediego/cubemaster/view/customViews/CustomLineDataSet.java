@@ -2,9 +2,6 @@ package com.jaimedediego.cubemaster.view.customViews;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.jaimedediego.cubemaster.methods.StatsMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.List;

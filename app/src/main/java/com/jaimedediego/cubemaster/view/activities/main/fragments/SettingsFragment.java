@@ -30,10 +30,8 @@ import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
-import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.ColorsAdapter;
 import com.jaimedediego.cubemaster.view.activities.main.adapters.IndicatorsSpinnerAdapter;
-import com.jaimedediego.cubemaster.view.activities.main.adapters.SortBySpinnerAdapter;
 import com.jaimedediego.cubemaster.view.dialogs.ContactDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 

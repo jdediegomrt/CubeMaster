@@ -19,14 +19,14 @@ public class CustomToast extends Toast {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.toast_custom, null);
         view.setBackgroundColor(Session.getInstance().getLightColorTheme());
-        ((TextView)view.findViewById(R.id.toast_text)).setText(stringResId);
+        ((TextView) view.findViewById(R.id.toast_text)).setText(stringResId);
         this.setView(view);
     }
 
-    public void setTextSize(float size){
+    public void setTextSize(float size) {
         View view = this.getView();
         view.setBackgroundColor(Session.getInstance().getLightColorTheme());
-        ((TextView)view.findViewById(R.id.toast_text)).setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        ((TextView) view.findViewById(R.id.toast_text)).setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CustomToast extends Toast {
         super.show();
     }
 
-    public void showAndHide(int delay){
+    public void showAndHide(int delay) {
         this.show();
         new Handler().postDelayed(new Runnable() {
             @Override

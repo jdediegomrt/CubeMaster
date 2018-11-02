@@ -21,43 +21,41 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:id="@+id/details_layout"
+        <RelativeLayout
+            android:id="@+id/times_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/md_blue_grey_100"
+            android:gravity="center_vertical"
+            android:minHeight="30sp"
+            android:paddingEnd="10sp"
+            android:paddingStart="10sp">
 
-            <RelativeLayout
-                android:id="@+id/times_detail"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/md_blue_grey_100"
-                android:gravity="center_vertical"
-                android:minHeight="30sp"
-                android:paddingEnd="10sp"
-                android:paddingStart="10sp">
+                android:text="@string/times_detail"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/times_detail"
-                    android:textColor="@color/md_black_1000"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+            <Spinner
+                android:id="@+id/details_sort_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
 
-                <Spinner
-                    android:id="@+id/details_sort_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/times_detail"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:id="@+id/details_container"
@@ -66,8 +64,8 @@
                 android:animateLayoutChanges="true"
                 android:orientation="vertical" />
 
-        </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

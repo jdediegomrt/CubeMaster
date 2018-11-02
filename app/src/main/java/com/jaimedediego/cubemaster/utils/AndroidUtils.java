@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 public class AndroidUtils {
 
-    public static void SwitchVisibility(View... views){
+    public static void SwitchVisibility(View... views) {
         for (View view : views) {
             if (view.getVisibility() == View.VISIBLE) {
                 view.setVisibility(View.GONE);
@@ -19,7 +19,7 @@ public class AndroidUtils {
         }
     }
 
-    public static void initLayoutTransitions(View... views){
+    public static void initLayoutTransitions(View... views) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             for (View view : views) {
                 if (view instanceof RelativeLayout) {

@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/selected"/>
+        android:contentDescription="@string/selected" />
 
     <RelativeLayout
         android:id="@+id/text"
@@ -46,8 +46,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/onboarding_sub_text_1"
             android:textAlignment="center"
-            android:textColor="@color/md_white_1000"
-            android:textSize="15sp" />
+            android:textColor="@color/md_white_1000" />
 
     </RelativeLayout>
 
@@ -88,7 +87,6 @@
             android:background="@drawable/background_gotit_button"
             android:text="@string/skip"
             android:textColor="@color/md_white_1000" />
-
 
         <ImageButton
             android:id="@+id/arrow_right"

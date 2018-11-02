@@ -37,7 +37,7 @@ public class Constants {
 
     //Scramble constants
 
-    public final List<String> CUBEMASTER_DEFAULT_PUZZLES_NAMES = Arrays.asList("3x3x3", "2x2x2", "4x4x4", "5x5x5", "6x6x6", "7x7x7", "Megamynx", "Piramynx", "Skewb", "Square-1", "Clock");
+    public final List<String> CUBEMASTER_DEFAULT_PUZZLES_NAMES = Arrays.asList("3x3x3", "2x2x2", "4x4x4", "5x5x5", "6x6x6", "7x7x7", "Megaminx", "Pyraminx", "Skewb", "Square-1", "Clock");
 
     public SortedMap<String, LazyInstantiator<Puzzle>> WCA_PUZZLES;
 
@@ -52,9 +52,7 @@ public class Constants {
 
             WCA_PUZZLES_LONG_NAMES = new ArrayList<>();
             for (int i = 0; i < WCA_PUZZLES_SHORT_NAMES.size(); i++) {
-                if(CUBEMASTER_DEFAULT_PUZZLES_NAMES.contains(PuzzlePlugins.getScramblerLongName(WCA_PUZZLES_SHORT_NAMES.get(i)))) {
-                    WCA_PUZZLES_LONG_NAMES.add(PuzzlePlugins.getScramblerLongName(WCA_PUZZLES_SHORT_NAMES.get(i)));
-                }
+                WCA_PUZZLES_LONG_NAMES.add(PuzzlePlugins.getScramblerLongName(WCA_PUZZLES_SHORT_NAMES.get(i)));
             }
 
         } catch (BadLazyClassDescriptionException e) {

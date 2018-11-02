@@ -15,9 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/number_of_solves"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/number_of_solves" />
 
         <TextView
             android:id="@+id/times_count"
@@ -26,9 +24,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -43,9 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/best_time"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/best_time" />
 
         <TextView
             android:id="@+id/best_time"
@@ -54,9 +48,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -71,9 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/worst_time"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/worst_time" />
 
         <TextView
             android:id="@+id/worst_time"
@@ -82,9 +72,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -99,9 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/average"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/average" />
 
         <TextView
             android:id="@+id/average"
@@ -110,9 +96,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -127,9 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/current_average_of_5"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/current_average_of_5" />
 
         <TextView
             android:id="@+id/averageof5"
@@ -138,9 +120,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -155,9 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/current_average_of_12"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/current_average_of_12" />
 
         <TextView
             android:id="@+id/averageof12"
@@ -166,9 +144,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 
@@ -184,9 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/current_average_of_n"
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="@string/current_average_of_n" />
 
         <com.jaimedediego.cubemaster.view.customViews.FilteredEditText
             android:id="@+id/averageofn_edittext"
@@ -201,8 +175,7 @@
             android:imeOptions="actionDone"
             android:inputType="number"
             android:minWidth="50dp"
-            android:textAlignment="center"
-            android:textSize="15sp" />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/averageofn"
@@ -211,9 +184,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=""
-            android:textColor="@color/md_black_1000"
-            android:textSize="15sp" />
+            android:text="" />
 
     </RelativeLayout>
 

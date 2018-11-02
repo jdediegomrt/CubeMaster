@@ -13,8 +13,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:text="@string/restart"
-        android:textAlignment="center"
-        android:textColor="@color/md_black_1000" />
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="match_parent"

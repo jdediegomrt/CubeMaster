@@ -171,7 +171,7 @@ public class ThemeConfig {
         return menuAnimation;
     }
 
-    public int getColorFromResource(int res){
+    public int getColorFromResource(int res) {
         return ResourcesCompat.getColor(activity.getResources(), res, null);
     }
 }

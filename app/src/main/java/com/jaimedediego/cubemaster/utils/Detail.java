@@ -1,8 +1,6 @@
 package com.jaimedediego.cubemaster.utils;
 
-import android.graphics.Bitmap;
 import android.graphics.Picture;
-import android.graphics.drawable.Drawable;
 
 import com.jaimedediego.cubemaster.methods.StatsMethods;
 

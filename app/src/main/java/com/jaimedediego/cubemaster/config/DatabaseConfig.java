@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.jaimedediego.cubemaster.methods.DatabaseMethods;
-import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.Arrays;

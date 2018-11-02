@@ -54,7 +54,7 @@ public class PuzzlesFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String filter) {
-                if(!filter.isEmpty()){
+                if (!filter.isEmpty()) {
                     isFiltering = true;
                 } else {
                     isFiltering = false;
@@ -65,7 +65,7 @@ public class PuzzlesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String filter) {
-                if(!filter.isEmpty()){
+                if (!filter.isEmpty()) {
                     isFiltering = true;
                     if (getString(R.string.add_new).toLowerCase().contains(filter.toLowerCase())) {
                         filterMatchAddNew = true;
@@ -99,14 +99,14 @@ public class PuzzlesFragment extends Fragment {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialog.didSomething()) {
-                        if(isFiltering){
-                            if(filterMatchAddNew){
-                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1, previousPuzzle);
+                        if (isFiltering) {
+                            if (filterMatchAddNew) {
+                                adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount() - 1, previousPuzzle);
                             } else {
                                 adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount(), previousPuzzle);
                             }
                         } else {
-                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount()-1, previousPuzzle);
+                            adapter.getViewHolder().addNewPuzzle(dialog.newPuzzleName(), adapter.getItemCount() - 1, previousPuzzle);
                         }
                     }
                 }

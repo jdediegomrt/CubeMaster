@@ -30,8 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/timer_settings"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -49,9 +47,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/minutes_beep"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/minutes_beep" />
 
             <Switch
                 android:id="@+id/beep_switch"
@@ -77,9 +73,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/time_holding"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/time_holding" />
 
             <ImageButton
                 android:id="@+id/frtime_info"
@@ -101,9 +95,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/frtime_setter"
                 android:layout_toStartOf="@+id/frtime_setter"
-                android:text="@string/selected"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/selected" />
 
             <NumberPicker
                 android:id="@+id/frtime_setter"
@@ -132,7 +124,6 @@
                 android:layout_height="0dp"
                 android:layout_centerVertical="true"
                 android:text="@string/frtime_info"
-                android:textColor="@color/md_black_1000"
                 android:textSize="13sp" />
 
         </RelativeLayout>
@@ -152,9 +143,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/stopwatch_mode"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/stopwatch_mode" />
 
             <ImageButton
                 android:id="@+id/stopwatch_info"
@@ -195,7 +184,6 @@
                 android:layout_height="0dp"
                 android:layout_centerVertical="true"
                 android:text="@string/stopwatch_info"
-                android:textColor="@color/md_black_1000"
                 android:textSize="13sp" />
 
         </RelativeLayout>
@@ -214,9 +202,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/scramble_settings"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/scramble_settings" />
 
             <Switch
                 android:id="@+id/scramble_switch"
@@ -242,8 +228,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/customization_settings"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -261,9 +245,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/indicator"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/indicator" />
 
             <Spinner
                 android:id="@+id/indicators"
@@ -288,23 +270,21 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/change_theme"
-                android:textColor="@color/md_black_1000"
-                android:textSize="15sp" />
+                android:text="@string/change_theme" />
 
             <android.support.v7.widget.GridLayout
                 android:id="@+id/color_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:layout_toEndOf="@+id/theme_text"
-                android:layout_toRightOf="@+id/theme_text"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/theme_text"
+                android:layout_toRightOf="@+id/theme_text"
                 app:columnCount="6" />
 
         </RelativeLayout>

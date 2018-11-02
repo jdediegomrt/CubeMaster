@@ -22,7 +22,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -37,9 +36,9 @@ import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
+import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineChart;
 import com.jaimedediego.cubemaster.view.customViews.CustomLineDataSet;
-import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 import com.jaimedediego.cubemaster.view.dialogs.DeletePuzzleDialog;
 
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class StatsFragment extends Fragment {
 
         int numSolves = StatsMethods.getInstance().countTimes(null);
         if (numSolves != 0) {
-            AndroidUtils.SwitchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats) );
+            AndroidUtils.SwitchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats));
         }
 
         switchStats.setOnClickListener(new View.OnClickListener() {

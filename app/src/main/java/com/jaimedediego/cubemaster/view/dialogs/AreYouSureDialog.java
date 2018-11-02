@@ -30,7 +30,7 @@ public class AreYouSureDialog extends Dialog {
         final Button cancel = findViewById(R.id.cancel);
 
         currentPuzzle.setText(puzzle);
-        
+
         if (id == R.id.reset) {
             text.setText(R.string.areyousurereset);
         } else {

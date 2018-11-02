@@ -17,8 +17,7 @@
             android:id="@+id/puzzle_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/md_white_1000"
-            android:textSize="15sp" />
+            android:textColor="@color/md_white_1000" />
 
     </RelativeLayout>
 
@@ -30,8 +29,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:textAlignment="center"
-        android:textColor="@color/md_black_1000" />
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="match_parent"

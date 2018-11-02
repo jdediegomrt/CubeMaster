@@ -46,7 +46,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:minHeight="40sp"
-                        android:textColor="@color/md_black_1000"
                         android:textSize="14sp" />
 
                     <ImageButton
@@ -73,7 +72,6 @@
                     android:layout_marginRight="35dp"
                     android:gravity="center"
                     android:paddingBottom="10sp"
-                    android:textColor="@color/md_black_1000"
                     android:textSize="10sp"
                     android:visibility="gone" />
 

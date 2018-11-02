@@ -14,7 +14,6 @@
         android:layout_margin="50dp"
         android:text="@string/solve_this_puzzle_to_start_seeing_statistics"
         android:textAlignment="center"
-        android:textColor="@color/md_black_1000"
         android:textSize="17sp" />
 
     <ScrollView

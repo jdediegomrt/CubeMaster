@@ -12,7 +12,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/info_main_text"
-        android:textColor="@color/md_black_1000"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -21,9 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Press the time"
-        android:textColor="@color/md_black_1000"
-        android:textSize="15sp" />
+        android:text="Press the time" />
 
     <Button
         android:id="@+id/info_close_button"

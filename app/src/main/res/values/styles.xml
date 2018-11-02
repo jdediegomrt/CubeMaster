@@ -4,6 +4,8 @@
         <item name="colorPrimaryDark">@color/md_black_1000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="AppTheme.CustomBarRed" parent="Default">
@@ -99,6 +101,15 @@
     <style name="NumberPickerText">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/md_black_1000</item>
+    </style>
+
+    <style name="MenuLayoutRadioButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">.25</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
     </style>
 
 </resources>

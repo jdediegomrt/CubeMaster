@@ -5,6 +5,4 @@
     android:layout_height="wrap_content"
     android:paddingBottom="2sp"
     android:paddingLeft="10sp"
-    android:paddingTop="2sp"
-    android:textColor="@color/md_black_1000"
-    android:textSize="14sp" />
+    android:paddingTop="2sp" />
