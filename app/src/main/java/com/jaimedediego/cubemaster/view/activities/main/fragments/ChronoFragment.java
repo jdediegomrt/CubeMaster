@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,6 +63,9 @@ public class ChronoFragment extends Fragment {
     private TextView millis;
     private TextView lastSolve;
     private TextView tutorial;
+    private RelativeLayout scramblingQuestion;
+    private Button scramblingQuestionYes;
+    private Button scramblingQuestionLater;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -120,6 +124,10 @@ public class ChronoFragment extends Fragment {
         infoButton = v.findViewById(R.id.info_button);
         tutorial = v.findViewById(R.id.tutorial);
 
+        scramblingQuestion = v.findViewById(R.id.layout_scrambling_question);
+        scramblingQuestionYes = v.findViewById(R.id.accept);
+        scramblingQuestionLater = v.findViewById(R.id.cancel);
+
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
         scrambleImage = v.findViewById(R.id.scramble_image);
@@ -153,7 +161,7 @@ public class ChronoFragment extends Fragment {
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                 Session.getInstance().setCurrentScramble("");
                 Session.getInstance().setCurrentScrambleSvg(null);
                 ScrambleConfig.getInstance().doScramble();
@@ -163,7 +171,7 @@ public class ChronoFragment extends Fragment {
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidUtils.SwitchVisibility(tutorial);
+                AndroidUtils.switchVisibility(tutorial);
                 if (tutorial.getVisibility() == View.VISIBLE) {
                     tutorial.setText(R.string.press_the_screen);
                     infoButton.setColorFilter(Session.getInstance().getLightColorTheme());
@@ -179,7 +187,7 @@ public class ChronoFragment extends Fragment {
             public void onClick(View view) {
                 if (tutorial.getVisibility() == View.VISIBLE) {
                     infoButton.setColorFilter(null);
-                    AndroidUtils.SwitchVisibility(tutorial);
+                    AndroidUtils.switchVisibility(tutorial);
                     new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
                 }
                 colorIndicators(R.color.md_grey_600);
@@ -215,7 +223,7 @@ public class ChronoFragment extends Fragment {
                                 colorIndicators(R.color.md_grey_600);
                                 if (tutorial.getVisibility() == View.VISIBLE) {
                                     infoButton.setColorFilter(null);
-                                    AndroidUtils.SwitchVisibility(tutorial);
+                                    AndroidUtils.switchVisibility(tutorial);
                                     new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
                                 }
                                 thread.finalize(true);
@@ -282,9 +290,33 @@ public class ChronoFragment extends Fragment {
         ScrambleConfig.getInstance().setListener(new OnScrambleCompleted() {
             @Override
             public void onScrambleCompleted() {
-                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-                scrambleText.setText(Session.getInstance().getCurrentScramble());
-                AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                if (PrefsMethods.getInstance().isScrambleEnabled()) {
+                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                    scrambleText.setText(Session.getInstance().getCurrentScramble());
+                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                }
+            }
+        });
+
+        scramblingQuestionYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PrefsMethods.getInstance().setScramble(true);
+                AndroidUtils.switchVisibility(scramblingQuestion);
+                if (Session.getInstance().getCurrentScramble() != null && !Session.getInstance().getCurrentScramble().isEmpty()) {
+                    scrambleText.setText(Session.getInstance().getCurrentScramble());
+                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton);
+                } else {
+                    AndroidUtils.switchVisibility(loadingScramble);
+                }
+            }
+        });
+
+        scramblingQuestionLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AndroidUtils.switchVisibility(scramblingQuestion);
             }
         });
 
@@ -372,21 +404,24 @@ public class ChronoFragment extends Fragment {
     }
 
     private void scramble() {
-        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName()) && PrefsMethods.getInstance().isScrambleEnabled()) {
-            if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
-                if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                    ScrambleConfig.getInstance().doScramble();
+        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+            if (PrefsMethods.getInstance().isScrambleEnabled()) {
+                if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
+                    if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                        AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                        ScrambleConfig.getInstance().doScramble();
+                    } else {
+                        AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                    }
                 } else {
-                    AndroidUtils.SwitchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                    scrambleText.setText(Session.getInstance().getCurrentScramble());
+                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
                 }
             } else {
-                scrambleText.setText(Session.getInstance().getCurrentScramble());
-                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scramblingQuestion);
             }
         } else {
-            AndroidUtils.SwitchVisibility(scrambleLayout);
-            AndroidUtils.SwitchVisibility(scrambleButton);
+            AndroidUtils.switchVisibility(scrambleLayout, scrambleButton);
         }
     }
 

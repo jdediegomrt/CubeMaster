@@ -11,14 +11,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -107,9 +105,9 @@ public class StatsFragment extends Fragment {
 
         int numSolves = StatsMethods.getInstance().countTimes(null);
         if (numSolves != 0) {
-            AndroidUtils.SwitchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats));
+            AndroidUtils.switchVisibility(v.findViewById(R.id.solve_puzzle), switchStats, v.findViewById(R.id.stats));
             if (PrefsMethods.getInstance().showChart()) {
-                AndroidUtils.SwitchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
+                AndroidUtils.switchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
                 switchStats.setImageResource(R.drawable.baseline_toc_white_24);
             }
         }
@@ -117,7 +115,7 @@ public class StatsFragment extends Fragment {
         switchStats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidUtils.SwitchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
+                AndroidUtils.switchVisibility(v.findViewById(R.id.stats), v.findViewById(R.id.chart));
                 if (PrefsMethods.getInstance().showChart()) {
                     PrefsMethods.getInstance().showChart(true);
                     switchStats.setImageResource(R.drawable.baseline_timeline_white_24);

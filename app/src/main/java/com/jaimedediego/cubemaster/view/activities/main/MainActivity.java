@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
             public void onAdLoaded() {
                 super.onAdLoaded();
                 if (banner.getVisibility() == View.GONE) {
-                    AndroidUtils.SwitchVisibility(banner);
+                    AndroidUtils.switchVisibility(banner);
                     FrameLayout container = findViewById(R.id.container);
                     ViewGroup.LayoutParams containerParams = container.getLayoutParams();
                     RelativeLayout.LayoutParams newContainerParams = new RelativeLayout.LayoutParams(containerParams);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
                 if (banner.getVisibility() == View.VISIBLE) {
-                    AndroidUtils.SwitchVisibility(banner);
+                    AndroidUtils.switchVisibility(banner);
                     FrameLayout container = findViewById(R.id.container);
                     ViewGroup.LayoutParams containerParams = container.getLayoutParams();
                     RelativeLayout.LayoutParams newContainerParams = new RelativeLayout.LayoutParams(containerParams);

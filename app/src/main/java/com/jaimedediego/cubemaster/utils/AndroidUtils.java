@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 public class AndroidUtils {
 
-    public static void SwitchVisibility(View... views) {
+    public static void switchVisibility(View... views) {
         for (View view : views) {
             if (view.getVisibility() == View.VISIBLE) {
                 view.setVisibility(View.GONE);

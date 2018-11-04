@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -70,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
         sortMode.setAdapter(adapter);
 
         if(DatabaseMethods.getInstance().countTimesByName(getCurrentPuzzle()) != 0) {
-            AndroidUtils.SwitchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
+            AndroidUtils.switchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
             sortMode.setSelection(0);
         }
 
@@ -136,7 +135,7 @@ public class DetailActivity extends AppCompatActivity {
                             public void onDismiss(DialogInterface dialogInterface) {
                                 if(dialog.didSomething()){
                                     if(DatabaseMethods.getInstance().countTimesByName(getCurrentPuzzle()) == 0) {
-                                        AndroidUtils.SwitchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
+                                        AndroidUtils.switchVisibility(findViewById(R.id.times_detail), findViewById(R.id.solve_puzzle));
                                     }
                                 }
                             }

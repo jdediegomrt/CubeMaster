@@ -70,7 +70,7 @@ public class PrefsConfig {
         }
 
         if (!prefs.contains("scramble")) {
-            editor.putBoolean("scramble", true);
+            editor.putBoolean("scramble", false);
             editor.apply();
         }
 
