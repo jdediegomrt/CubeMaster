@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity
                     newContainerParams.addRule(RelativeLayout.ABOVE, R.id.menu_layout);
                     container.setLayoutParams(newContainerParams);
                 }
+//                banner.loadAd(new AdRequest.Builder().build());
+                banner.loadAd(new AdRequest.Builder().addTestDevice("9291F3AB05D2610244D1D11FF443BCC0").build());
             }
         });
 
