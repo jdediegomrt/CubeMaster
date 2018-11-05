@@ -2,6 +2,7 @@ package com.jaimedediego.cubemaster.view.activities.main.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,6 +42,7 @@ import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
+import com.jaimedediego.cubemaster.view.dialogs.NewFeatureDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.handler.ChronoThread;
 
@@ -63,9 +64,6 @@ public class ChronoFragment extends Fragment {
     private TextView millis;
     private TextView lastSolve;
     private TextView tutorial;
-    private RelativeLayout scramblingQuestion;
-    private Button scramblingQuestionYes;
-    private Button scramblingQuestionLater;
     private RelativeLayout scrambleLayout;
     private TextView scrambleText;
     private SVGImageView scrambleImage;
@@ -124,10 +122,6 @@ public class ChronoFragment extends Fragment {
         infoButton = v.findViewById(R.id.info_button);
         tutorial = v.findViewById(R.id.tutorial);
 
-        scramblingQuestion = v.findViewById(R.id.layout_scrambling_question);
-        scramblingQuestionYes = v.findViewById(R.id.accept);
-        scramblingQuestionLater = v.findViewById(R.id.cancel);
-
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
         scrambleImage = v.findViewById(R.id.scramble_image);
@@ -147,6 +141,20 @@ public class ChronoFragment extends Fragment {
         activityMenu = getActivity().findViewById(R.id.menu_layout);
         saveButton = v.findViewById(R.id.save_button);
         lastSolve = v.findViewById(R.id.last_solve);
+
+        if (PrefsMethods.getInstance().isNotShowedNewFeature()) {
+            NewFeatureDialog newFeatureDialog = new NewFeatureDialog(getContext());
+            newFeatureDialog.show();
+            newFeatureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if (newFeatureDialog.didSomething()) {
+                        AndroidUtils.switchVisibility(scrambleLayout, scrambleText, scrambleImage, loadingScramble);
+                        ScrambleConfig.getInstance().doScramble();
+                    }
+                }
+            });
+        }
 
         tutorial.setBackgroundColor(Session.getInstance().getLightColorTheme());
         AndroidUtils.initLayoutTransitions(chronoScreen, v.findViewById(R.id.buttons));
@@ -298,28 +306,6 @@ public class ChronoFragment extends Fragment {
             }
         });
 
-        scramblingQuestionYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PrefsMethods.getInstance().setScramble(true);
-                AndroidUtils.switchVisibility(scramblingQuestion);
-                if (Session.getInstance().getCurrentScramble() != null && !Session.getInstance().getCurrentScramble().isEmpty()) {
-                    scrambleText.setText(Session.getInstance().getCurrentScramble());
-                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
-                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton);
-                } else {
-                    AndroidUtils.switchVisibility(loadingScramble);
-                }
-            }
-        });
-
-        scramblingQuestionLater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AndroidUtils.switchVisibility(scramblingQuestion);
-            }
-        });
-
         scramble();
 
         return v;
@@ -404,21 +390,17 @@ public class ChronoFragment extends Fragment {
     }
 
     private void scramble() {
-        if (Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-            if (PrefsMethods.getInstance().isScrambleEnabled()) {
-                if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
-                    if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                        AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                        ScrambleConfig.getInstance().doScramble();
-                    } else {
-                        AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
-                    }
+        if (PrefsMethods.getInstance().isScrambleEnabled() && Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+            if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
+                if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
+                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                    ScrambleConfig.getInstance().doScramble();
                 } else {
-                    scrambleText.setText(Session.getInstance().getCurrentScramble());
-                    scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
                 }
             } else {
-                AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scramblingQuestion);
+                scrambleText.setText(Session.getInstance().getCurrentScramble());
+                scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
             }
         } else {
             AndroidUtils.switchVisibility(scrambleLayout, scrambleButton);

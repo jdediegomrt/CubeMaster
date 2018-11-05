@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Session;
 
 import java.util.Arrays;
@@ -79,6 +80,8 @@ public class DatabaseConfig extends SQLiteOpenHelper {
                 } while (c.moveToNext());
             }
             c.close();
+            PrefsMethods.getInstance().showedNewFeature(false);
+            PrefsMethods.getInstance().setScramble(false);
         }
     }
 }

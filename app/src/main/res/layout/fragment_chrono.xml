@@ -236,48 +236,6 @@
             android:layout_marginRight="25dp"
             android:layout_marginTop="25dp">
 
-            <RelativeLayout
-                android:background="@drawable/background_display_window"
-                android:id="@+id/layout_scrambling_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/scrambable_puzzle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:text="@string/this_puzzle_has_official_wca_scrambling_ndo_you_want_to_try_it"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/scrambable_puzzle"
-                    android:orientation="horizontal"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
-
-                    <Button
-                        android:id="@+id/cancel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/later" />
-
-                    <Button
-                        android:id="@+id/accept"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/do_it" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
             <TextView
                 android:id="@+id/scramble_text"
                 android:layout_width="match_parent"

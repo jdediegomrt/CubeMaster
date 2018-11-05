@@ -107,4 +107,13 @@ public class PrefsMethods {
         prefsConfig.editor.putBoolean("chart", show);
         prefsConfig.editor.apply();
     }
+
+    public boolean isNotShowedNewFeature() {
+        return !prefsConfig.prefs.getBoolean("showedNewFeature", false);
+    }
+
+    public void showedNewFeature(boolean showed) {
+        prefsConfig.editor.putBoolean("showedNewFeature", showed);
+        prefsConfig.editor.apply();
+    }
 }

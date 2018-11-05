@@ -104,5 +104,5 @@
     <string name="solve_this_puzzle_to_start_seeing_statistics">¡Resuelve el puzzle para empezar a ver estadísticas!</string>
     <string name="solve_this_puzzle_to_start_seeing_details">¡Resuelve el puzzle para empezar a ver detalles!</string>
     <string name="do_it">¡Probémoslo!</string>
-    <string name="this_puzzle_has_official_wca_scrambling_ndo_you_want_to_try_it">Este puzzle tiene mezcla WCA! Quieres probarlo?</string>
+    <string name="new_feature_wca_scrambling">¿Quieres probar la mezcla WCA? ¡Es una nueva característica en CubeMaster!</string>
 </resources>

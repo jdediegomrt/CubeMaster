@@ -70,7 +70,7 @@ public class PrefsConfig {
         }
 
         if (!prefs.contains("scramble")) {
-            editor.putBoolean("scramble", false);
+            editor.putBoolean("scramble", true);
             editor.apply();
         }
 
@@ -81,6 +81,11 @@ public class PrefsConfig {
 
         if (!prefs.contains("averageOfN")) {
             editor.putInt("averageOfN", 0);
+            editor.apply();
+        }
+
+        if (!prefs.contains("showedNewFeature")) {
+            editor.putBoolean("showedNewFeature", true);
             editor.apply();
         }
     }
