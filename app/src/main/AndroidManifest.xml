@@ -19,8 +19,9 @@
             android:name=".view.activities.main.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -36,6 +37,15 @@
         <activity
             android:name=".view.activities.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
+
+        <!--Example APP_ID-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+            <!--android:value="ca-app-pub-8962656574856623~3014810195"/>-->
 
         <service android:name=".service.MessagingService">
             <intent-filter>
