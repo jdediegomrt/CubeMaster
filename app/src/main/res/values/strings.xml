@@ -11,8 +11,8 @@
     <string name="areyousuredelete">Are you sure you want to delete this puzzle? (This action can\'t be undone)</string>
     <string name="areyousurereset">Are you sure you want to reset this puzzle? You will loose all registered times</string>
     <string name="areyousuredeletepuzzle">Are you sure you want to delete this solve? This action will update all statistics</string>
-    <string name="delete">delete</string>
-    <string name="cancel">@android:string/cancel</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
     <string name="show_detail">Show detail</string>
     <string name="sort_by">Sort by: </string>
     <string name="recent">Recent</string>
