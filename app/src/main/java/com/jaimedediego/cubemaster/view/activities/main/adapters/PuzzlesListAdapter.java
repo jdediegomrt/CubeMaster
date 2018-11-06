@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.config.ScrambleConfig;
+import com.jaimedediego.cubemaster.config.ThemeConfig;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
@@ -102,7 +103,7 @@ public class PuzzlesListAdapter extends RecyclerView.Adapter<PuzzlesListAdapter.
             if (holder.name.getText().toString().isEmpty()) {
                 holder.element.setVisibility(View.GONE);
             } else {
-                holder.name.setTextColor(context.getColor(R.color.md_black_1000));
+                holder.name.setTextColor(ThemeConfig.getInstance().getColorFromResource(R.color.md_black_1000));
                 holder.optionsLayout.setVisibility(View.VISIBLE);
                 holder.element.setVisibility(View.VISIBLE);
             }
