@@ -7,7 +7,7 @@ android {
         applicationId "com.jaimedediego.cubemaster"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 12
+        versionCode 14
         versionName "2.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
