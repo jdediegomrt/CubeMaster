@@ -105,4 +105,5 @@
     <string name="solve_this_puzzle_to_start_seeing_details">Solve this puzzle to start seeing details!</string>
     <string name="do_it">Do it!</string>
     <string name="new_feature_wca_scrambling">Do you want to try the official WCA scrambling? It is a new feature in CubeMaster!</string>
+    <string name="inspection_time_text">Inspection Time</string>
 </resources>

@@ -65,6 +65,9 @@ public class Constants {
     //Time selector constant
     public final String FREEZING_TIME_SELECTOR[] = {"0.0s", "0.1s", "0.2s", "0.3s", "0.4s", "0.5s", "0.6s", "0.7s", "0.8s", "0.9s", "1.0s"};
 
+    //Time selector constant
+    public final String INSPECTION_TIME_SELECTOR[] = {"0", "WCA (15s)", "3s", "5s", "12s", "20s"};
+
     //Toasts timing constants
     public final int TOAST_LONG_DURATION = 1500;
     public final int TOAST_MEDIUM_DURATION = 1000;

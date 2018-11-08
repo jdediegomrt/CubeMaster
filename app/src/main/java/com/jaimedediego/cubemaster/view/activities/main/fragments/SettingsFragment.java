@@ -90,17 +90,24 @@ public class SettingsFragment extends Fragment {
         final ViewGroup.LayoutParams frTimeParams = frTimeInfoText.getLayoutParams();
         final ViewGroup.LayoutParams stopwatchParams = stopwatchInfoText.getLayoutParams();
         final Spinner indicators = v.findViewById(R.id.indicators);
+        final NumberPicker inspectionTime = v.findViewById(R.id.inspection_time_setter);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             LayoutTransition layoutTransition = settingsLayout.getLayoutTransition();
             layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
         }
 
-        freezingTime.setMaxValue(10);
+        freezingTime.setMaxValue(Constants.getInstance().FREEZING_TIME_SELECTOR.length-1);
         freezingTime.setMinValue(0);
         freezingTime.setDisplayedValues(Constants.getInstance().FREEZING_TIME_SELECTOR);
         freezingTime.setWrapSelectorWheel(true);
         freezingTime.setValue(PrefsMethods.getInstance().getFreezingTime() / 100);
+
+        inspectionTime.setMaxValue(Constants.getInstance().INSPECTION_TIME_SELECTOR.length-1);
+        inspectionTime.setMinValue(0);
+        inspectionTime.setDisplayedValues(Constants.getInstance().INSPECTION_TIME_SELECTOR);
+        inspectionTime.setWrapSelectorWheel(true);
+        inspectionTime.setValue(PrefsMethods.getInstance().getInspectionTime());
 
         for (int i = 0; i < ThemeConfig.getInstance().colors().size(); i++) {
             colorGrid.addView(new ColorsAdapter(getActivity()).getView(i, colorGrid));
@@ -202,6 +209,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 PrefsMethods.getInstance().setFreezingTime(newVal * 100);
+            }
+        });
+
+        inspectionTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                PrefsMethods.getInstance().setInspectionTime(newVal);
             }
         });
 

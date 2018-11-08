@@ -88,5 +88,10 @@ public class PrefsConfig {
             editor.putBoolean("showedNewFeature", true);
             editor.apply();
         }
+
+        if (!prefs.contains("inspectionTime")) {
+            editor.putInt("inspectionTime", 0);
+            editor.apply();
+        }
     }
 }

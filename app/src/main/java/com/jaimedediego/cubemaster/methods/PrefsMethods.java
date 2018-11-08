@@ -116,4 +116,13 @@ public class PrefsMethods {
         prefsConfig.editor.putBoolean("showedNewFeature", showed);
         prefsConfig.editor.apply();
     }
+
+    public int getInspectionTime() {
+        return prefsConfig.prefs.getInt("inspectionTime", 0);
+    }
+
+    public void setInspectionTime(int inspectionTime) {
+        prefsConfig.editor.putInt("inspectionTime", inspectionTime);
+        prefsConfig.editor.apply();
+    }
 }
