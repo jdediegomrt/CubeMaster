@@ -40,6 +40,7 @@ import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.Session;
+import com.jaimedediego.cubemaster.utils.StringUtils;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.NewFeatureDialog;
@@ -269,9 +270,10 @@ public class ChronoFragment extends Fragment {
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (inspectionThread != null && inspectionThread.isAlive()) {
-                        inspectionThread.finalize(true);
-                    } else if (chronoThread != null && chronoThread.isAlive()) {
+//                    if (inspectionThread != null && inspectionThread.isAlive()) {
+//                        inspectionThread.finalize(true);
+//                    } else
+                    if (chronoThread != null && chronoThread.isAlive()) {
                         if (chronoThread.isPaused() && resumeOnUp) {
                             chronoThread.setPause(false);
                             tutorial.setText(R.string.press_to_stop_the_timer);
@@ -288,13 +290,13 @@ public class ChronoFragment extends Fragment {
                             infoButton.setEnabled(false);
                             scrambleButton.setVisibility(View.GONE);
                             helpCounter = 0;
-                            if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
-                                inspectionThread = new InspectionThread(secs, millisLayout, timeLayout, plus2, dnf);
-                                inspectionThread.start();
-                            } else {
+//                            if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
+//                                inspectionThread = new InspectionThread(secs, millisLayout, timeLayout, plus2, dnf);
+//                                inspectionThread.start();
+//                            } else {
                                 chronoThread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp, false);
                                 chronoThread.start();
-                            }
+//                            }
                             tutorial.setText(R.string.press_to_stop_the_timer);
                         } else {
                             colorIndicators(R.color.md_grey_600);
@@ -326,12 +328,6 @@ public class ChronoFragment extends Fragment {
         scramble();
 
         return v;
-    }
-
-    private String getDateTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("es", "ES"));
-        Date date = new Date();
-        return format.format(date);
     }
 
     @Override
@@ -406,7 +402,7 @@ public class ChronoFragment extends Fragment {
             scrambleImageByteArray = stream.toByteArray();
         }
 
-        DatabaseMethods.getInstance().saveData(time, getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+        DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
         lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
 
         if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {

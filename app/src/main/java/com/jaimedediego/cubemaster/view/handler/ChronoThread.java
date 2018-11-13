@@ -23,6 +23,7 @@ public class ChronoThread extends Thread {
         finish = false;
         pause = false;
         pauseFlag = false;
+        handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
         if(plus2){
             this.secs = 2;
             handler.setTextSecs("2");
@@ -32,7 +33,6 @@ public class ChronoThread extends Thread {
         }
         this.mins = 0;
         this.hours = 0;
-        handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
         handler.setTextMins("0");
         handler.setTextHours("0");
         this.mp = mp;
