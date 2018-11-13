@@ -106,4 +106,6 @@
     <string name="do_it">¡Probémoslo!</string>
     <string name="new_feature_wca_scrambling">¿Quieres probar la mezcla WCA? ¡Es una nueva característica en CubeMaster!</string>
     <string name="inspection_time_text">Tiempo de inspección</string>
+    <string name="plus2">+2</string>
+    <string name="dnf">DNF</string>
 </resources>

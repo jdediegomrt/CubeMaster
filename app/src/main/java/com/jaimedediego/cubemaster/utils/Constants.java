@@ -67,6 +67,7 @@ public class Constants {
 
     //Time selector constant
     public final String INSPECTION_TIME_SELECTOR[] = {"0", "WCA (15s)", "3s", "5s", "12s", "20s"};
+    public final List<String> INSPECTION_TIME_SECS = Arrays.asList("0", "15", "3", "5", "12", "20");
 
     //Toasts timing constants
     public final int TOAST_LONG_DURATION = 1500;

@@ -46,8 +46,8 @@
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
-                android:layout_toEndOf="@+id/time_layout"
-                android:layout_toRightOf="@+id/time_layout"
+                android:layout_toEndOf="@+id/plus2_dnf_time_layout"
+                android:layout_toRightOf="@+id/plus2_dnf_time_layout"
                 android:contentDescription="@string/selected"
                 android:src="@drawable/circle"
                 android:tint="@color/md_grey_600" />
@@ -58,118 +58,151 @@
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
-                android:layout_toLeftOf="@+id/time_layout"
-                android:layout_toStartOf="@+id/time_layout"
+                android:layout_toStartOf="@+id/plus2_dnf_time_layout"
+                android:layout_toLeftOf="@+id/plus2_dnf_time_layout"
                 android:contentDescription="@string/selected"
                 android:src="@drawable/circle"
                 android:tint="@color/md_grey_600" />
 
-            <LinearLayout
-                android:id="@+id/time_layout"
+            <RelativeLayout
+                android:id="@+id/plus2_dnf_time_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
 
-                <LinearLayout
-                    android:id="@+id/hours_layout"
+                <TextView
+                    android:id="@+id/plus2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:visibility="gone">
+                    android:text="@string/plus2"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="50sp"
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/hours"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/zero"
-                        android:textAlignment="center"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
-
-                    <TextView
-                        android:id="@+id/hours_dots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/twodots"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/mins_layout"
+                <TextView
+                    android:id="@+id/dnf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:visibility="gone">
+                    android:text="@string/dnf"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="50sp"
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/mins"
+                <LinearLayout
+                    android:id="@+id/time_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/hours_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/zero"
-                        android:textAlignment="center"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
+                        android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/mins_dots"
+                        <TextView
+                            android:id="@+id/hours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/zero"
+                            android:textAlignment="center"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+
+                        <TextView
+                            android:id="@+id/hours_dots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/twodots"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/mins_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/twodots"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/mins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/zero"
+                            android:textAlignment="center"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+
+                        <TextView
+                            android:id="@+id/mins_dots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/twodots"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/secs_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/secs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/zero"
+                            android:textAlignment="center"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/millis_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/dot"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="50sp" />
+
+                        <TextView
+                            android:id="@+id/millis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/zero_millis"
+                            android:textAlignment="center"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="42sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/secs_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:id="@+id/secs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/zero"
-                        android:textAlignment="center"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/millis_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/dot"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="50sp" />
-
-                    <TextView
-                        android:id="@+id/millis"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/zero_millis"
-                        android:textAlignment="center"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="42sp" />
-                </LinearLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -205,8 +238,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="50dp"
                 android:layout_marginRight="50dp"
-                android:layout_toLeftOf="@+id/save_button"
                 android:layout_toStartOf="@+id/save_button"
+                android:layout_toLeftOf="@+id/save_button"
                 android:background="@drawable/circle_grey"
                 android:contentDescription="@string/selected"
                 android:src="@drawable/baseline_refresh_white_18" />
@@ -216,8 +249,8 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
                 android:layout_marginStart="50dp"
+                android:layout_marginLeft="50dp"
                 android:layout_toEndOf="@+id/save_button"
                 android:layout_toRightOf="@+id/save_button"
                 android:background="@drawable/circle_grey"
@@ -240,10 +273,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/timer_layout"
-            android:layout_marginBottom="25dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp">
+            android:layout_marginBottom="25dp">
 
             <TextView
                 android:id="@+id/scramble_text"

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 
 public class ChronoThread extends Thread {
@@ -18,15 +19,20 @@ public class ChronoThread extends Thread {
     private ChronoHandler handler;
 
     public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
-                        LinearLayout hoursLayout, MediaPlayer mp) {
+                        LinearLayout hoursLayout, MediaPlayer mp, boolean plus2) {
         finish = false;
         pause = false;
         pauseFlag = false;
-        this.secs = 0;
+        if(plus2){
+            this.secs = 2;
+            handler.setTextSecs("2");
+        } else {
+            this.secs = 0;
+            handler.setTextSecs("0");
+        }
         this.mins = 0;
         this.hours = 0;
         handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
-        handler.setTextSecs("0");
         handler.setTextMins("0");
         handler.setTextHours("0");
         this.mp = mp;

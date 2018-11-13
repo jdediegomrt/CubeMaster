@@ -106,4 +106,6 @@
     <string name="do_it">Do it!</string>
     <string name="new_feature_wca_scrambling">Do you want to try the official WCA scrambling? It is a new feature in CubeMaster!</string>
     <string name="inspection_time_text">Inspection Time</string>
+    <string name="plus2">+2</string>
+    <string name="dnf">DNF</string>
 </resources>

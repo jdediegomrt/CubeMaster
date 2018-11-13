@@ -45,6 +45,7 @@ import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.NewFeatureDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.handler.ChronoThread;
+import com.jaimedediego.cubemaster.view.handler.InspectionThread;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -56,8 +57,12 @@ public class ChronoFragment extends Fragment {
     private MediaPlayer mp;
     private ImageButton infoButton;
     private ImageButton saveButton;
+    private LinearLayout timeLayout;
     private LinearLayout hoursLayout;
     private LinearLayout minsLayout;
+    private LinearLayout millisLayout;
+    private TextView plus2;
+    private TextView dnf;
     private TextView hours;
     private TextView mins;
     private TextView secs;
@@ -76,7 +81,8 @@ public class ChronoFragment extends Fragment {
 
     private int helpCounter = 0;
     private boolean resumeOnUp;
-    ChronoThread thread = null;
+    ChronoThread chronoThread = null;
+    InspectionThread inspectionThread = null;
     private boolean holded = false;
 
     private final int REQUEST_CODE_FOR_REFRESH_CHRONO = 1;
@@ -133,8 +139,12 @@ public class ChronoFragment extends Fragment {
         mins = v.findViewById(R.id.mins);
         secs = v.findViewById(R.id.secs);
         millis = v.findViewById(R.id.millis);
+        plus2 = v.findViewById(R.id.plus2);
+        dnf = v.findViewById(R.id.dnf);
+        timeLayout = v.findViewById(R.id.time_layout);
         hoursLayout = v.findViewById(R.id.hours_layout);
         minsLayout = v.findViewById(R.id.mins_layout);
+        millisLayout = v.findViewById(R.id.millis_layout);
         lineIndicator = v.findViewById(R.id.line_indicator);
         dotIndicator1 = v.findViewById(R.id.dot_indicator_1);
         dotIndicator2 = v.findViewById(R.id.dot_indicator_2);
@@ -199,7 +209,7 @@ public class ChronoFragment extends Fragment {
                     new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
                 }
                 colorIndicators(R.color.md_grey_600);
-                thread.finalize(true);
+                chronoThread.finalize(true);
                 saveButton.setVisibility(View.INVISIBLE);
                 saveTime();
             }
@@ -219,10 +229,10 @@ public class ChronoFragment extends Fragment {
                         colorIndicators(R.color.md_grey_600);
                         new CustomToast(getContext(), R.string.scrambling).showAndHide(Constants.getInstance().TOAST_SHORT_DURATION);
                     } else {
-                        if (thread != null && thread.isAlive()) {
+                        if (chronoThread != null && chronoThread.isAlive()) {
                             if (PrefsMethods.getInstance().isPauseActivated()) {
-                                if (!thread.isPaused()) {
-                                    thread.setPause(true);
+                                if (!chronoThread.isPaused()) {
+                                    chronoThread.setPause(true);
                                     tutorial.setText(R.string.press_the_screen_again_to_resume);
                                     saveButton.setVisibility(View.VISIBLE);
                                     resumeOnUp = false;
@@ -234,7 +244,7 @@ public class ChronoFragment extends Fragment {
                                     AndroidUtils.switchVisibility(tutorial);
                                     new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
                                 }
-                                thread.finalize(true);
+                                chronoThread.finalize(true);
                                 final Handler handleChrono = new Handler();
                                 handleChrono.postDelayed(new Runnable() {
                                     @Override
@@ -259,9 +269,11 @@ public class ChronoFragment extends Fragment {
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (thread != null && thread.isAlive()) {
-                        if (thread.isPaused() && resumeOnUp) {
-                            thread.setPause(false);
+                    if (inspectionThread != null && inspectionThread.isAlive()) {
+                        inspectionThread.finalize(true);
+                    } else if (chronoThread != null && chronoThread.isAlive()) {
+                        if (chronoThread.isPaused() && resumeOnUp) {
+                            chronoThread.setPause(false);
                             tutorial.setText(R.string.press_to_stop_the_timer);
                             saveButton.setVisibility(View.INVISIBLE);
                         } else {
@@ -276,8 +288,13 @@ public class ChronoFragment extends Fragment {
                             infoButton.setEnabled(false);
                             scrambleButton.setVisibility(View.GONE);
                             helpCounter = 0;
-                            thread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp);
-                            thread.start();
+                            if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
+                                inspectionThread = new InspectionThread(secs, millisLayout, timeLayout, plus2, dnf);
+                                inspectionThread.start();
+                            } else {
+                                chronoThread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp, false);
+                                chronoThread.start();
+                            }
                             tutorial.setText(R.string.press_to_stop_the_timer);
                         } else {
                             colorIndicators(R.color.md_grey_600);
@@ -353,16 +370,25 @@ public class ChronoFragment extends Fragment {
     }
 
     private void saveTime() {
+        saveTime(false);
+    }
+
+    private void saveTime(boolean dnf) {
         String time;
-        if (mins.getText().equals("0")) {
-            time = secs.getText().toString() + '.' + millis.getText().toString();
+        if (dnf) {
+            time = getResources().getString(R.string.dnf);
         } else {
-            if (hours.getText().equals("0")) {
-                time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+            if (mins.getText().equals("0")) {
+                time = secs.getText().toString() + '.' + millis.getText().toString();
             } else {
-                time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                if (hours.getText().equals("0")) {
+                    time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                } else {
+                    time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                }
             }
         }
+
         for (int i = 0; i < activityMenu.getChildCount(); i++) {
             activityMenu.getChildAt(i).setEnabled(true);
         }
