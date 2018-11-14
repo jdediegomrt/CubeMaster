@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.PictureDrawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +38,7 @@ import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
+import com.jaimedediego.cubemaster.utils.OnThreadFinished;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.utils.StringUtils;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
@@ -51,13 +51,10 @@ import com.jaimedediego.cubemaster.view.handler.InspectionHandler;
 import com.jaimedediego.cubemaster.view.handler.InspectionThread;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class ChronoFragment extends Fragment {
 
-    private MediaPlayer mp;
+    byte[] scrambleImageByteArray = null;
     private ImageButton infoButton;
     private ImageButton saveButton;
     private LinearLayout timeLayout;
@@ -137,7 +134,6 @@ public class ChronoFragment extends Fragment {
         scrambleButton = v.findViewById(R.id.scramble_button);
         loadingScramble = v.findViewById(R.id.loading_scramble);
 
-        mp = MediaPlayer.create(getActivity(), R.raw.beep);
         hours = v.findViewById(R.id.hours);
         mins = v.findViewById(R.id.mins);
         secs = v.findViewById(R.id.secs);
@@ -223,7 +219,7 @@ public class ChronoFragment extends Fragment {
         }
 
         ChronoHandler chronoHandler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
-//        InspectionHandler inspectionHandler = new InspectionHandler(secs, millisLayout, timeLayout, plus2, dnf);
+        InspectionHandler inspectionHandler = new InspectionHandler(millis, secs, mins, hours, millisLayout, timeLayout, plus2, dnf);
         chronoScreen.setOnTouchListener(new View.OnTouchListener() {
             final Handler handler = new Handler();
 
@@ -243,20 +239,12 @@ public class ChronoFragment extends Fragment {
                                     resumeOnUp = false;
                                 }
                             } else {
-                                colorIndicators(R.color.md_grey_600);
                                 if (tutorial.getVisibility() == View.VISIBLE) {
                                     infoButton.setColorFilter(null);
                                     AndroidUtils.switchVisibility(tutorial);
                                     new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
                                 }
                                 chronoThread.finalize(true);
-                                final Handler handleChrono = new Handler();
-                                handleChrono.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        saveTime();
-                                    }
-                                }, 10);
                             }
                         } else {
                             tutorial.setText(R.string.wait_until_indicator_turns_green);
@@ -274,10 +262,9 @@ public class ChronoFragment extends Fragment {
                     return true;
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    if (inspectionThread != null && inspectionThread.isAlive()) {
-//                        inspectionThread.finalize(true);
-//                    } else
-                    if (chronoThread != null && chronoThread.isAlive()) {
+                    if (inspectionThread != null && inspectionThread.isAlive()) {
+                        inspectionThread.finalize(true);
+                    } else if (chronoThread != null && chronoThread.isAlive()) {
                         if (chronoThread.isPaused() && resumeOnUp) {
                             chronoThread.setPause(false);
                             tutorial.setText(R.string.press_to_stop_the_timer);
@@ -294,13 +281,43 @@ public class ChronoFragment extends Fragment {
                             infoButton.setEnabled(false);
                             scrambleButton.setVisibility(View.GONE);
                             helpCounter = 0;
-//                            if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
-//                                inspectionThread = new InspectionThread(secs, millisLayout, timeLayout, plus2, dnf);
-//                                inspectionThread.start();
-//                            } else {
-                                chronoThread = new ChronoThread(getContext(), chronoHandler,  false);
+                            if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
+                                if ((inspectionThread == null) || (inspectionThread != null && !inspectionThread.isAlive())) {
+                                    inspectionThread = new InspectionThread(getContext(), inspectionHandler, new OnThreadFinished() {
+                                        @Override
+                                        public void OnThreadFinished() {
+                                            if (inspectionThread.isDnf()) {
+                                                saveTime(getResources().getString(R.string.dnf));
+                                            } else if (inspectionThread.isPlus2()) {
+                                                chronoThread = new ChronoThread(getContext(), chronoHandler, true, new OnThreadFinished() {
+                                                    @Override
+                                                    public void OnThreadFinished() {
+                                                        saveTime(chronoHandler.getTime());
+                                                    }
+                                                });
+                                                chronoThread.start();
+                                            } else {
+                                                chronoThread = new ChronoThread(getContext(), chronoHandler, false, new OnThreadFinished() {
+                                                    @Override
+                                                    public void OnThreadFinished() {
+                                                        saveTime(chronoHandler.getTime());
+                                                    }
+                                                });
+                                                chronoThread.start();
+                                            }
+                                        }
+                                    });
+                                }
+                                inspectionThread.start();
+                            } else {
+                                chronoThread = new ChronoThread(getContext(), chronoHandler, false, new OnThreadFinished() {
+                                    @Override
+                                    public void OnThreadFinished() {
+                                        saveTime(chronoHandler.getTime());
+                                    }
+                                });
                                 chronoThread.start();
-//                            }
+                            }
                             tutorial.setText(R.string.press_to_stop_the_timer);
                         } else {
                             colorIndicators(R.color.md_grey_600);
@@ -325,6 +342,13 @@ public class ChronoFragment extends Fragment {
                     scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
                     scrambleText.setText(Session.getInstance().getCurrentScramble());
                     AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, loadingScramble);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
+                    Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bitmap);
+                    canvas.drawPicture(drawable.getPicture());
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    scrambleImageByteArray = stream.toByteArray();
                 }
             }
         });
@@ -361,57 +385,41 @@ public class ChronoFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE_FOR_REFRESH_CHRONO);
     }
 
+    private void saveTime(String time) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        colorIndicators(R.color.md_grey_600);
+                        for (int i = 0; i < activityMenu.getChildCount(); i++) {
+                            activityMenu.getChildAt(i).setEnabled(true);
+                        }
+                        infoButton.setEnabled(true);
+
+                        if (scrambleLayout.getVisibility() == View.VISIBLE) {
+                            scrambleButton.setVisibility(View.VISIBLE);
+                        }
+
+                        if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
+                            final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
+                            dialog.show();
+                        }
+
+                        DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+                        lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+                    }
+                }, 10);
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_FOR_REFRESH_CHRONO && resultCode == Activity.RESULT_OK) {
             lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
-        }
-    }
-
-    private void saveTime() {
-        saveTime(false);
-    }
-
-    private void saveTime(boolean dnf) {
-        String time;
-        if (dnf) {
-            time = getResources().getString(R.string.dnf);
-        } else {
-            if (mins.getText().equals("0")) {
-                time = secs.getText().toString() + '.' + millis.getText().toString();
-            } else {
-                if (hours.getText().equals("0")) {
-                    time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
-                } else {
-                    time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
-                }
-            }
-        }
-
-        for (int i = 0; i < activityMenu.getChildCount(); i++) {
-            activityMenu.getChildAt(i).setEnabled(true);
-        }
-        infoButton.setEnabled(true);
-
-        byte[] scrambleImageByteArray = null;
-        if (scrambleLayout.getVisibility() == View.VISIBLE) {
-            scrambleButton.setVisibility(View.VISIBLE);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
-            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            canvas.drawPicture(drawable.getPicture());
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            scrambleImageByteArray = stream.toByteArray();
-        }
-
-        DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
-        lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
-
-        if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
-            final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
-            dialog.show();
         }
     }
 
@@ -427,9 +435,17 @@ public class ChronoFragment extends Fragment {
             } else {
                 scrambleText.setText(Session.getInstance().getCurrentScramble());
                 scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
+                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                canvas.drawPicture(drawable.getPicture());
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                scrambleImageByteArray = stream.toByteArray();
             }
         } else {
             AndroidUtils.switchVisibility(scrambleLayout, scrambleButton);
+            scrambleImageByteArray = null;
         }
     }
 

@@ -72,7 +72,7 @@ public class ChronoHandler extends Handler {
         this.hoursVisible = hoursVisible;
     }
 
-    String getTime() {
+    public String getTime() {
         String time;
         if (minsText.getText().equals("0")) {
             time = secsText.getText().toString() + '.' + millisText.getText().toString();

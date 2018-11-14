@@ -13,15 +13,24 @@ public class InspectionHandler extends Handler {
     private Boolean plus2Visible;
     private Boolean dnfVisible;
     private Boolean millisVisible;
+    private String millis;
     private String secs;
+    private String mins;
+    private String hours;
+    private TextView millisText;
     private TextView secsText;
+    private TextView minsText;
+    private TextView hoursText;
     private TextView plus2;
     private TextView dnf;
     private LinearLayout millisLayout;
     private LinearLayout timeLayout;
 
-    public InspectionHandler(TextView s, LinearLayout millisLayout, LinearLayout timeLayout, TextView plus2, TextView dnf) {
+    public InspectionHandler(TextView m, TextView s, TextView M, TextView H, LinearLayout millisLayout, LinearLayout timeLayout, TextView plus2, TextView dnf) {
+        millisText = m;
         secsText = s;
+        minsText = M;
+        hoursText = H;
         this.millisLayout = millisLayout;
         this.timeLayout = timeLayout;
         this.plus2 = plus2;
@@ -56,8 +65,20 @@ public class InspectionHandler extends Handler {
         }
     }
 
+    void setTextMillis(String millisStr) {
+        millis = millisStr;
+    }
+
     void setTextSecs(String secsStr) {
         secs = secsStr;
+    }
+
+    void setTextMins(String minsStr) {
+        mins = minsStr;
+    }
+
+    void setTextHours(String hoursStr) {
+        hours = hoursStr;
     }
 
     void millisVisible(Boolean millisVisible) {

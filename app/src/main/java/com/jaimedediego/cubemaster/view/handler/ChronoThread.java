@@ -7,9 +7,12 @@ import android.util.Log;
 import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.utils.OnThreadFinished;
 import com.jaimedediego.cubemaster.utils.StringUtils;
 
 public class ChronoThread extends Thread {
+    private OnThreadFinished listener;
+
     private MediaPlayer mp;
     private int secs;
     private int mins;
@@ -19,7 +22,8 @@ public class ChronoThread extends Thread {
     private boolean pauseFlag;
     private ChronoHandler handler;
 
-    public ChronoThread(Context context, ChronoHandler handler, boolean plus2) {
+    public ChronoThread(Context context, ChronoHandler handler, boolean plus2, OnThreadFinished listener) {
+        this.listener = listener;
         finish = false;
         pause = false;
         pauseFlag = false;
@@ -38,7 +42,7 @@ public class ChronoThread extends Thread {
         this.mp = MediaPlayer.create(context, R.raw.beep);
     }
 
-    public void run() {
+    public synchronized void run() {
         long start = System.currentTimeMillis();
         long millis = 0;
         do {
@@ -92,6 +96,12 @@ public class ChronoThread extends Thread {
             }
             handler.act();
         } while (!finish);
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException ex) {
+            Log.e("Thread", "InterruptedException", ex);
+        }
+        listener.OnThreadFinished();
     }
 
     public void finalize(boolean finish) {
