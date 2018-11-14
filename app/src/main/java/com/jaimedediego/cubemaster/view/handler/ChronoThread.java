@@ -1,12 +1,13 @@
 package com.jaimedediego.cubemaster.view.handler;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
 import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
+import com.jaimedediego.cubemaster.utils.StringUtils;
 
 public class ChronoThread extends Thread {
     private MediaPlayer mp;
@@ -18,13 +19,12 @@ public class ChronoThread extends Thread {
     private boolean pauseFlag;
     private ChronoHandler handler;
 
-    public ChronoThread(TextView millis, TextView secs, TextView mins, TextView hours, LinearLayout minsLayout,
-                        LinearLayout hoursLayout, MediaPlayer mp, boolean plus2) {
+    public ChronoThread(Context context, ChronoHandler handler, boolean plus2) {
         finish = false;
         pause = false;
         pauseFlag = false;
-        handler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
-        if(plus2){
+        this.handler = handler;
+        if (plus2) {
             this.secs = 2;
             handler.setTextSecs("2");
         } else {
@@ -35,7 +35,7 @@ public class ChronoThread extends Thread {
         this.hours = 0;
         handler.setTextMins("0");
         handler.setTextHours("0");
-        this.mp = mp;
+        this.mp = MediaPlayer.create(context, R.raw.beep);
     }
 
     public void run() {

@@ -45,7 +45,9 @@ import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
 import com.jaimedediego.cubemaster.view.dialogs.NewFeatureDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
+import com.jaimedediego.cubemaster.view.handler.ChronoHandler;
 import com.jaimedediego.cubemaster.view.handler.ChronoThread;
+import com.jaimedediego.cubemaster.view.handler.InspectionHandler;
 import com.jaimedediego.cubemaster.view.handler.InspectionThread;
 
 import java.io.ByteArrayOutputStream;
@@ -212,7 +214,7 @@ public class ChronoFragment extends Fragment {
                 colorIndicators(R.color.md_grey_600);
                 chronoThread.finalize(true);
                 saveButton.setVisibility(View.INVISIBLE);
-                saveTime();
+//                saveTime();
             }
         });
 
@@ -220,6 +222,8 @@ public class ChronoFragment extends Fragment {
             infoButton.performClick();
         }
 
+        ChronoHandler chronoHandler = new ChronoHandler(millis, secs, mins, hours, minsLayout, hoursLayout);
+//        InspectionHandler inspectionHandler = new InspectionHandler(secs, millisLayout, timeLayout, plus2, dnf);
         chronoScreen.setOnTouchListener(new View.OnTouchListener() {
             final Handler handler = new Handler();
 
@@ -294,7 +298,7 @@ public class ChronoFragment extends Fragment {
 //                                inspectionThread = new InspectionThread(secs, millisLayout, timeLayout, plus2, dnf);
 //                                inspectionThread.start();
 //                            } else {
-                                chronoThread = new ChronoThread(millis, secs, mins, hours, minsLayout, hoursLayout, mp, false);
+                                chronoThread = new ChronoThread(getContext(), chronoHandler,  false);
                                 chronoThread.start();
 //                            }
                             tutorial.setText(R.string.press_to_stop_the_timer);

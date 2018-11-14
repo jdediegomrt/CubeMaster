@@ -20,10 +20,7 @@ public class InspectionHandler extends Handler {
     private LinearLayout millisLayout;
     private LinearLayout timeLayout;
 
-    InspectionHandler(TextView s,
-                      LinearLayout millisLayout,
-                      LinearLayout timeLayout, TextView plus2, TextView dnf) {
-
+    public InspectionHandler(TextView s, LinearLayout millisLayout, LinearLayout timeLayout, TextView plus2, TextView dnf) {
         secsText = s;
         this.millisLayout = millisLayout;
         this.timeLayout = timeLayout;

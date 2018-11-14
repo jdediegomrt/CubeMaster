@@ -1,24 +1,30 @@
 package com.jaimedediego.cubemaster.view.handler;
 
+import android.content.Context;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.jaimedediego.cubemaster.R;
+import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.Constants;
+import com.jaimedediego.cubemaster.utils.StringUtils;
 
 public class InspectionThread extends Thread {
+    private Context context;
+    private String scramble;
+    private byte[] scrambleImage;
     private int secs;
     private boolean finish;
     private boolean dnf = false;
     private boolean plus2 = false;
     private InspectionHandler handler;
 
-    public InspectionThread(TextView secs,
-                            LinearLayout millisLayout,
-                            LinearLayout timeLayout, TextView plus2, TextView dnf) {
+    public InspectionThread(Context context, InspectionHandler handler, String scramble, byte[] scrambleImage) {
+        this.context = context;
+        this.scramble = scramble;
+        this.scrambleImage = scrambleImage;
         finish = false;
-        handler = new InspectionHandler(secs, millisLayout, timeLayout, plus2, dnf);
+        this.handler = handler;
         String inspection = Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime());
         handler.setTextSecs(inspection);
         handler.millisVisible(false);
@@ -27,7 +33,7 @@ public class InspectionThread extends Thread {
 
     public void run() {
         long start = System.currentTimeMillis();
-        long millis = 0;
+        long millis;
         do {
             try {
                 Thread.sleep(1);
@@ -39,7 +45,7 @@ public class InspectionThread extends Thread {
                 secs--;
                 if (secs > 0) {
                     handler.setTextSecs(String.valueOf(secs));
-                } else if (secs > -2){
+                } else if (secs > -2) {
                     handler.timeVisible(false);
                     handler.plus2Visible(true);
                     plus2 = true;

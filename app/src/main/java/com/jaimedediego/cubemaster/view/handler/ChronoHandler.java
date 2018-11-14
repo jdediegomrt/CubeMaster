@@ -20,7 +20,7 @@ public class ChronoHandler extends Handler {
     private LinearLayout minsLayout;
     private LinearLayout hoursLayout;
 
-    ChronoHandler(TextView m, TextView s, TextView M, TextView H, LinearLayout minsLayout, LinearLayout hoursLayout) {
+    public ChronoHandler(TextView m, TextView s, TextView M, TextView H, LinearLayout minsLayout, LinearLayout hoursLayout) {
         millisText = m;
         secsText = s;
         minsText = M;
@@ -70,6 +70,20 @@ public class ChronoHandler extends Handler {
 
     void hoursVisible(Boolean hoursVisible) {
         this.hoursVisible = hoursVisible;
+    }
+
+    String getTime() {
+        String time;
+        if (minsText.getText().equals("0")) {
+            time = secsText.getText().toString() + '.' + millisText.getText().toString();
+        } else {
+            if (hoursText.getText().equals("0")) {
+                time = minsText.getText().toString() + ':' + secsText.getText().toString() + '.' + millisText.getText().toString();
+            } else {
+                time = hoursText.getText().toString() + ':' + minsText.getText().toString() + ':' + secsText.getText().toString() + '.' + millisText.getText().toString();
+            }
+        }
+        return time;
     }
 
     void act() {
