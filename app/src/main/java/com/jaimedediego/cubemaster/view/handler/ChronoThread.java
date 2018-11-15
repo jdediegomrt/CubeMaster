@@ -97,7 +97,7 @@ public class ChronoThread extends Thread {
             handler.act();
         } while (!finish);
         try {
-            Thread.sleep(1);
+            Thread.sleep(10);
         } catch (InterruptedException ex) {
             Log.e("Thread", "InterruptedException", ex);
         }

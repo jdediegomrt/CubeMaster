@@ -72,20 +72,6 @@ public class ChronoHandler extends Handler {
         this.hoursVisible = hoursVisible;
     }
 
-    public String getTime() {
-        String time;
-        if (minsText.getText().equals("0")) {
-            time = secsText.getText().toString() + '.' + millisText.getText().toString();
-        } else {
-            if (hoursText.getText().equals("0")) {
-                time = minsText.getText().toString() + ':' + secsText.getText().toString() + '.' + millisText.getText().toString();
-            } else {
-                time = hoursText.getText().toString() + ':' + minsText.getText().toString() + ':' + secsText.getText().toString() + '.' + millisText.getText().toString();
-            }
-        }
-        return time;
-    }
-
     void act() {
         super.sendEmptyMessage(0);
     }

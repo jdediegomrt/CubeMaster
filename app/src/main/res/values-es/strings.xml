@@ -108,4 +108,5 @@
     <string name="inspection_time_text">Tiempo de inspección</string>
     <string name="plus2">+2</string>
     <string name="dnf">DNF</string>
+    <string name="press_to_finish_the_inspection">Presiona para dejar la inspección</string>
 </resources>

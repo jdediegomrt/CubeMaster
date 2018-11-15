@@ -202,15 +202,8 @@ public class ChronoFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tutorial.getVisibility() == View.VISIBLE) {
-                    infoButton.setColorFilter(null);
-                    AndroidUtils.switchVisibility(tutorial);
-                    new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
-                }
-                colorIndicators(R.color.md_grey_600);
                 chronoThread.finalize(true);
                 saveButton.setVisibility(View.INVISIBLE);
-//                saveTime();
             }
         });
 
@@ -229,35 +222,30 @@ public class ChronoFragment extends Fragment {
                     if (loadingScramble.getVisibility() == View.VISIBLE) {
                         colorIndicators(R.color.md_grey_600);
                         new CustomToast(getContext(), R.string.scrambling).showAndHide(Constants.getInstance().TOAST_SHORT_DURATION);
-                    } else {
-                        if (chronoThread != null && chronoThread.isAlive()) {
-                            if (PrefsMethods.getInstance().isPauseActivated()) {
-                                if (!chronoThread.isPaused()) {
-                                    chronoThread.setPause(true);
-                                    tutorial.setText(R.string.press_the_screen_again_to_resume);
-                                    saveButton.setVisibility(View.VISIBLE);
-                                    resumeOnUp = false;
-                                }
-                            } else {
-                                if (tutorial.getVisibility() == View.VISIBLE) {
-                                    infoButton.setColorFilter(null);
-                                    AndroidUtils.switchVisibility(tutorial);
-                                    new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
-                                }
-                                chronoThread.finalize(true);
+                    } else if (chronoThread != null && chronoThread.isAlive()) {
+                        if (PrefsMethods.getInstance().isPauseActivated()) {
+                            if (!chronoThread.isPaused()) {
+                                chronoThread.setPause(true);
+                                tutorial.setText(R.string.press_the_screen_again_to_resume);
+                                saveButton.setVisibility(View.VISIBLE);
+                                resumeOnUp = false;
                             }
                         } else {
-                            tutorial.setText(R.string.wait_until_indicator_turns_green);
-                            colorIndicators(R.color.md_red_500);
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    holded = true;
-                                    colorIndicators(R.color.md_green_500);
-                                    tutorial.setText(R.string.stop_holding);
-                                }
-                            }, PrefsMethods.getInstance().getFreezingTime());
+                            chronoThread.finalize(true);
                         }
+                    } else if (inspectionThread != null && inspectionThread.isAlive()) {
+                        tutorial.setText(R.string.stop_holding);
+                    } else {
+                        tutorial.setText(R.string.wait_until_indicator_turns_green);
+                        colorIndicators(R.color.md_red_500);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                holded = true;
+                                colorIndicators(R.color.md_green_500);
+                                tutorial.setText(R.string.stop_holding);
+                            }
+                        }, PrefsMethods.getInstance().getFreezingTime());
                     }
                     return true;
                 }
@@ -287,38 +275,51 @@ public class ChronoFragment extends Fragment {
                                         @Override
                                         public void OnThreadFinished() {
                                             if (inspectionThread.isDnf()) {
-                                                saveTime(getResources().getString(R.string.dnf));
+                                                saveTime(true);
                                             } else if (inspectionThread.isPlus2()) {
                                                 chronoThread = new ChronoThread(getContext(), chronoHandler, true, new OnThreadFinished() {
                                                     @Override
                                                     public void OnThreadFinished() {
-                                                        saveTime(chronoHandler.getTime());
+                                                        saveTime();
                                                     }
                                                 });
                                                 chronoThread.start();
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        tutorial.setText(R.string.press_to_stop_the_timer);
+                                                    }
+                                                });
                                             } else {
                                                 chronoThread = new ChronoThread(getContext(), chronoHandler, false, new OnThreadFinished() {
                                                     @Override
                                                     public void OnThreadFinished() {
-                                                        saveTime(chronoHandler.getTime());
+                                                        saveTime();
                                                     }
                                                 });
                                                 chronoThread.start();
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        tutorial.setText(R.string.press_to_stop_the_timer);
+                                                    }
+                                                });
                                             }
                                         }
                                     });
                                 }
                                 inspectionThread.start();
+                                tutorial.setText(R.string.press_to_finish_the_inspection);
                             } else {
                                 chronoThread = new ChronoThread(getContext(), chronoHandler, false, new OnThreadFinished() {
                                     @Override
                                     public void OnThreadFinished() {
-                                        saveTime(chronoHandler.getTime());
+                                        saveTime();
                                     }
                                 });
                                 chronoThread.start();
+                                tutorial.setText(R.string.press_to_stop_the_timer);
                             }
-                            tutorial.setText(R.string.press_to_stop_the_timer);
                         } else {
                             colorIndicators(R.color.md_grey_600);
                             tutorial.setText(R.string.press_the_screen);
@@ -385,32 +386,53 @@ public class ChronoFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE_FOR_REFRESH_CHRONO);
     }
 
-    private void saveTime(String time) {
+    private void saveTime() {
+        saveTime(false);
+    }
+
+    private void saveTime(boolean dnf) {
+        holded = false;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        colorIndicators(R.color.md_grey_600);
-                        for (int i = 0; i < activityMenu.getChildCount(); i++) {
-                            activityMenu.getChildAt(i).setEnabled(true);
+                String time;
+                if (dnf) {
+                    time = getResources().getString(R.string.dnf);
+                } else {
+                    if (mins.getText().equals("0")) {
+                        time = secs.getText().toString() + '.' + millis.getText().toString();
+                    } else {
+                        if (hours.getText().equals("0")) {
+                            time = mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
+                        } else {
+                            time = hours.getText().toString() + ':' + mins.getText().toString() + ':' + secs.getText().toString() + '.' + millis.getText().toString();
                         }
-                        infoButton.setEnabled(true);
-
-                        if (scrambleLayout.getVisibility() == View.VISIBLE) {
-                            scrambleButton.setVisibility(View.VISIBLE);
-                        }
-
-                        if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
-                            final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
-                            dialog.show();
-                        }
-
-                        DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
-                        lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
                     }
-                }, 10);
+                }
+
+                DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+                lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+
+                if (tutorial.getVisibility() == View.VISIBLE) {
+                    infoButton.setColorFilter(null);
+                    AndroidUtils.switchVisibility(tutorial);
+                    new CustomToast(getContext(), R.string.well_done_you_finished_the_tutorial).showAndHide(Constants.getInstance().TOAST_LONG_DURATION);
+                }
+
+                colorIndicators(R.color.md_grey_600);
+                for (int i = 0; i < activityMenu.getChildCount(); i++) {
+                    activityMenu.getChildAt(i).setEnabled(true);
+                }
+                infoButton.setEnabled(true);
+
+                if (scrambleLayout.getVisibility() == View.VISIBLE) {
+                    scrambleButton.setVisibility(View.VISIBLE);
+                }
+
+                if (!PrefsMethods.getInstance().isRatedOrNever() && DatabaseMethods.getInstance().countAllTimes() % 50 == 0) {
+                    final RateDialog dialog = new RateDialog(getActivity(), DatabaseMethods.getInstance().countAllTimes(), false);
+                    dialog.show();
+                }
             }
         });
     }
