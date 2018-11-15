@@ -123,7 +123,7 @@ public class ChronoFragment extends Fragment {
         PrefsConfig.getInstance().setContext(v.getContext());
         DatabaseMethods.getInstance().setDatabase(getActivity());
 
-        final RelativeLayout chronoScreen = v.findViewById(R.id.chrono_layout);
+        final RelativeLayout chronoScreen = v.findViewById(R.id.screen);
 
         infoButton = v.findViewById(R.id.info_button);
         tutorial = v.findViewById(R.id.tutorial);
