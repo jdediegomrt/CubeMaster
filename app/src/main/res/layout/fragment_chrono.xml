@@ -268,9 +268,9 @@
                 android:id="@+id/info_button"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
                 android:background="@drawable/circle_grey"
                 android:contentDescription="@string/selected"
@@ -285,24 +285,31 @@
             android:layout_marginBottom="18dp"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/scramble_text"
+            <RelativeLayout
+                android:id="@+id/scramble_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/md_white_1000"
-                android:textSize="13sp" />
+                android:layout_height="match_parent">
 
-            <com.caverock.androidsvg.SVGImageView
-                android:id="@+id/scramble_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="25dp"
-                android:gravity="center"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/scramble_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="13sp" />
+
+                <com.caverock.androidsvg.SVGImageView
+                    android:id="@+id/scramble_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="25dp"
+                    android:gravity="center"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <ProgressBar
                 android:id="@+id/loading_scramble"

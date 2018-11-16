@@ -75,6 +75,7 @@ public class ChronoFragment extends Fragment {
     private SVGImageView scrambleImage;
     private ImageButton scrambleButton;
     private ImageButton scrambleSwitch;
+    private RelativeLayout scrambleContainer;
     private ProgressBar loadingScramble;
     private ImageView lineIndicator;
     private ImageView dotIndicator1;
@@ -135,6 +136,7 @@ public class ChronoFragment extends Fragment {
         scrambleImage = v.findViewById(R.id.scramble_image);
         scrambleButton = v.findViewById(R.id.scramble_button);
         scrambleSwitch = v.findViewById(R.id.scramble_switch);
+        scrambleContainer = v.findViewById(R.id.scramble_container);
         loadingScramble = v.findViewById(R.id.loading_scramble);
 
         hours = v.findViewById(R.id.hours);
@@ -181,24 +183,24 @@ public class ChronoFragment extends Fragment {
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scrambleSwitch, loadingScramble);
+                AndroidUtils.switchVisibility(scrambleContainer, scrambleButton, scrambleSwitch, loadingScramble);
                 Session.getInstance().setCurrentScramble("");
                 Session.getInstance().setCurrentScrambleSvg(null);
                 ScrambleConfig.getInstance().doScramble();
             }
         });
 
-//        scrambleSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(scrambleSwitch.getDrawable().getConstantState().equals(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_text_fields_white_18, null).getConstantState())) {
-//                    scrambleSwitch.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_grid_on_white_18, null));
-//                } else {
-//                    scrambleSwitch.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_text_fields_white_18, null));
-//                }
-//                AndroidUtils.switchVisibility(scrambleText, scrambleImage);
-//            }
-//        });
+        scrambleSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (scrambleSwitch.getDrawable().getConstantState().equals(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_text_fields_white_18, null).getConstantState())) {
+                    scrambleSwitch.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_grid_on_white_18, null));
+                } else {
+                    scrambleSwitch.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_text_fields_white_18, null));
+                }
+                AndroidUtils.switchVisibility(scrambleText, scrambleImage);
+            }
+        });
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -358,7 +360,7 @@ public class ChronoFragment extends Fragment {
                 if (PrefsMethods.getInstance().isScrambleEnabled()) {
                     scrambleImage.setSVG(Session.getInstance().getCurrentScrambleSvg());
                     scrambleText.setText(Session.getInstance().getCurrentScramble());
-                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scrambleSwitch, loadingScramble);
+                    AndroidUtils.switchVisibility(scrambleContainer, scrambleButton, scrambleSwitch, loadingScramble);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     PictureDrawable drawable = (PictureDrawable) scrambleImage.getDrawable();
                     Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -466,10 +468,10 @@ public class ChronoFragment extends Fragment {
         if (PrefsMethods.getInstance().isScrambleEnabled() && Constants.getInstance().WCA_PUZZLES_LONG_NAMES.contains(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
             if ((Session.getInstance().getCurrentScramble().isEmpty() || Session.getInstance().getCurrentScramble() == null)) {
                 if (ScrambleConfig.getInstance().getPuzzle() == null || !ScrambleConfig.getInstance().getPuzzle().getLongName().equals(DatabaseMethods.getInstance().getCurrentPuzzleName())) {
-                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scrambleSwitch, loadingScramble);
+                    AndroidUtils.switchVisibility(scrambleContainer, scrambleButton, scrambleSwitch, loadingScramble);
                     ScrambleConfig.getInstance().doScramble();
                 } else {
-                    AndroidUtils.switchVisibility(scrambleText, scrambleImage, scrambleButton, scrambleSwitch, loadingScramble);
+                    AndroidUtils.switchVisibility(scrambleContainer, scrambleButton, scrambleSwitch, loadingScramble);
                 }
             } else {
                 scrambleText.setText(Session.getInstance().getCurrentScramble());
