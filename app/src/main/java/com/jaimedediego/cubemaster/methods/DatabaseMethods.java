@@ -140,7 +140,7 @@ public class DatabaseMethods {
         return num;
     }
 
-    public void saveData(String time, String date, String scramble, byte[] scrambleImage) {
+    public Detail saveData(String time, String date, String scramble, byte[] scrambleImage) {
         Cursor c = makeQuery("SELECT max(num_solve) FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId());
         if (c.moveToFirst()) {
             do {
@@ -149,6 +149,7 @@ public class DatabaseMethods {
         }
         c.close();
         closeDatabase();
+        return getCurrentPuzzleLastSolve();
     }
 
     public int setDefaultCurrentPuzzle() {
@@ -219,12 +220,12 @@ public class DatabaseMethods {
         closeDatabase();
     }
 
-    public String getCurrentPuzzleLastSolve() {
-        String time = "";
-        Cursor c = makeQuery("SELECT time FROM times WHERE user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId() + " order by num_solve desc limit 1");
+    public Detail getCurrentPuzzleLastSolve() {
+        Detail time = new Detail();
+        Cursor c = makeQuery("select time, date, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id=" + Session.getInstance().getCurrentPuzzleId() + " order by num_solve desc limit 1");
         if (c.moveToFirst()) {
             do {
-                time = c.getString(0);
+                time = new Detail(c.getString(0), c.getString(1), c.getInt(2));
             } while (c.moveToNext());
         }
         c.close();
@@ -303,16 +304,16 @@ public class DatabaseMethods {
         Cursor c;
         switch (mode) {
             case 1:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve asc");
+                c = makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve asc");
                 break;
             case 2:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
+                c = makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
                 break;
             case 3:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
+                c = makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "')");
                 break;
             default:
-                c = DatabaseMethods.getInstance().makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve desc");
+                c = makeQuery("select time, date, scramble, image, num_solve from times where user_id=" + Session.getInstance().getCurrentUserId() + " and puzzle_id in (select id from puzzles where name='" + puzzle + "') order by num_solve desc");
                 break;
         }
         if (c.moveToFirst()) {

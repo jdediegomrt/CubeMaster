@@ -10,6 +10,7 @@ import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,12 +40,15 @@ import com.jaimedediego.cubemaster.methods.DatabaseMethods;
 import com.jaimedediego.cubemaster.methods.PrefsMethods;
 import com.jaimedediego.cubemaster.utils.AndroidUtils;
 import com.jaimedediego.cubemaster.utils.Constants;
+import com.jaimedediego.cubemaster.utils.Detail;
 import com.jaimedediego.cubemaster.utils.OnScrambleCompleted;
 import com.jaimedediego.cubemaster.utils.OnThreadFinished;
 import com.jaimedediego.cubemaster.utils.Session;
 import com.jaimedediego.cubemaster.utils.StringUtils;
 import com.jaimedediego.cubemaster.view.activities.detail.DetailActivity;
+import com.jaimedediego.cubemaster.view.activities.main.MainActivity;
 import com.jaimedediego.cubemaster.view.customViews.CustomToast;
+import com.jaimedediego.cubemaster.view.dialogs.DeletePuzzleDialog;
 import com.jaimedediego.cubemaster.view.dialogs.NewFeatureDialog;
 import com.jaimedediego.cubemaster.view.dialogs.RateDialog;
 import com.jaimedediego.cubemaster.view.handler.ChronoHandler;
@@ -62,6 +67,7 @@ public class ChronoFragment extends Fragment {
     private LinearLayout hoursLayout;
     private LinearLayout minsLayout;
     private LinearLayout millisLayout;
+    private ImageButton deleteSolve;
     private TextView plus2;
     private TextView dnf;
     private TextView hours;
@@ -88,6 +94,8 @@ public class ChronoFragment extends Fragment {
     InspectionThread inspectionThread = null;
     private boolean holded = false;
 
+    private Detail lastTime;
+
     private final int REQUEST_CODE_FOR_REFRESH_CHRONO = 1;
 
     private OnFragmentInteractionListener mListener;
@@ -108,7 +116,7 @@ public class ChronoFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.delete_last_solve) {
             DatabaseMethods.getInstance().deleteCurrentPuzzleLastSolve();
-            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+            setLastSolve();
             return true;
         } else if (id == R.id.go_to_details) {
             goToDetail();
@@ -130,6 +138,8 @@ public class ChronoFragment extends Fragment {
 
         infoButton = v.findViewById(R.id.info_button);
         tutorial = v.findViewById(R.id.tutorial);
+
+        deleteSolve = v.findViewById(R.id.delete_solve);
 
         scrambleLayout = v.findViewById(R.id.scramble_layout);
         scrambleText = v.findViewById(R.id.scramble_text);
@@ -155,6 +165,7 @@ public class ChronoFragment extends Fragment {
         activityMenu = getActivity().findViewById(R.id.menu_layout);
         saveButton = v.findViewById(R.id.save_button);
         lastSolve = v.findViewById(R.id.last_solve);
+        lastTime = DatabaseMethods.getInstance().getCurrentPuzzleLastSolve();
 
         if (PrefsMethods.getInstance().isNotShowedNewFeature()) {
             NewFeatureDialog newFeatureDialog = new NewFeatureDialog(getContext());
@@ -171,14 +182,14 @@ public class ChronoFragment extends Fragment {
         }
 
         tutorial.setBackgroundColor(Session.getInstance().getLightColorTheme());
+        deleteSolve.setColorFilter(ThemeConfig.getInstance().getColorFromResource(R.color.md_grey_600));
+        if(DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime()!=null){
+            deleteSolve.setVisibility(View.VISIBLE);
+        }
         AndroidUtils.initLayoutTransitions(chronoScreen, v.findViewById(R.id.buttons));
         initIndicators();
 
-        if (DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().isEmpty() || DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().equals("")) {
-            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), getResources().getString(R.string.threedots)));
-        } else {
-            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
-        }
+        setLastSolve();
 
         scrambleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +232,29 @@ public class ChronoFragment extends Fragment {
             public void onClick(View view) {
                 chronoThread.finalize(true);
                 saveButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        deleteSolve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DeletePuzzleDialog dialog = new DeletePuzzleDialog(getContext(), lastTime.getNumSolve(), null, null);
+                dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        if (dialog.didSomething()) {
+                            setLastSolve();
+                            if(DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime()==null){
+                                deleteSolve.setVisibility(View.GONE);
+                            }
+                            minsLayout.setVisibility(View.GONE);
+                            hoursLayout.setVisibility(View.GONE);
+                            millis.setText(R.string.zero_millis);
+                            secs.setText(R.string.zero);
+                        }
+                    }
+                });
             }
         });
 
@@ -286,6 +320,7 @@ public class ChronoFragment extends Fragment {
                             infoButton.setEnabled(false);
                             scrambleButton.setVisibility(View.GONE);
                             scrambleSwitch.setVisibility(View.GONE);
+                            deleteSolve.setVisibility(View.GONE);
                             helpCounter = 0;
                             if (Integer.parseInt(Constants.getInstance().INSPECTION_TIME_SECS.get(PrefsMethods.getInstance().getInspectionTime())) != 0) {
                                 if ((inspectionThread == null) || (inspectionThread != null && !inspectionThread.isAlive())) {
@@ -428,8 +463,10 @@ public class ChronoFragment extends Fragment {
                     }
                 }
 
-                DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
-                lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+                lastTime = DatabaseMethods.getInstance().saveData(time, StringUtils.getDateTime(), scrambleText.getText().toString(), scrambleImageByteArray);
+                deleteSolve.setVisibility(View.VISIBLE);
+
+                lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime()));
 
                 if (tutorial.getVisibility() == View.VISIBLE) {
                     infoButton.setColorFilter(null);
@@ -460,7 +497,7 @@ public class ChronoFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_FOR_REFRESH_CHRONO && resultCode == Activity.RESULT_OK) {
-            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve()));
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime()));
         }
     }
 
@@ -529,5 +566,15 @@ public class ChronoFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    private void setLastSolve(){
+        lastTime = DatabaseMethods.getInstance().getCurrentPuzzleLastSolve();
+        if (DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime() == null) {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), getResources().getString(R.string.threedots)));
+        } else {
+            lastSolve.setText(String.format(getResources().getString(R.string.last_solve), DatabaseMethods.getInstance().getCurrentPuzzleLastSolve().getTime()));
+        }
+
     }
 }

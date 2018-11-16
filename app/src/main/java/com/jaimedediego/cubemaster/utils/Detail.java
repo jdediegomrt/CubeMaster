@@ -14,11 +14,19 @@ public class Detail {
     private Picture image;
     private int numSolve;
 
+    public Detail(){/*Empty constructor*/};
+
     public Detail(String time, String date, String scramble, Picture image, int numSolve) {
         this.time = time;
         this.date = date;
         this.scramble = scramble;
         this.image = image;
+        this.numSolve = numSolve;
+    }
+
+    public Detail(String time, String date, int numSolve) {
+        this.time = time;
+        this.date = date;
         this.numSolve = numSolve;
     }
 

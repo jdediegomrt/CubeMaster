@@ -205,14 +205,34 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/last_solve"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/last_solve_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:textColor="@color/md_grey_600" />
+                android:layout_below="@+id/plus2_dnf_time_layout"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/delete_solve"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/selected"
+                    android:src="@drawable/baseline_delete_white_24"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/last_solve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/md_grey_600" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
